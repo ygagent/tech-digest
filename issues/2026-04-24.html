@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日科技简报 #1 — 2026-04-24</title>
+  <meta property="og:title" content="每日科技简报 #1 — GPT-5.5 与 DeepSeek V4 同日登场">
+  <meta property="og:description" content="阮一峰第二次 API 浪潮 · Anthropic Claude Code 事后分析 · Bitwarden 供应链攻击 · Tokenmaxxing 奇葩趋势">
+  <meta property="og:image" content="https://static1.squarespace.com/static/50363cf324ac8e905e7df861/t/6993b59b8517240d2235240a/1771507646532/Frontier%2BLanguage%2BModel%2BIntelligence%2C%2BOver%2BTime%2B%2824%2BJan%2B%2726%29%2B-2.png.webp?format=1500w">
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #1c2129;
+      --border: #30363d; --text: #e6edf3; --text-muted: #8b949e;
+      --accent: #58a6ff; --accent-hover: #79c0ff;
+      --green: #3fb950; --yellow: #d29922; --red: #f85149; --purple: #bc8cff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px;
+    }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; }
+    .container { flex: 1; min-width: 0; padding: 40px 32px 80px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      padding: 40px 16px 40px 0; border-right: 1px solid var(--border);
+    }
+    .toc-title { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .toc a {
+      display: block; padding: 5px 12px; margin-bottom: 2px;
+      font-size: 0.85rem; color: var(--text-muted); text-decoration: none;
+      border-radius: 4px; border-left: 2px solid transparent; transition: all 0.15s;
+    }
+    .toc a:hover, .toc a.active { color: var(--accent); background: var(--surface); border-left-color: var(--accent); }
+    .toc-mobile {
+      display: none; position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 16px;
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto;
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.9rem;
+      color: var(--text-muted); text-decoration: none; border-radius: 4px;
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--bg); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .page { flex-direction: column; }
+      .container { padding: 24px 16px 60px; }
+    }
+    .back { display: inline-block; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 32px; }
+    .back:hover { color: var(--accent); }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+    .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px; }
+    .hero-img { width: 100%; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); }
+    .hero-caption { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 40px; text-align: center; font-style: italic; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 48px 0 20px; padding-bottom: 8px; border-bottom: 1px solid var(--border); scroll-margin-top: 20px; }
+    h3 { font-size: 1.1rem; font-weight: 600; margin: 28px 0 8px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: #fff; }
+    .callout { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 6px; padding: 16px 20px; margin: 20px 0; font-size: 0.95rem; }
+    .article-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); margin: 12px 0 24px; }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: border-color 0.2s; }
+    .tool-card:hover { border-color: var(--accent); }
+    .tool-card h4 { font-size: 1rem; margin-bottom: 6px; }
+    .tool-card h4 a { color: var(--accent); }
+    .tool-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
+    .tool-card .tag { display: inline-block; font-size: 0.7rem; padding: 2px 6px; border-radius: 3px; background: var(--accent); color: var(--bg); font-weight: 600; margin-bottom: 6px; }
+    .fun-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+    .fun-card h4 { font-size: 1.05rem; margin-bottom: 8px; }
+    .fun-card h4 a { color: var(--accent); }
+    .fun-card p { font-size: 0.9rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
+    .quote-block { background: var(--surface); border-left: 3px solid var(--purple); border-radius: 6px; padding: 20px 24px; margin: 20px 0; }
+    .quote-block blockquote { font-size: 1.05rem; line-height: 1.6; margin-bottom: 8px; font-style: italic; }
+    .quote-block .quote-author { font-size: 0.85rem; color: var(--accent); margin-bottom: 10px; }
+    .quote-block .quote-comment { font-size: 0.9rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 10px; }
+    .resource-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .resource-item a { font-weight: 600; }
+    .resource-item p { font-size: 0.9rem; color: var(--text-muted); margin: 6px 0 0; }
+    .audio-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 32px; }
+    .audio-bar.hidden { display: none; }
+    .audio-bar .audio-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+    .audio-bar audio { width: 100%; height: 36px; }
+    .footer-sources { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; }
+    .footer-sources strong { color: var(--text); font-size: 0.8rem; }
+    @media (max-width: 640px) { .tool-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<details class="toc-mobile">
+  <summary>📑 目录导航</summary>
+  <div class="toc-dropdown">
+    <a href="#headline">🔥 头条速递</a>
+    <a href="#tech-news">📰 科技动态</a>
+    <a href="#ai">🤖 AI 相关</a>
+    <a href="#articles">📝 文章推荐</a>
+    <a href="#tools">🛠️ 工具推荐</a>
+    <a href="#ai-tools">🧠 AI 工具</a>
+    <a href="#fun">🎲 趣闻</a>
+    <a href="#resources">📚 资源</a>
+    <a href="#quotes">💬 言论</a>
+  </div>
+</details>
+
+<div class="page">
+<nav class="toc">
+  <div class="toc-title">本期目录</div>
+  <a href="#headline">🔥 头条速递</a>
+  <a href="#tech-news">📰 科技动态</a>
+  <a href="#ai">🤖 AI 相关</a>
+  <a href="#articles">📝 文章推荐</a>
+  <a href="#tools">🛠️ 工具推荐</a>
+  <a href="#ai-tools">🧠 AI 工具</a>
+  <a href="#fun">🎲 趣闻</a>
+  <a href="#resources">📚 资源</a>
+  <a href="#quotes">💬 言论</a>
+</nav>
+
+<main class="container">
+  <a href="../index.html" class="back">← 返回目录</a>
+
+  <h1>GPT-5.5 与 DeepSeek V4 同日亮剑，第二次 API 开放浪潮来了</h1>
+  <div class="meta">第 1 期 · 2026年4月24日 · Hacker News / TLDR / Import AI / Simon Willison / The Pragmatic Engineer 等 15 个全球精选源</div>
+
+  <div class="audio-bar hidden" id="audioBar">
+    <div class="audio-label">🎧 收听本期音频版<br><small>由 NotebookLM 生成 · 双人对话播客风格</small></div>
+    <audio controls preload="none" id="audioPlayer"></audio>
+  </div>
+
+  <img class="hero-img" src="https://static1.squarespace.com/static/50363cf324ac8e905e7df861/t/6993b59b8517240d2235240a/1771507646532/Frontier%2BLanguage%2BModel%2BIntelligence%2C%2BOver%2BTime%2B%2824%2BJan%2B%2726%29%2B-2.png.webp?format=1500w" alt="前沿模型能力趋势图">
+  <p class="hero-caption">Benedict Evans 的前沿模型能力趋势图 —— 能力天花板在收窄，但获取成本在暴跌</p>
+
+  <!-- ========== 头条速递 ========== -->
+  <h2 id="headline">🔥 头条速递</h2>
+
+  <p>今天最值得聊的不是某个单独产品，而是一股暗流：<strong>第二次 API 开放浪潮正在到来。</strong></p>
+
+  <p>阮一峰在本周的<a href="https://www.ruanyifeng.com/blog/2026/04/weekly-issue-394.html">《科技爱好者周刊》第 394 期</a>里详细分析了这个趋势。15 年前，Facebook、Twitter 纷纷开放 API，后来发现赚不到钱又一个个关了。但如今 AI Agent 需要调用其他平台才能干活 —— 没有 API，你的平台就进不了 AI 工作流。强如腾讯，也在龙虾（OpenClaw）爆红后以最快速度开放了微信接口。</p>
+
+  <p>与此同时，模型军备竞赛持续白热化。OpenAI 的 <a href="https://openai.com/index/introducing-gpt-5-5/">GPT-5.5</a> 今日登场，定位新一代旗舰；<a href="https://api-docs.deepseek.com/">DeepSeek V4</a> Flash 和 Pro 也同步上线，Simon Willison 实测后给出评价："几乎贴脸前沿，但价格像打折区。"这两家的时间差不超过 24 小时。</p>
+
+  <p>Benedict Evans 在长文 <a href="https://www.ben-evans.com/benedictevans/2026/2/19/how-will-openai-compete-nkg2x">《How will OpenAI compete?》</a> 中尖锐指出：技术不再是独家秘方，用户多但粘性浅 —— 队散了怎么办？当能力趋同，护城河就不在模型层了。</p>
+
+  <p><strong>判断：</strong>模型本身正在商品化，真正的战场移到了两个方向 —— 往下是基础设施（API 生态、推理成本），往上是产品和场景（谁能让 Agent 做更多事）。开发者的黄金时代：选择越来越多，成本越来越低。</p>
+
+  <!-- ========== 科技动态 ========== -->
+  <h2 id="tech-news">📰 科技动态</h2>
+
+  <h3>1、Bitwarden CLI 遭供应链攻击：GitHub Action 被植入木马</h3>
+  <p>安全研究机构 Socket 披露，Bitwarden CLI 2026.4.0 版本通过一个被入侵的 GitHub Action 注入了恶意代码，属于更大规模的 Checkmarx 供应链攻击活动的一部分。受影响的团队被建议立即轮换密钥 —— 供应链安全这道题，答案永远是"不要信任上游"。</p>
+  <img class="article-img" src="https://cdn.sanity.io/images/cgdhsj6q/production/65ef8dc5e66260e20fdf13cead82ebd41b705ee6-1018x666.png?w=1200&q=95&fit=max&auto=format" alt="Bitwarden 供应链攻击">
+
+  <h3>2、OpenAI 收购 Astral（Ruff 和 uv 的开发者）</h3>
+  <p>开源圈瞬间分裂成"恭喜上岸"和"以后还独立吗"两拨。Astral 团队打造了 Python 生态中最受欢迎的格式化器 <a href="https://github.com/astral-sh/ruff">Ruff</a> 和包管理器 <a href="https://github.com/astral-sh/uv">uv</a>。OpenAI 盯上这些资产，说明 Python 开发者体验在 AI 时代成了战略级基础设施。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=changelog.com&sz=128" alt="Changelog">
+
+  <h3>3、「Tokenmaxxing」成为企业奇葩新趋势</h3>
+  <p>TLDR 和 Pragmatic Engineer 同时报道了一个离谱但真实的现象：公司把 token 使用量当作 KPI，鼓励员工疯狂刷 prompt 和并行 Agent 来爬内部排行榜。结果是浪费 token、产出脆弱的输出、以及月底吓人的基础设施账单。AI 版的"面向指标编程"。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=tldr.tech&sz=128" alt="Tokenmaxxing">
+
+  <h3>4、MDN 重构：从 React 迁移到 Web Components</h3>
+  <p>MDN 工程团队<a href="https://developer.mozilla.org/en-US/blog/mdn-front-end-deep-dive/">详细解释</a>了为什么要把 React 换成 Lit Web Components：避免 <code>dangerouslySetInnerHTML</code> 的安全边界问题，解耦 CSS 纠缠，瘦身构建流水线。一个罕见的"在百科全书级别规模上退役 CRA 架构"的内部报告。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=developer.mozilla.org&sz=128" alt="MDN">
+
+  <h3>5、Railway 把前端从 Next.js 迁走了</h3>
+  <p>Railway <a href="https://blog.railway.com/p/moving-railways-frontend-off-nextjs">记录了</a>把 200+ 路由从 Next.js 迁移到 Vite + TanStack Router 的过程：降低构建复杂度、改善路由类型安全、简化本质上是 SPA 的应用。又一个"Next.js 不适合所有场景"的真实案例。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=railway.com&sz=128" alt="Railway">
+
+  <!-- ========== AI 相关 ========== -->
+  <h2 id="ai">🤖 AI 相关</h2>
+
+  <h3>1、Claude Code 变差不是模型的锅 — Anthropic 自曝三连 Bug</h3>
+  <p>Anthropic <a href="https://www.anthropic.com/engineering/april-23-postmortem">发布事后分析</a>：默认推理等级被调低、思考链缓存清理逻辑写炸（idle 一小时后清的逻辑变成了每轮都清）、冗长提示词过度激进。三个产品层面的 Bug 叠加，让用户觉得"模型变蠢了"。给所有做 Agent 框架的团队递了一把刀：<strong>坑在编排层，不在 logits。</strong></p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=anthropic.com&sz=128" alt="Anthropic">
+
+  <h3>2、Anthropic 用 9 个 Claude Agent 自动化对齐研究</h3>
+  <p>Import AI 报道了 Anthropic 的"<a href="https://www.anthropic.com/research/automated-alignment-researchers">自动化对齐研究员</a>"项目：9 个沙盒化的 Claude Opus 4.6 Agent，带工具和共享研究论坛，自主提出并测试弱到强监督方案。人类一周达到 PGR 0.23，Agent 跑出了 0.97 —— 不过迁移到 Sonnet 4 后实际增益不显著。关键洞察：自动化对齐的瓶颈不是生成想法，而是<strong>设计评估指标</strong>。</p>
+  <img class="article-img" src="https://www.anthropic.com/api/opengraph-illustration?name=Hand%20Abacus&backgroundColor=olive" alt="Automated Alignment Researchers">
+
+  <h3>3、Meta 推出 Muse Spark —— 开源大旗要倒？</h3>
+  <p>Meta 发布了原生多模态推理模型 Muse Spark，支持工具调用和"沉思模式"，健康场景拉满但编码偏弱。关键变化：这次是消费者优先（meta.ai 上线），API 仅私有预览 —— 从 Llama 时代的开源领袖，转向了"自家产品优先"。</p>
+  <img class="article-img" src="https://charonhub.deeplearning.ai/content/images/2026/04/Captura-de-pantalla-2026-04-16-a-la-s--4.37.39---p.--m..png" alt="Muse Spark">
+
+  <h3>4、华为 HiFloat4：国产芯片的「抠门美学」</h3>
+  <p>显卡被卡脖子之后，算力不够、数值格式来凑。华为研究人员在昇腾 NPU 上对比了自研 HiFloat4 与 OCP 标准 MXFP4 格式：HiFloat4 相对 BF16 的精度损失（~1.0%）低于 MXFP4（~1.5%），大模型越大优势越明显。</p>
+  <img class="article-img" src="https://arxiv.org/static/browse/0.3.4/images/arxiv-logo-fb.png" alt="HiFloat4">
+
+  <h3>5、美国各州 AI 立法拼图：一盘散沙还是多元探索？</h3>
+  <p>The Batch 梳理了加州水印规则、科罗拉多高风险 AI 义务、明尼苏达/犹他健康保险 AI 拒赔限制、纽约生物武器/黑客防护等法案，与联邦层面的抢先立法倾向形成鲜明对比。监管碎片化 vs. 一刀切，目前还没有赢家。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=deeplearning.ai&sz=128" alt="AI Laws">
+
+  <!-- ========== 文章推荐 ========== -->
+  <h2 id="articles">📝 文章推荐</h2>
+
+  <h3>1、<a href="https://www.ben-evans.com/benedictevans/2026/2/19/how-will-openai-compete-nkg2x">Benedict Evans：How will OpenAI compete?</a></h3>
+  <p>Evans 论证 OpenAI 缺乏持久差异化：模型各家趋同、ChatGPT 的巨量 MAU 粘性浅薄没有网络效应、产品负责人只能接住实验室的突破而无法主导路线图。Altman 正在赛跑：趁商品化完成之前，把纸面估值转化为战略地位。</p>
+  <img class="article-img" src="https://static1.squarespace.com/static/50363cf324ac8e905e7df861/t/6993b59b8517240d2235240a/1771507646532/Frontier%2BLanguage%2BModel%2BIntelligence%2C%2BOver%2BTime%2B%2824%2BJan%2B%2726%29%2B-2.png.webp?format=1500w" alt="OpenAI Compete">
+
+  <h3>2、<a href="https://newsletter.pragmaticengineer.com/p/designing-data-intensive-applications">DDIA 作者 Martin Kleppmann 深度对谈</a></h3>
+  <p>第二版刚出，Kafka 年代的亲历怎么塑造了整本书。最有意思的部分：LLM 写码之后，形式化验证会不会从"太贵用不起"变成"不得不用"？以及 local-first 软件面临的现实挑战。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=pragmaticengineer.com&sz=128" alt="DDIA">
+
+  <h3>3、<a href="https://newsletter.pragmaticengineer.com/p/learnings-from-conducting-1000-interviews">亚马逊前 Principal 面了 1000 场的感悟</a></h3>
+  <p>很多人挂的不是技术，而是"怎么把自己呈现出来"。面试官其实在预览"以后跟你共事是什么感觉" —— 信号比答案重要。Steve Huynh 十年面试经验的浓缩。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=pragmaticengineer.com&sz=128" alt="Interviews">
+
+  <h3>4、<a href="https://blog.bytebytego.com/p/how-doordash-launches-a-new-country">DoorDash 如何一周内上线一个新国家</a></h3>
+  <p>从 if/else 地狱拆成"薄编排器 + 工作流定义 + 可插拔 Step"，一周上线不是加班神话，而是架构复利。系统设计教科书级别的案例。</p>
+  <img class="article-img" src="https://www.google.com/s2/favicons?domain=bytebytego.com&sz=128" alt="DoorDash">
+
+  <h3>5、<a href="https://importai.substack.com/p/import-ai-454-automating-alignment">Import AI 454：自动化对齐研究</a></h3>
+  <p>Jack Clark 开场灵魂拷问：股市到底哪天开始给"奇点"计价？本期覆盖 Anthropic 自动化对齐、华为 HiFloat4、Kimi K2.5 安全评测。论文味很冲，但读起来像悬疑片。</p>
+  <img class="article-img" src="https://substack-post-media.s3.amazonaws.com/public/images/d6d17996-2bef-40a4-abe3-be72a0e8a227_258x258.png" alt="Import AI">
+
+  <!-- ========== 工具推荐 ========== -->
+  <h2 id="tools">🛠️ 工具推荐</h2>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <h4><a href="https://github.com/matz/spinel">Spinel</a></h4>
+      <p>Ruby 之父 Matz 亲自操刀的 AOT 原生编译器，让 Ruby 代码编译成原生二进制。还在早期，但 matz 亲自下场的份量不一样</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://github.com/refactoringhq/tolaria">Tolaria</a></h4>
+      <p>离线优先的 macOS Markdown 知识库管理工具，git-friendly，专为跟 AI 工具协作设计的文件结构</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://pijul.org/">Pijul</a></h4>
+      <p>基于 patch 的分布式版本控制系统，patch 是可交换的 —— rebase 冲突？不存在的。理论优雅，实际体验仍在打磨</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://bun.com/blog/bun-v1.3.13">Bun v1.3.13</a></h4>
+      <p>测试隔离/并行/分片全补齐，更低内存占用，更快安装。继续认真抢 Node 的全栈工具箱</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://github.com/heygen-com/hyperframes">HyperFrames</a></h4>
+      <p>用 HTML/JS 做视频合成，可导出 MP4。比 Remotion 更轻的非 React 路线，支持 AI Agent 调用</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://blog.bytebytego.com/p/the-security-architecture-of-github">GitHub Agentic 安全架构</a></h4>
+      <p>GitHub 如何为 Agent 编码工作流设计安全模型：假设入侵已发生，控制爆炸半径。系统设计思维应用于人-Agent 协作</p>
+    </div>
+  </div>
+
+  <!-- ========== AI 工具 ========== -->
+  <h2 id="ai-tools">🧠 AI 工具</h2>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <span class="tag">Agent</span>
+      <h4><a href="https://github.com/Infisical/agent-vault">Agent Vault</a></h4>
+      <p>开源的 Agent 凭证代理：HTTP 中间人模式给上游请求注入密钥，让非确定性的 Agent 永远看不到长期凭证。Go 单二进制，自托管</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">Agent</span>
+      <h4><a href="https://github.com/multica-ai/multica">Multica</a></h4>
+      <p>开源多 Agent 队友平台：本地 Go daemon 认领任务、写代码、汇报进度，像一个自主的虚拟队友</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">模型</span>
+      <h4><a href="https://simonwillison.net/2026/Apr/24/deepseek-v4/">DeepSeek V4</a></h4>
+      <p>Flash 和 Pro 双版本，1M token 上下文，MIT 协议。Simon 实测：几乎贴脸前沿，价格打骨折</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">企业</span>
+      <h4><a href="https://blog.cloudflare.com/email-for-agents/">Cloudflare Email for Agents</a></h4>
+      <p>让自治软件拥有持久邮箱，无需搭建完整邮件栈。"Agent 需要真实协议"趋势的又一体现</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">开源</span>
+      <h4><a href="https://simonwillison.net/2026/Apr/23/liteparse-for-the-web/">LiteParse for Web</a></h4>
+      <p>浏览器端 PDF 解析，把 LlamaIndex 的 LiteParse 移植到 WASM，无需服务器往返。重型搅拌机改便携榨汁杯</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">Agent</span>
+      <h4><a href="https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw">NVIDIA NeMo Agent Runtime</a></h4>
+      <p>Nvidia 入局 Agent 平台之争，NeMoClaw 对标 OpenClaw 社区。Agent OS 赛道越来越拥挤</p>
+    </div>
+  </div>
+
+  <!-- ========== 趣闻 ========== -->
+  <h2 id="fun">🎲 趣闻</h2>
+
+  <div class="fun-card">
+    <h4><a href="https://wheelfront.com/this-alberta-startup-sells-no-tech-tractors-for-half-price/">加拿大创业公司卖「去智能化」拖拉机，价格直接砍半</a></h4>
+    <p>你没看错 —— 卖点是把拖拉机里的「智能」扒掉。没有联网锁机、没有订阅、没有遥测，用复刻的 Cummins 机械喷射引擎，价格砍半。HN 上大量投票，说明大家苦"万物皆可订阅"久矣。有时候，减法才是最好的产品策略。</p>
+  </div>
+
+  <div class="fun-card">
+    <h4><a href="https://simonwillison.net/2026/Apr/21/gpt-image-2/">Simon Willison 用 GPT Image 2.0 玩"找浣熊"</a></h4>
+    <p>Simon 让 GPT Image 2.0 生成一张 Where's Waldo 风格的复杂场景，然后让模型自己找出拿着对讲机的浣熊。结论：让模型"圈出来"时它会伪造证据 —— 图像模型不该被信任去审计自己的拼图。经典的 "AI 的自我审计悖论"。</p>
+  </div>
+
+  <div class="fun-card">
+    <h4><a href="https://blog.meshcore.io/2026/04/23/the-split">MeshCore 社区分裂：商标争议 + AI 生成代码</a></h4>
+    <p>开源网状无线电社区 MeshCore 的维护者指控分裂派系重度依赖 Claude Code 生成代码、未经共识申请商标、分叉品牌。这不只是技术分歧 —— 更是"谁拥有 vibe coded 出来的东西"的治理危机。</p>
+  </div>
+
+  <!-- ========== 资源 ========== -->
+  <h2 id="resources">📚 资源</h2>
+
+  <div class="resource-item">
+    <a href="https://ynarwal.github.io/how-llms-work/">How LLMs Work — 交互式视觉指南</a>
+    <p>基于 Andrej Karpathy 的经典讲座，用交互动画走完从数据收集、分词、预训练、采样、SFT、RLHF 到 RAG 的全流程。作者说用 Claude Code 从讲座文字稿生成了整个体验 —— 用 AI 教 AI 是什么。</p>
+  </div>
+
+  <div class="resource-item">
+    <a href="https://blog.bytebytego.com/p/b-trees-vs-lsm-trees-comparison-and">B-Trees vs LSM Trees：没有更好，只有更合适</a>
+    <p>ByteByteGo 的经典图解对比：B-Tree 读爽写贵，LSM 写爽读要还账。数据库底层最核心的工程取舍之一。</p>
+  </div>
+
+  <div class="resource-item">
+    <a href="https://www.densediscovery.com/">Dense Discovery — 每周一封值得打开的邮件</a>
+    <p>Kai Brach 的人工精选周刊，覆盖工具、书籍、设计与文化交叉点。明确标注"人类策划而非算法推荐"—— 在 AI 洪流中反而成了卖点。</p>
+  </div>
+
+  <!-- ========== 言论 ========== -->
+  <h2 id="quotes">💬 言论</h2>
+
+  <div class="quote-block">
+    <blockquote>AI Agent 已经太像人了……缺乏严谨性、缺乏耐心、缺乏专注力……它们向熟悉的东西漂移，与现实谈判。</blockquote>
+    <div class="quote-author">— Andreas Påhlsson-Notini，<a href="https://simonwillison.net/2026/Apr/21/gpt-image-2/">via Simon Willison</a></div>
+    <div class="quote-comment">Agent 需要的不是人类的灵活性，而是机器的确定性。下次觉得 Agent 不靠谱时，想想它是不是在模仿我们最差的工作习惯。</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>突然之间，API 不再是累赘，而是接入 AI 的必须条件。没有 API，你的平台就进入不了 AI 工作流。</blockquote>
+    <div class="quote-author">— 阮一峰，<a href="https://www.ruanyifeng.com/blog/2026/04/weekly-issue-394.html">科技爱好者周刊第 394 期</a></div>
+    <div class="quote-comment">第一次 API 浪潮是平台主动开放又主动关闭。这一次，是 AI 倒逼平台不得不开放。谁没有 API，谁就会被 Agent 的世界遗忘。</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>用户感觉"模型变差了"，但真正出问题的是 harness 层的 Bug。</blockquote>
+    <div class="quote-author">— Anthropic 工程团队，<a href="https://www.anthropic.com/engineering/april-23-postmortem">Claude Code 事后分析</a></div>
+    <div class="quote-comment">用户归因和实际原因经常南辕北辙。下次觉得"AI 变蠢了"，先检查上下文管理链路 —— 坑几乎总在编排层。</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>OpenAI 的技术不再是独家秘方，用户多但粘性像网红店排队 —— 队散了怎么办？</blockquote>
+    <div class="quote-author">— Benedict Evans，<a href="https://www.ben-evans.com/benedictevans/2026/2/19/how-will-openai-compete-nkg2x">How will OpenAI compete?</a></div>
+    <div class="quote-comment">当能力趋同，护城河就不在技术层了。OpenAI 的故事越来越像 2010 年的 Google —— 搜索已经赢了，但接下来靠什么？</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>自动化对齐研究的真正瓶颈不是生成想法，而是设计评估指标 —— 没有好 eval，自动化研究员只会过拟合。</blockquote>
+    <div class="quote-author">— Anthropic 研究团队，<a href="https://www.anthropic.com/research/automated-alignment-researchers">Automated Alignment Researchers</a></div>
+    <div class="quote-comment">这个洞察适用于所有 AI 应用：你以为瓶颈是模型能力，其实是你的衡量标准不够好。</div>
+  </div>
+
+  <!-- ========== 来源 ========== -->
+  <div class="footer-sources">
+    <strong>综合科技：</strong>Hacker News · TLDR · Changelog · weeklyfoo<br>
+    <strong>AI 前沿：</strong>Import AI · The Batch · Simon Willison · Last Week in AI<br>
+    <strong>开发者工具：</strong>console.dev · Bytes.dev · JavaScript Weekly<br>
+    <strong>深度分析：</strong>Benedict Evans · The Pragmatic Engineer<br>
+    <strong>系统设计：</strong>ByteByteGo · Dense Discovery<br><br>
+    由 Cursor AI 自动生成 · 信息截止至 2026-04-24 22:00 CST
+  </div>
+</main>
+</div>
+
+<script>
+  // Audio player
+  const today = '2026-04-24';
+  const audioPath = `../audio/${today}.mp3`;
+  fetch(audioPath, { method: 'HEAD' }).then(r => {
+    if (r.ok) {
+      document.getElementById('audioBar').classList.remove('hidden');
+      document.getElementById('audioPlayer').src = audioPath;
+    }
+  }).catch(() => {});
+
+  // TOC active state
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href')?.replace('#','');
+    if (id) { const el = document.getElementById(id); if (el) sections.push({ id, el, link }); }
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const s = sections.find(s => s.el === entry.target);
+      if (s) s.link.classList.toggle('active', entry.isIntersecting);
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s.el));
+</script>
+</body>
+</html>
