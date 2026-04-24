@@ -1,8 +1,8 @@
 [
   {
     "date": "2026-04-24",
-    "title": "第 1 期：GPT-5.5 与 DeepSeek V4 同日亮剑，第二次 API 开放浪潮来了",
-    "highlights": "Bitwarden 供应链攻击 · Anthropic Claude Code 事后分析 · 阮一峰第二次 API 浪潮 · Tokenmaxxing 奇葩趋势",
-    "image": "https://static1.squarespace.com/static/50363cf324ac8e905e7df861/t/6993b59b8517240d2235240a/1771507646532/Frontier%2BLanguage%2BModel%2BIntelligence%2C%2BOver%2BTime%2B%2824%2BJan%2B%2726%29%2B-2.png.webp?format=1500w"
+    "title": "第 2 期：TypeScript 7.0 用 Go 重写编译器，AI 自动化编码真能干几周的活了",
+    "highlights": "TypeScript 7.0 编译器用 Go 重写 · MirrorCode 验证 AI 多周编码能力 · DHH 转向 Agent-first 工作流 · Vercel 安全事件 · AlphaGenome 解读暗基因",
+    "image": "https://devblogs.microsoft.com/typescript/wp-content/uploads/sites/11/2026/04/ts7-0-beta-4.png"
   }
 ]
