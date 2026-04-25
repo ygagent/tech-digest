@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-04-25",
+    "title": "第 2 期：AI 模型三国争霸日 — DeepSeek V4 开源登场，Google 砸 400 亿投 Anthropic",
+    "highlights": "DeepSeek V4 开源 MoE 模型 · Google 400 亿投资 Anthropic · GPT-5.5 API 上线 · Astral 被 OpenAI 收购 · Ruby 之父发布 AOT 编译器 Spinel",
+    "image": "https://opengraph.githubassets.com/1/matz/spinel"
+  },
+  {
     "date": "2026-04-24",
     "title": "第 1 期：TypeScript 7.0 用 Go 重写编译器，AI 自动化编码真能干几周的活了",
     "highlights": "TypeScript 7.0 编译器用 Go 重写 · MirrorCode 验证 AI 多周编码能力 · DHH 转向 Agent-first 工作流 · Vercel 安全事件 · AlphaGenome 解读暗基因",
