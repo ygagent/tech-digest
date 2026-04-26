@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-04-26",
+    "title": "第 3 期：业余爱好者用 ChatGPT 攻克 60 年 Erdős 猜想 · Anthropic 估值破万亿 · DeepSeek V4 杀入前沿",
+    "highlights": "ChatGPT 解数学猜想 · Anthropic 万亿估值 · OpenAI 收购 Astral · GLM-5.1 长任务 · DeepSeek V4 · Agent 交易市场 · npm 供应链攻击",
+    "image": "https://static.scientificamerican.com/dam/asset/124ad289-58c2-4d51-87e8-aee854d10fc7/abstract-rubiks-cube.jpg?m=1777033076.511&w=1200"
+  },
+  {
     "date": "2026-04-25",
     "title": "第 2 期：Firefox 偷师 Brave 广告拦截 · 百个机器人运营生物实验室 · 美中 AI 盗窃争端升级",
     "highlights": "Firefox 内置 Brave adblock-rust · DeepMind AI Agent 六大攻击类型 · Spotify 发布流水线解密 · Railway 弃用 Next.js · Tokenmaxxing 刷 token 乱象",
