@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>每日科技简报 #3 — 2026-04-26</title>
-  <meta property="og:title" content="欧盟年龄验证背后的数字身份证博弈 · Flickr 为何仍是摄影师的「最后一块净土」· AI 正在改变内核维护的代价">
-  <meta property="og:description" content="欧盟年龄门与数字身份 · Flickr 反潮流长期主义 · Linux 老驱动与 AI 漏洞报告 · OpenAI 企业隐私滤镜 · Vibe Coding 时代的 Mac 应用淘金热">
-  <meta property="og:image" content="https://juraj.bednar.io/wp-content/uploads/2026/04/cover-eu-age.jpeg">
+  <meta property="og:title" content="第 3 期：50 源扩容后首期 — DeepSeek-V4 百万 token · Cloudflare 救活 Rust Worker · GPT-5.5 不是无痛升级">
+  <meta property="og:description" content="信息源从 20 扩至 50，强化实验室与大厂工程深读；本期覆盖 HN 热榜、Hugging Face、Cloudflare Engineering、OpenAI Developer、Simon Willison 等。">
+  <meta property="og:image" content="https://huggingface.co/blog/assets/deepseekv4/thumbnail.png">
   <style>
     :root {
       --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
@@ -126,6 +126,7 @@
       border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0; font-size: 0.93rem;
       color: var(--text-secondary);
     }
+    .callout strong { color: var(--text); }
     .article-img {
       width: 100%; max-height: 380px; object-fit: cover;
       border-radius: var(--radius-sm); margin: 12px 0 24px;
@@ -238,200 +239,207 @@
 <main class="container">
   <a href="../index.html" class="back">← 返回目录</a>
 
-  <h1>第 3 期：欧盟年龄门背后的数字身份证博弈 · Flickr 的长期主义 · 内核维护遇上 AI 漏洞报告潮</h1>
-  <div class="meta">第 3 期 · 2026年4月26日</div>
+  <h1>第 3 期：50 源扩容后首期 —— 把「实验室 + 大厂工程」拉回 C 位</h1>
+  <div class="meta">第 3 期 · 2026年4月26日 · 本期按 <strong>50 信息源 / 6 路并行抓取</strong> 结构组稿</div>
 
   <div class="audio-bar hidden" id="audioBar">
     <div class="audio-label">🎧 收听本期音频版<br><small>由 NotebookLM 生成 · 双人对话播客风格</small></div>
     <audio controls preload="none" id="audioPlayer"></audio>
   </div>
 
-  <img class="hero-img" src="https://juraj.bednar.io/wp-content/uploads/2026/04/cover-eu-age.jpeg" alt="欧盟年龄验证与数字身份封面图">
-  <p class="hero-caption">欧盟「年龄验证」立法争议 —— 图片来自 Juraj Bednar 博客封面</p>
+  <img class="hero-img" src="https://huggingface.co/blog/assets/deepseekv4/thumbnail.png" alt="DeepSeek-V4 官方博文配图">
+  <p class="hero-caption">DeepSeek-V4 系列预览 — 来自 Hugging Face 官方博文缩略图</p>
 
-  <!-- ========== 头条速递 ========== -->
+  <div class="callout">
+    <strong>本期建议阅读顺序（按优先级）</strong><br><br>
+    1. <strong>头条</strong>：为何要把订阅从 20 扩到 50，以及「趋势雷达」与「深读主源」怎么分工。<br>
+    2. <strong>文章推荐 §1</strong>：<a href="#articles">Cloudflare Rust Workers + wasm-bindgen</a> —— 边缘 Rust 从「一 panic 全挂」到可恢复，是典型的工程含金量。<br>
+    3. <strong>AI 相关</strong>：<a href="#ai">DeepSeek-V4 长上下文</a> + <a href="#ai">HF「ML Intern」后训练测评选题</a>，一条看模型，一条看人才筛选范式。<br>
+    4. <strong>科技动态 §1</strong>：HN 热帖「西方既忘了造物也忘了写码」—— 偏社会学视角，可当雷达而非技术结论。<br>
+    5. <strong>工具</strong>：<a href="#tools">honker</a>（SQLite 上的 NOTIFY/LISTEN 语义）适合后端读者。<br>
+    6. <strong>言论区</strong>：OpenAI 对 GPT-5.5 的「别当无痛升级」警告 + Nilay Patel 的「软件脑」长文摘。<br><br>
+    <strong>时间预算：</strong>只有 <strong>5 分钟</strong> → 读本 callout + 扫一眼工具网格。<strong>15 分钟</strong> → 加读「文章推荐」第一篇与「AI 相关」前两则。<strong>30 分钟</strong> → 再读完头条与科技动态前两条。
+  </div>
+
   <h2 id="headline">🔥 头条速递</h2>
 
-  <p>今天最值得单独拎出来说的，不是某个模型发布，而是一条正在欧洲快速推进的<strong>监管逻辑链</strong>：以「保护未成年人」为名的年龄验证，正在变成数字身份基础设施的入口 —— Juraj Bednar 把它形容为 <strong>Trojan horse for digital IDs</strong>。</p>
+  <p>从今天起，简报背后的 <strong>daily-tech-digest</strong> 技能把信息源从 <strong>20 个扩到 50 个</strong>，并把 Phase 1 从 <strong>3 路子 Agent 改成 6 路</strong>，避免「单 Agent 抓一半 WebFetch 就爆 token」的尴尬。结构上刻意补了四块短板：<strong>AI 原始研究 / AI 工程化 / 分布式与数据库 / 大厂工程复盘</strong> —— TechCrunch、Product Hunt 仍保留，但定位只能是 <strong>趋势雷达</strong>，不再冒充深度学习主菜。</p>
 
-  <p>政策叙事很干净：没有年龄门，孩子就能刷到不该看的内容。工程落地却极其复杂：你要证明「屏幕前的人已满 18 岁」，几乎必然会走向<strong>更强的身份绑定</strong>（证件、钱包、运营商、平台账号互证）。一旦基础设施建成，它不会只服务于「家长控制」，而会服务于所有需要「可信成年人」的场景 —— 广告、金融、政治动员，都会排队来借这套能力。</p>
+  <p>本期是 <strong>删稿重生</strong> 后的同一日期刊：上一版侧重欧盟年龄门与 Flickr 叙事；这一版刻意 <strong>换一批 URL 与故事线</strong>，方便你直观看「扩源之后」选题是否更硬：头条让位给 <strong>DeepSeek-V4 + Cloudflare 工程长文 + GPT-5.5 迁移语境</strong>，再用 HN 热榜做社会情绪对照。若你觉得某类源（例如 SemiAnalysis、Jepsen、TigerBeetle）还该在正文里占更大版面，下一期可在对话里一句话调权重。</p>
 
-  <p><strong>1. 这是典型的「安全理由 → 永久能力」路径。</strong> 年龄验证听起来比「全面实名制」更容易在舆论场通过，但它对技术栈的要求几乎等价：可验证、可审计、难伪造 —— 也就是数字身份系统最喜欢的那组性质。</p>
+  <p><strong>1. 为什么 50 不是简单加法？</strong> 多出来的 30 个里，Anthropic / OpenAI / DeepMind / Meta AI / BAIR、Interconnects、Ahead of AI、Latent、Hugging Face、ACM Queue、Martin Kleppmann、Jepsen、Cloudflare、Netflix、Stripe、GitHub &amp; Meta Engineering、Jane Street、TigerBeetle……本质是 <strong>把「读过原文」的概率往上推</strong>，而不是再多读一遍二手摘要。</p>
 
-  <p><strong>2. 平台与国家的激励高度对齐。</strong> 大型平台早就苦于合规与风控成本；国家则希望减少匿名互联网的「不可控面」。当双方都想把「人」钉在账号与设备上时，年龄门只是最先被写进法律的那一个楔子。</p>
+  <p><strong>2. 中文侧怎么补？</strong> 新表里有 <strong>ByteDance Seed</strong> 与 <strong>美团技术团队</strong>，与英文大厂 Engineering 对位，避免「全球简报」变成纯硅谷视角。</p>
 
-  <p><strong>3. 对开发者意味着什么？</strong> 你要设计的不是「一个勾选框」，而是一整条信任链：数据来源、最小化采集、可删除性、跨境合规、以及最坏情况下的滥用模型。否则你以为自己在做 parental controls，用户看到的可能只是又一层账号监狱。</p>
+  <p><strong>3. 执行诚实声明：</strong> 单期 HTML 仍由主编 Agent 在 Phase 2 做<strong>互斥分桶与去重</strong>；物理上 50 源全量逐条展开会极长。本期正文已<strong>优先覆盖</strong>你点名的「收益最大 12 源」中的多条（HF、Cloudflare、OpenAI Dev、Simon、HN 等），其余在页脚 <code>footer-sources</code> 分层列出，后续期可轮换头条。</p>
 
-  <p><strong>判断：</strong> 这类议题没有「技术中立」的舒适区 —— 架构选型即政治选择。值得所有做身份、支付、社交与内容分发的人严肃读一遍 <a href="https://juraj.bednar.io/en/blog-en/2026/04/17/eu-age-control-the-trojan-horse-for-digital-ids/">Juraj Bednar 的分析长文</a>。本期其他板块不再重复该 URL，避免「头条写了、下面又贴一遍」的重复感。</p>
-
-  <!-- ========== 科技动态 ========== -->
   <h2 id="tech-news">📰 科技动态</h2>
 
-  <h3>1、Linux 内核讨论：老旧网络驱动是否该为「AI 生成的漏洞报告」让路？</h3>
-  <p><a href="https://www.phoronix.com/news/Linux-Old-Network-AI">Phoronix</a> 报道，上游社区在权衡<strong>维护成本</strong>与<strong>安全响应</strong>时，开始讨论是否更激进地移除长期无人维护的老旧网络驱动。导火索之一是：大量由 AI 辅助生成的漏洞报告涌入，让维护者花在「甄别真伪」上的时间暴涨 —— 这不是「模型好不好用」的问题，而是<strong>协作协议被新工具改写</strong>之后，项目治理要怎么升级。</p>
+  <h3>1、HN 榜首：西方「忘了造物」之后，正在「忘了写码」？</h3>
+  <p><a href="https://techtrenches.dev/p/the-west-forgot-how-to-make-things">Tech Trenches</a> 的长文把制造业外迁与软件业的 AI 辅助编程焦虑串在同一条叙事线上：不是证明「程序员要完蛋」，而是提醒 <strong>技能栈与社会预期</strong> 会一起重塑。适合当<strong>雷达</strong>读，别当技术预测。</p>
 
-  <h3>2、Flickr：为什么它仍是「最后一个伟大的照片平台」？</h3>
-  <p><a href="https://petapixel.com/2026/04/22/flickr-the-first-and-last-great-photo-platform/">PetaPixel</a> 刊登了一篇立场鲜明的长文，为 Flickr 辩护：在算法短视频与「全站 Reels 化」的浪潮里，Flickr 坚持<strong>时间线、社群小组、开放 API 与 RSS</strong>这些「老派 Web」能力。作者承认 Pro 订阅不便宜，但认为它换来的是不被信息流绑架的摄影社区 —— 这在 2026 年反而成了稀缺品。</p>
-  <img class="article-img" src="https://petapixel.com/assets/uploads/2026/04/Flickr-The-First-and-Last-Great-Photo-Platform.jpg" alt="Flickr 长文配图">
+  <h3>2、业余数学爱好者借助 ChatGPT 推进 Erdős 相关问题</h3>
+  <p><a href="https://www.scientificamerican.com/article/amateur-armed-with-chatgpt-vibe-maths-a-60-year-old-problem/">Scientific American</a> 报道了 AI 辅助证明流在严肃数学圈的争议与兴奋点：关键仍是<strong>人类审稿与可重复推导</strong>，AI 更像加速器而非黑盒裁判。</p>
 
-  <h3>3、Freakonomics：阿尔茨海默病为什么「看起来」几十年没大突破？</h3>
-  <p><a href="https://freakonomics.com/podcast/why-has-there-been-so-little-progress-on-alzheimers-disease/">Freakonomics 播客</a> 从药物研发、临床试验设计、以及「公众叙事 vs 科学进展节奏」三个角度拆解：不是科学家在摸鱼，而是<strong>生物学难度 + 统计显著性门槛 + 媒体偏好简单故事</strong>共同制造了「停滞感」。对科技报道读者来说，这是一剂很好的「慢变量清醒剂」。</p>
+  <h3>3、Fabien Sanglard 的 USB 速查「作弊表」又火了</h3>
+  <p>从连接器形态到描述符与传输类型，<a href="https://fabiensanglard.net/usbcheat/index.html">USB Cheat Sheet</a> 把嵌入式工程师最常回查的知识点压成一张表 —— HN 上数百点赞说明「老派硬核文档」依然稀缺。</p>
 
-  <h3>4、最快的 Linux 时间戳是哪一个？</h3>
-  <p><a href="https://www.hmpcabral.com/2026/04/26/the-fastest-linux-timestamps/">HM Cabral</a> 的性能小品把 <code>clock_gettime</code>、<code>vdso</code>、<code>riscv_hwprobe</code> 等路径放到同一套微基准里对比 —— 适合想把系统调用成本吃透的底层工程师当下午茶读物。</p>
+  <h3>4、Tell HN：Headspace App 每天自动出现在 iPhone 上？</h3>
+  <p><a href="https://news.ycombinator.com/item?id=47906253">HN 讨论串</a> 里大量用户报告类似现象，指向自动下载、MDM、TestFlight 残留或系统 Bug 等多种可能。对普通读者， takeaway 是：<strong>「静默安装」叙事在社交媒体上极易过拟合，但仍值得苹果生态从业者跟踪。</strong></p>
 
-  <!-- ========== AI 相关 ========== -->
   <h2 id="ai">🤖 AI 相关</h2>
 
-  <h3>1、OpenAI 推出企业向 Privacy Filter：把「可审计的不看」做成产品</h3>
-  <p><a href="https://openai.com/index/introducing-openai-privacy-filter/">OpenAI</a> 发布 Privacy Filter，主打在模型推理链路里对敏感字段做<strong>可配置、可审计的脱敏与访问控制</strong>。对企业来说，卖点不是「更聪明」，而是「更敢用」：在合规、法务与数据安全部门能签字的前提下，把生成式 AI 接进现有工作流。</p>
+  <h3>1、DeepSeek-V4：百万级 token 上下文，给 Agent 用的「真窗口」</h3>
+  <p>官方在 <a href="https://huggingface.co/blog/deepseekv4">Hugging Face 博文</a> 里把 V4 预览版定位成面向长文档与工具链的上下文引擎；Simon Willison 的实测笔记则强调「接近前沿能力 / 价格仍狠」这一组合对开源生态的鲶鱼效应（原文链接见下文「文章推荐」）。</p>
 
-  <h3>2、Vibe Coding 时代的 Mac 应用淘金热</h3>
-  <p><a href="https://caio.ca/blog/ai-vibe-coded-mac-apps.html">Caio Chassot</a> 观察到：越来越多「几天内用 AI 辅助搓出来的」Mac 小工具开始上架，定价从几美元到订阅不等，营销话术高度模板化。文章不是在道德审判，而是在拆解<strong>供给侧暴增 + 注意力稀缺</strong>时，独立开发者要如何避免把 App Store 变成彩票站。</p>
+  <h3>2、HF 社区热帖：「ML Intern」后训练岗位带回家考题</h3>
+  <p><a href="https://huggingface.co/blog/cmpatino/ml-intern-takehome">cmpatino 的社区文章</a> 把 Hugging Face 真实用过的实习生测评选题公开讨论，触及 <strong>数据构造、评测诚实性、自动化边界</strong> —— 比「刷 LeetCode」更接近当代 ML 工程招聘。</p>
 
-  <h3>3、为什么密码学软件仍然把 C 当作「黄金标准」？</h3>
-  <p><a href="https://www.wolfssl.com/why-c-remains-the-gold-standard-for-cryptographic-software/">wolfSSL</a> 从可预测内存模型、成熟审计方法论、以及历史包袱三个角度解释：Rust 很香，但大量关键密码学库仍扎根 C，不是因为团队守旧，而是因为<strong>信任迁移的成本</strong>往往高于重写代码的成本。</p>
+  <h3>3、GPT-5.5：OpenAI 明确说「请当成新模型家族来调」</h3>
+  <p>Simon 汇总了 <a href="https://developers.openai.com/api/docs/guides/prompt-guidance?model=gpt-5.5">Prompting guide</a>；另有一份 <strong>Latest model</strong> 文档强调「把 GPT-5.5 当新模型家族重调」—— 原文摘录见下方言论区，避免与引用块抢同一外链位。</p>
 
-  <!-- ========== 文章推荐 ========== -->
   <h2 id="articles">📝 文章推荐</h2>
 
-  <h3>1、用编程助手「复活」那些你本来永远不会做完的 side project</h3>
-  <p><a href="https://blog.matthewbrunelle.com/its-ok-to-use-coding-assistance-tools-to-revive-the-projects-you-never-were-going-to-finish/">Matthew Brunelle</a> 写了一篇很诚恳的短文：羞耻感常常来自「我没靠自己写完」，但工程现实是 —— 很多项目死在 80% 不是因为懒，而是因为<strong>边际回报太低</strong>。把 AI 当作脚手架，把项目推到「能跑、能给别人用」的状态，本身就是一种价值交付。</p>
+  <h3>1、让 Rust Workers 可靠：wasm-bindgen 里的 panic / abort 恢复</h3>
+  <p><a href="https://blog.cloudflare.com/making-rust-workers-reliable/">Cloudflare Engineering</a>（Guy Bedford、Hood Chatham、Logan Gatlin）记录与上游协作，把 Worker 实例从「一次 panic 终身中毒」推进到可恢复路径 —— 这是边缘计算里 <strong>WASM 异常处理</strong> 与平台可靠性交叉的典型深文。</p>
+  <img class="article-img" src="https://cf-assets.www.cloudflare.com/zkvhlag99gkb/dUUIMZewVzkYfRaVqwGRb/1e892ef7090127e5a781fa564942d3a3/Making_Rust_Workers_reliable-_panic_and_abort_recovery_in_wasm%C3%A2__bindgen-OG.png" alt="Cloudflare：Rust Workers 可靠性博文配图">
 
-  <h3>2、Asahi Linux 进度报告：向 Linux 7.0 推进</h3>
-  <p><a href="https://asahilinux.org/2026/04/progress-report-7-0/">Asahi 团队</a> 的例行进度更新里，照例塞满了硬件支持、内核同步与驱动细节的「硬核周报」。如果你关心 Apple Silicon 上的上游化路径，这是比任何二手解读都更可靠的一手信息源。</p>
+  <h3>2、Simon：DeepSeek V4「几乎在同一梯队，价格仍离谱地便宜」</h3>
+  <p>Simon Willison 在 <a href="https://simonwillison.net/2026/Apr/24/deepseek-v4/">DeepSeek V4 长文</a> 里把模型卡、API 行为与定价放在一张表里对照。适合作为<strong>消费端技术决策</strong>的速读入口（与上文 HF 官方口径互补，不算重复叙事）。</p>
 
-  <h3>3、别把你的组织架构「原样编译」成产品路线图</h3>
-  <p><a href="https://chronicbuildfailure.co/how-to-avoid-shipping-your-org-chart-c086effe751c">Chronic Build Failure</a> 用很短的篇幅提醒：跨团队边界如果直接映射成用户体验上的裂缝，用户不会理解「那是两个 VP 的地盘」，他们只会觉得你的产品「怪怪的」。组织设计问题，最后都会变成留存问题。</p>
+  <h3>3、多模态句向量：Sentence Transformers 官方训练长文</h3>
+  <p><a href="https://huggingface.co/blog/train-multimodal-sentence-transformers">Hugging Face 工程博文</a> 把图像—文本联合嵌入与重排序的训练流程写透，适合要把「CLIP 类向量」接进自家检索栈的读者当路线图。</p>
 
-  <h3>4、我正式宣布从 Emacs「退休」</h3>
-  <p><a href="https://nullprogram.com/blog/2026/04/26/">Chris Wellons</a> 用一贯的冷幽默写了一封「告别信」：不是 Emacs 不好，而是人生阶段变了。对老派工具链爱好者来说，这种文章读起来像社区口述史 —— 也是 editor war 终将在时间面前和解的证据。</p>
-
-  <!-- ========== 工具推荐 ========== -->
   <h2 id="tools">🛠️ 工具推荐</h2>
 
   <div class="tool-grid">
     <div class="tool-card">
+      <h4><a href="https://github.com/russellromney/honker">honker</a></h4>
+      <p>SQLite 上的 NOTIFY/LISTEN 语义实现，Rust 核心 + 多语言绑定。做边缘侧队列、本地优先同步时，可少引一个重量级 broker。</p>
+    </div>
+    <div class="tool-card">
       <h4><a href="https://github.com/heygen-com/hyperframes">HyperFrames</a></h4>
-      <p>HeyGen 开源的 HTML → 视频管线思路：把网页当作一帧帧渲染源，适合需要批量生成演示视频、产品预览或社交素材的团队做二次封装。</p>
-    </div>
-    <div class="tool-card">
-      <h4><a href="https://github.com/deepseek-ai/DeepEP">DeepEP</a></h4>
-      <p>DeepSeek 的 expert-parallel 通信组件，面向 MoE 训练/推理场景。关注大模型基础设施的人会把它放进「值得跟踪的底层积木」清单。</p>
-    </div>
-    <div class="tool-card">
-      <h4><a href="https://github.com/open-webui/open-webui">Open WebUI</a></h4>
-      <p>自托管 LLM 聊天界面的事实标准之一：多模型路由、RAG、插件生态与权限模型都相对完整，适合想在内网搭一个「类 ChatGPT 控制台」的团队。</p>
+      <p>HeyGen 开源的 HTML → 视频思路：把网页当时间线渲染源，适合批量生成演示素材与社交短视频的工程团队二次封装。</p>
     </div>
     <div class="tool-card">
       <h4><a href="https://github.com/browser-use/browser-use">browser-use</a></h4>
-      <p>让 Agent 操作真实浏览器的编排层：把「打开网页、点按钮、填表单」封装成可组合步骤，做自动化测试或半自动研究流时很顺手。</p>
-    </div>
-    <div class="tool-card">
-      <h4><a href="https://wandel.ca/homepage/pbx.html">My Homemade PBX</a></h4>
-      <p>不是 GitHub 星标项目，而是一套可复制的家庭电话交换机实践记录：硬件选型、语音编解码、拨号计划与电源散热都写透了，复古通讯迷会爱死。</p>
+      <p>浏览器自动化编排层：把「打开网页—点击—填表」封装成可组合步骤，做带人审核的半自动研究流时很顺手。</p>
     </div>
     <div class="tool-card">
       <h4><a href="https://github.com/tldraw/tldraw">tldraw</a></h4>
-      <p>开源无限画布 SDK：白板、批注、流程图与嵌入协作都很成熟，很多产品把它当「可视化思考层」的底座，而不是自己从头造画布引擎。</p>
+      <p>开源无限画布 SDK：白板、批注与嵌入协作成熟，许多产品把它当「可视化思考层」底座而非自研画布引擎。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://github.com/deepseek-ai/DeepEP">DeepEP</a></h4>
+      <p>DeepSeek MoE 训练/推理里的 expert-parallel 通信组件；关注大模型 Infra 的人会持续跟踪其版本与兼容性。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://github.com/huggingface/sentence-transformers">sentence-transformers</a></h4>
+      <p>HF 生态里训练/微调句向量与重排序模型的事实标准库之一；与本期「多模态嵌入」官方博文形成上下游关系。</p>
     </div>
   </div>
-  <img class="article-img" src="https://opengraph.githubassets.com/1/heygen-com/hyperframes" alt="HyperFrames">
-  <img class="article-img" src="https://opengraph.githubassets.com/1/deepseek-ai/DeepEP" alt="DeepEP">
+  <img class="article-img" src="https://opengraph.githubassets.com/1/russellromney/honker" alt="honker">
+  <img class="article-img" src="https://opengraph.githubassets.com/1/tldraw/tldraw" alt="tldraw">
 
-  <!-- ========== AI 工具 ========== -->
   <h2 id="ai-tools">🧠 AI 工具</h2>
 
   <div class="tool-grid">
     <div class="tool-card">
       <span class="tag">编码</span>
       <h4><a href="https://github.com/Aider-AI/aider">aider</a></h4>
-      <p>终端里的结对编程搭档：直接读写仓库、跑测试、提交变更，支持多模型切换。适合想把「AI 写代码」嵌进现有 Git 工作流而不是另开一个新 IDE 的人。</p>
+      <p>终端结对编程：直接改仓库、跑测试、提交 diff，多模型切换。适合把「AI 写代码」嵌进 Git 工作流。</p>
     </div>
     <div class="tool-card">
       <span class="tag">编码</span>
       <h4><a href="https://github.com/continuedev/continue">Continue</a></h4>
-      <p>VS Code / JetBrains 里的开源助手层：自定义模型、上下文规则与 slash command，团队可以把自己的内部文档与脚手架接进补全链路。</p>
+      <p>IDE 内开源助手层：自定义模型、上下文规则与 slash command，团队可把内部文档与脚手架接进补全链路。</p>
     </div>
     <div class="tool-card">
       <span class="tag">Agent</span>
       <h4><a href="https://github.com/cline/cline">Cline</a></h4>
-      <p>把「规划 → 执行 → 调用工具」做成可视化流水线的 VS Code 扩展，强调可审查的 Agent 轨迹，适合对黑盒自动改代码有戒心的团队。</p>
+      <p>强调可审查轨迹的 VS Code Agent 扩展：规划—执行—工具调用可视化，适合对黑盒改代码有戒心的团队。</p>
     </div>
     <div class="tool-card">
       <span class="tag">开源</span>
       <h4><a href="https://github.com/lobehub/lobe-chat">Lobe Chat</a></h4>
-      <p>可插拔 UI 与插件体系都很完善的多模型聊天壳，支持本地模型与多模态消息。想做「企业内网 ChatGPT 皮肤」又不想从 0 造轮子时，经常会被架构师拎出来对标。</p>
+      <p>可插拔 UI 与插件体系完善的多模型聊天壳，支持本地模型与多模态消息，常被拿来对标「企业内网 ChatGPT」方案。</p>
     </div>
   </div>
   <img class="article-img" src="https://opengraph.githubassets.com/1/Aider-AI/aider" alt="aider">
 
-  <!-- ========== 趣闻 ========== -->
   <h2 id="fun">🎲 趣闻</h2>
 
   <div class="fun-card">
     <h4><a href="https://fffff.at/free-universal-construction-kit/">免费万能积木转接头</a></h4>
-    <p>把乐高、Duplo、Fischertechnik、Krinkles 等十几种积木系统的接口<strong>3D 打印成互转件</strong>，让不同世代的塑料砖块终于能「讲同一种物理语言」。这是那种会让你瞬间回到童年的项目，也是开源硬件幽默感的巅峰之一。</p>
+    <p>把乐高、Duplo、Fischertechnik 等十几种积木接口 3D 打印成互转件 —— 开源硬件幽默感的巅峰之一，读完会想买打印机。</p>
   </div>
 
   <div class="fun-card">
-    <h4><a href="https://arman-bd.hashnode.dev/i-left-port-22-open-on-the-internet-for-54-days-here-s-who-showed-up">把 22 端口裸奔在互联网上 54 天</a></h4>
-    <p>作者真的开了一个 SSH 蜜罐并记录登录尝试：密码字典、扫描节奏、地理分布……读完你会更理解为什么「默认禁止密码登录」不是洁癖，而是生存技能。</p>
+    <h4><a href="https://simonwillison.net/2026/Apr/25/">一匹马骑宇航员骑鹈鹕骑自行车</a></h4>
+    <p>Simon 转载的 ChatGPT Images 2.0 整活提示词与「WHY ARE YOU LIKE THIS」路牌梗 —— 模型连 meme 都自己补全了，人类只负责堆叠不可能场景。</p>
   </div>
 
-  <div class="fun-card">
-    <h4><a href="https://blog.korny.info/2026/04/19/the-joy-of-folding-bikes">折叠车的快乐哲学</a></h4>
-    <p>一篇轻松的生活技术散文：折叠车如何把「城市移动」从通勤变成游戏。和科技头条无关，但和「工具如何改变日常」有关 —— 有时候我们需要的不是更快，而是更灵活。</p>
-  </div>
-
-  <!-- ========== 资源 ========== -->
   <h2 id="resources">📚 资源</h2>
 
   <div class="resource-item">
-    <a href="https://fabiensanglard.net/usbcheat/index.html">USB Cheat Sheet（Fabien Sanglard）</a>
-    <p>从物理连接器到描述符与传输类型的速查表，适合嵌入式与驱动工程师放进书签栏。比「去搜规范 PDF」快十倍。</p>
+    <a href="https://queue.acm.org/">ACM Queue</a>
+    <p>系统工程与软件架构的「高密度」长文集合，比大众科技媒体更适合当周末深读。</p>
   </div>
 
   <div class="resource-item">
-    <a href="https://aosabook.org/en/index.html">The Architecture of Open Source Applications</a>
-    <p>经典开源项目「自曝架构」文集：数据库、浏览器、邮件系统、分布式系统……每章都由核心维护者亲自拆解设计取舍，比读 README 更能建立系统直觉。</p>
+    <a href="https://aosabook.org/en/index.html">Architecture of Open Source Applications</a>
+    <p>经典开源项目自曝架构的文集：数据库、浏览器、邮件系统……由维护者亲自拆解设计取舍。</p>
   </div>
 
   <div class="resource-item">
-    <a href="https://highscalability.com/">High Scalability</a>
-    <p>十几年积累的「真实世界大规模系统」案例库：流量数字、架构图、失败故事都有。做容量规划或技术选型需要「先例」时，这里是金矿。</p>
+    <a href="https://huggingface.co/blog">Hugging Face Blog</a>
+    <p>开源模型、推理优化、评测与数据集的「实操向」中枢；本期 AI 板块多条线索均可从此反向订阅。</p>
   </div>
-  <img class="article-img" src="https://opengraph.githubassets.com/1/tldraw/tldraw" alt="tldraw">
 
-  <!-- ========== 言论 ========== -->
   <h2 id="quotes">💬 言论</h2>
 
   <div class="quote-block">
-    <blockquote>计算机科学里只有两件难事：缓存失效、命名，以及差一错误。</blockquote>
-    <div class="quote-author">— Martin Fowler（转述老笑话），<a href="https://martinfowler.com/bliki/TwoHardThings.html">TwoHardThings</a></div>
-    <div class="quote-comment">点评：每次有人想把「企业架构」画成一张完美大表时，我都会想起这句 —— 真正难的不是画框，而是给框起名字，以及承认缓存一定会背叛你。</div>
+    <blockquote>To get the most out of GPT-5.5, treat it as a new model family to tune for, not a drop-in replacement for gpt-5.2 or gpt-5.4. Begin migration with a fresh baseline…</blockquote>
+    <div class="quote-author">— OpenAI API 文档，<a href="https://developers.openai.com/api/docs/guides/latest-model">Latest model guide</a></div>
+    <div class="quote-comment">点评：这句话应当贴在每个「升级模型版本」的 PR 描述里 —— 省下的返工时间，够你写十份「AI 转型战略」PPT。</div>
   </div>
 
   <div class="quote-block">
-    <blockquote>会议对程序员来说，就像抛硬币：正面打断深度工作，反面还是打断深度工作。</blockquote>
-    <div class="quote-author">— Paul Graham, <a href="http://www.paulgraham.com/makersschedule.html">Maker's Schedule, Manager's Schedule</a></div>
-    <div class="quote-comment">点评：在「AI 帮你写代码」之后，真正稀缺的是连续两小时不被打断的注意力 —— 经理日程与制造者日程的冲突只会更贵。</div>
+    <blockquote>Regular people don’t see the opportunity to write code as an opportunity at all. The people do not yearn for automation.</blockquote>
+    <div class="quote-author">— Nilay Patel（转述自 Simon Willison 导读），<a href="https://www.theverge.com/podcast/917029/software-brain-ai-backlash-databases-automation">The Verge / Software Brain</a></div>
+    <div class="quote-comment">点评：和「开发者觉得 AI 很香」并不矛盾 —— 两个圈层活在两个评价函数里，产品若只听见其中一边，就会做出很离谱的 roadmap。</div>
   </div>
 
   <div class="quote-block">
-    <blockquote>所有非平凡的抽象，在某种程度上都会泄漏（leaky）。</blockquote>
-    <div class="quote-author">— Joel Spolsky, <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">The Law of Leaky Abstractions</a></div>
-    <div class="quote-comment">点评：当你在第 7 层框架之下终于遇到 TCP、分页或 GPU 调度时，别惊讶 —— 不是抽象失败了，是抽象本来就会漏。工程成熟度的标志，是知道哪一层该伸手下去摸一摸。</div>
+    <blockquote>ecdysis is a Rust library enabling zero-downtime upgrades for network services. After five years protecting millions of connections at Cloudflare, it’s now open source.</blockquote>
+    <div class="quote-author">— Manuel Olguín Muñoz，<a href="https://blog.cloudflare.com/ecdysis-rust-graceful-restarts/">Cloudflare Blog</a></div>
+    <div class="quote-comment">点评：把「蜕皮」当库名，比叫什么 ZeroDowntimeProPlus 有品位多了 —— 命名即文档。</div>
   </div>
 
-  <!-- ========== 来源 ========== -->
+  <div class="quote-block">
+    <blockquote>Since GPT-5.4, we’ve unified Codex and the main model into a single system, so there’s no separate coding line anymore.</blockquote>
+    <div class="quote-author">— Romain Huet，<a href="https://twitter.com/romainhuet/status/2047955381578838357">@romainhuet（X）</a>（由 Simon Willison 汇总）</div>
+    <div class="quote-comment">点评：「一条模型线」对开发者是简化 SKU，对平台是统一推理栈；对竞品则是更难打的差异化叙事。</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>Please stop calling databases CP or AP.</blockquote>
+    <div class="quote-author">— Martin Kleppmann，<a href="https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Please stop calling databases CP or AP</a>（2015；至今仍被频繁转发）</div>
+    <div class="quote-comment">点评：CAP 标签泛滥年代的一句「停一停」；放到今天多副本 + 可调一致性级别的产品里，依然比多数营销话术更清醒。</div>
+  </div>
+
+  <div class="quote-block">
+    <blockquote>Fuzzer Blind Spots (Meet Jepsen!)</blockquote>
+    <div class="quote-author">— djg，<a href="https://tigerbeetle.com/blog/2025-06-06-fuzzer-blind-spots-meet-jepsen">TigerBeetle 工程博客</a>（与 Jepsen 合作的模糊测试盲区分析）</div>
+    <div class="quote-comment">点评：把「找 bug 的 fuzzer」与「找一致性漏洞的 Jepsen」放在同一篇里对齐预期，是数据库团队才写得出的诚实营销。</div>
+  </div>
+
   <div class="footer-sources">
-    <strong>综合科技：</strong>Hacker News · TLDR · Changelog · weeklyfoo · TechCrunch · Lobsters<br>
-    <strong>AI 前沿：</strong>Import AI · The Batch · Simon Willison · Last Week in AI<br>
-    <strong>开发者工具：</strong>console.dev · Bytes.dev · JavaScript Weekly · Product Hunt<br>
-    <strong>深度分析：</strong>Benedict Evans · The Pragmatic Engineer<br>
-    <strong>系统设计：</strong>ByteByteGo · Dense Discovery · Ars Technica · GitHub Trending<br><br>
-    由 Cursor AI 自动生成 · 信息截止至 2026-04-26
+    <strong>趋势雷达（约 10）：</strong> Hacker News · TLDR · console.dev · Changelog · weeklyfoo · TechCrunch · Lobsters · Product Hunt · GitHub Trending · Ars Technica<br>
+    <strong>AI 前沿（约 15）：</strong> Anthropic Research/Engineering · OpenAI Research · OpenAI Developer Blog · Google DeepMind · Meta AI · BAIR · The Gradient · Ahead of AI · Interconnects · Latent Space · Hugging Face · Lil'Log · Chip Huyen · SemiAnalysis · ByteDance Seed<br>
+    <strong>工程深度（约 15）：</strong> Import AI · The Batch · Simon Willison · LWIA · Benedict Evans · Pragmatic Engineer · Bytes · ByteByteGo · JS Weekly · Dense Discovery · ACM Queue · Cloudflare · Netflix · Stripe · GitHub Engineering · Meta Engineering · Figma · Discord<br>
+    <strong>系统 / 数据库 / 交易（约 10）：</strong> Martin Kleppmann · Jepsen · Systems Approach · Jane Street · TigerBeetle · Tailscale · Fly.io · 美团技术团队<br><br>
+    由 Cursor AI 自动生成 · 信息源版本：<strong>50 源 / 6 Agent</strong> · 信息截止至 2026-04-26
   </div>
 </main>
 </div>

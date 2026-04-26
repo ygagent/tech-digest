@@ -1,9 +1,9 @@
 [
   {
     "date": "2026-04-26",
-    "title": "第 3 期：欧盟年龄门与数字身份证博弈 · Flickr 长期主义 · 内核维护撞上 AI 漏洞报告潮",
-    "highlights": "欧盟年龄验证与数字身份 · Flickr 反潮流社区 · Linux 老驱动与 AI 漏洞报告 · OpenAI Privacy Filter · Vibe Coding Mac 淘金热 · aider / Continue / Cline",
-    "image": "https://juraj.bednar.io/wp-content/uploads/2026/04/cover-eu-age.jpeg"
+    "title": "第 3 期：50 源扩容后首期 — DeepSeek-V4 · Cloudflare Rust Workers · GPT-5.5 迁移警告",
+    "highlights": "50 信息源 / 6 Agent · DeepSeek-V4 长上下文 · Cloudflare WASM panic 恢复 · GPT-5.5 当新模型家族 · HN 西方写码焦虑 · HF 多模态句向量",
+    "image": "https://huggingface.co/blog/assets/deepseekv4/thumbnail.png"
   },
   {
     "date": "2026-04-25",
