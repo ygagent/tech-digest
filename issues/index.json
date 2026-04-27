@@ -1,9 +1,9 @@
 [
   {
     "date": "2026-04-27",
-    "title": "第 4 期：Google 砸 400 亿入股 Anthropic — AI 军备竞赛进入超级资本阶段",
-    "highlights": "Google 400亿投资 Anthropic · OpenAI 收购 Astral (Ruff/uv) · SWE-bench 退役 · Gemma 4 开源 · GLM-5.1 长时任务 · AI Agent 删了生产数据库",
-    "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/04/TPU-8i-rack-2560x1440.jpg"
+    "title": "第 4 期：AI Agent 删了生产数据库 — 能力在膨胀，安全网在哪？",
+    "highlights": "AI Agent 删库事件 · Anthropic 估值破万亿 · OpenAI 收购 Astral · Claude Code 质量复盘 · DeepSeek V4 开源 · 人类首次竞技马拉松破 2 小时",
+    "image": "https://engineering.fb.com/wp-content/uploads/2026/04/capacity_efficiency_hero_white_option_5_1775676974.png"
   },
   {
     "date": "2026-04-26",
