@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 从工程师到百万订阅：Lenny Rachitsky 与妻子对谈——通讯、播客、创作焦虑与「最好内容来自真实经历」</title>
+  <meta property="og:title" content="从工程师到百万订阅：Lenny Rachitsky 与妻子对谈——通讯、播客、创作焦虑与「最好内容来自真实经历」">
+  <meta property="og:description" content="当订阅与播客把个人变成「周更机器」，可持续来自早期信号（写得开心且有人要）与 Lindy 式自我说服；而真正能穿越算法的，多半仍是实践者自现场带回来的、经无数次改稿仍说得简单的那点东西。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/HEqrvF7ztBE/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>从工程师到百万订阅：Lenny Rachitsky 与妻子对谈——通讯、播客、创作焦虑与「最好内容来自真实经历」</h1>
+  <div class="meta"> &middot; 1h6m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">创作者经济</span>
+    <span class="tag">Newsletter</span>
+    <span class="tag">播客</span>
+    <span class="tag">产品管理</span>
+    <span class="tag">Substack</span>
+    <span class="tag">内容迭代</span>
+    <span class="tag">心理健康</span>
+    <span class="tag">创业路径</span>
+    <span class="tag">Michelle Rial</span>
+    <span class="tag">实践者智慧</span>
+  </div>
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>本期为 Lenny 的妻子 Michelle Rial「反客为主」采访 Lenny：话题从 2019 年起步的通讯（现约 120 万订户）与常年前十的科技播客，延伸到若未走这条路，他很可能会在创业挣扎后回到大厂做 PM。</li>
+  <li>Lenny 强调：如今多数长文是嘉宾撰稿，分享其职业生涯里「最想传下去的一课」；与 Michelle 的图表创作共通之处是——内在标准先于外部掌声：自己觉得真有趣、真好，再发布。</li>
+  <li>路径并非单点决策，而是一串「被拉力带着走」的时刻：Medium 上 Airbnb 复盘被推荐与全公司转发；朋友 Lee Jacobs 点出「你享受且别人买账」的罕见交集，建议加码；迁到 Substack 后连续九周更，借 Lindy 效应判断「还能再干一年」，并在疫情与股权不确定性下试水付费墙且跑通。</li>
+  <li>光鲜背后的结构压力被比作「夺宝奇兵里永远在追你的巨石」：周更文章与周更播客是跑步机；引用艺术家 Finch 的观点——一旦职业化，「不得不做」会改变体验，但 Lenny 仍表示难以想象更有满足感的工作。</li>
+  <li>个人层面首次公开的细节包括：约书亚树一次经历中反复浮现「我有智慧可以分享」，成为写作自信来源；宾大线上幸福课抬升「幸福基线」、运动把情绪从负值拉回零点；以及 Product Pass 大规模福利遭欺诈团伙攻击的极度高压、与儿子出生时麻醉意外中在走廊等待的恐惧。</li>
+  <li>Michelle 侧揭示图表病毒传播的逻辑：极简、快速消化、触发情绪或大笑；创意来自生活与觉察，过度埋头工作反而会断粮；咖啡剂量、截止时间与睡眠构成她的「创作曲线」。</li>
+  <li>收尾回扣共同信念：想写出好东西要先多读多体验；最佳建议来自在地实践者「真做过」再分享，而非云端空泛议论，并配合大量迭代与清晰表达。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+<p>Michelle Rial 为图表作家与作者，代表作含《Am I Overthinking This?》等；本期节目中她采访丈夫 Lenny Rachitsky。Lenny 自乌克兰敖德萨移民美国，原名 Leonid，入籍时改为 Lenny；Airbnb 七年（Localmind 被收购入局），由软件工程师经产品工程师转至产品经理；2019 年起以通讯与后续播客建立以个人品牌为核心的内容业务，并发展付费会员与产品权益合作等模式。</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <p>「享受 × 擅长 × 他人需要」的三圆交集若出现，值得严肃对待；VC 朋友 Lee Jacobs 的劝进本质是：罕见地同时满足内在动机与市场信号时，不必过早用「不务正业」自我否决。</p>
+  <p>Lindy 效应被用作心理锚：已持续九个月的周更，暗示未来至少还能维持同量级周期，从而降低对「长期做不下去」的恐慌，支撑付费化实验。</p>
+  <p>周更体制将完成感立即转化为「下周是什么」的倒计时；可持续性与「六十岁、七十岁是否仍周更」尚无答案，但可用 Lindy 式幽默自我宽解。</p>
+  <p>公开形象偏松弛，但 Lenny 自认压力可能被低估（偶发头痛）；归因约七成遗传特质，其余靠认知调整与「会好的」叙事——与伴侣争论时也被拿来当梗。</p>
+  <p>幸福课核心：人围绕个体基线波动；可通过更乐观的默认解释风格等方式抬高基线；运动未必让人「更快乐」，但有助于脱离抑郁区间（从负到零）。</p>
+  <p>创作判断与 Michelle 的图表标准平行：若自己仍会笑或动容，往往预示传播潜力；过度精巧、层级过多则需编辑式简化以适配短注意力。</p>
+  <p>线下被认出多始于播客而非通讯——脸在音频媒介中更可见；Lenny 对读者/听众搭讪持欢迎态度，并常反问对方最爱的单集或文章以收集反馈。</p>
+  <p>早期 atheistspot.com、Tutorials（用户贡献短教程）等侧面项目并不「预言」今日路径；疫情期足不出户写作，反而契合内向者「不必到处宣告」的节奏。</p>
+  <p>一人公司扩张冲动与「把自己做成讨厌的工作」相邻：刻意限制全职雇佣、谨慎承诺，以避免机会堆叠成不可爱的怪物。</p>
+  <p>Product Pass 级「过于划算」的权益会吸引跨国欺诈链；需与支付与平台方封洞，工程连续熬夜，品牌信任一度命悬一线。</p>
+  <p>产房外等待版本的分娩叙事：信息真空下的恐惧与「相信医疗团队」的自语；与当事人术后失忆式体验形成对照，凸显危机中照料者心理负荷。</p>
+  <p>PM 可被压缩为影响、协作、判断、对齐等关键词，但更完整的职业叙事是：在约束下优先解决最高杠杆业务问题，并以接近 CEO 的视角思考该产品如何助组织成功——与「总编辑」角色有可类比之处。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>享受—价值 罕见交集（Lee Jacobs 时刻）</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>Lindy 式周更承诺</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>夺宝奇兵巨石（周更跑步机）</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>幸福基线 + 运动地板</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>Michelle 式图表可传播性</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>加密与金融科技行业同样充斥「实践者内容」红利：交易、风控、清算、增长一线的一手复盘，比泛泛宏观评论更易建立订阅与信任；Lenny 模式可映射为「高信噪比行业通讯 + 深度访谈」是否仍被低估。</li>
+  <li>权益类增长（试用金、费率抵扣、工具额度）若规则过松，会复现「Product Pass」式套利与灰产围攻；设计 offer 时需同步欺诈场景、地域风控与客服预案，避免品牌被「薅秃」反噬。</li>
+  <li>个人 IP 强于公司 PR：播客带来的「被认出」说明音频对人格化信任的加持；对交易所、钱包、研究品牌而言，可思考创始人/研究负责人是否应在可控节奏下承担可见叙事，而非仅发公告。</li>
+  <li>一人公司/小团队扩张纪律：机会漏斗过大时，PM 出身的「对齐与取舍」反而要转向对自己业务的 OKR——否则容易从创作者变成自己厌恶的运营商。</li>
+  <li>迭代次数（数十遍改稿、多轮编辑）与公开「轻松」观感之间的落差，对任何对外内容团队都是提醒：高质量输出往往是隐藏工序堆出来的，而非灵感单次降临。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 职业化是否必然稀释热爱？Lenny 承认「不得不写」改变质感，但仍选择接受；这对所有把激情变收入的人都是长期张力题。</p></div>
+<div class="discussion-q"><p>2. 伴侣作为「编辑」边界：Michelle 会拉回到简单，Lenny 亦反馈图表「过巧」——亲密关系里的创作反馈如何不伤感情，需要额外默契。</p></div>
+<div class="discussion-q"><p>3. 公开分享迷幻体验与家庭反应：节目中以幽默处理「妈妈在看吗」，提示创作者在真实与隐私之间的自我审查线因人而异。</p></div>
+<div class="discussion-q"><p>4. 面孔识别困难与被认出之间的 irony：流量放大社交摩擦，Lenny 请求陌生人若未被认出请包涵——对大机构 KOL 运营亦有启示（粉丝预期管理）。</p></div>
+<div class="discussion-q"><p>5. 「迷你 CEO」叙事在 PM 圈争议多年；Lenny 仍认为 PM 应在局部模拟 CEO 的增长与取舍心智，但是否对外使用该标签需看组织政治。</p></div>
+<div class="discussion-q"><p>6. Michelle 转向童书：图表承载颜色、对比、情绪等早教维度；「没孩子前写的童书不够好」印证二人共同结论——深度内容常依赖真实生活样本。</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block"><blockquote>「最好的东西来自真实经历。」</blockquote></div>
+<div class="quote-block"><blockquote>「最佳建议的来源，是在一线真做这件事的人，而不是飘在天上高谈阔论。」</blockquote></div>
+<div class="quote-block"><blockquote>「我脑子里一直是《夺宝奇兵》那块石头在追着我。」</blockquote></div>
+<div class="quote-block"><blockquote>「我有智慧可以分享。」（约书亚树经历中反复出现的句子，转述）</blockquote></div>
+<div class="quote-block"><blockquote>「一旦成为你必须做的事，它就会改变这件事。」（引用 Finch 关于是否成为职业艺术家的警告，意译）</blockquote></div>
+<div class="quote-block"><blockquote>「运动不会让你更快乐，但它把你从负数拉回到零。」</blockquote></div>
+<div class="quote-block"><blockquote>「秘密就是迭代、编辑、在上面花更多时间。」</blockquote></div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>当订阅与播客把个人变成「周更机器」，可持续来自早期信号（写得开心且有人要）与 Lindy 式自我说服；而真正能穿越算法的，多半仍是实践者自现场带回来的、经无数次改稿仍说得简单的那点东西。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>

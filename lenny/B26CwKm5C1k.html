@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 工程师变「巫师」、脚手架被模型吃掉：OpenAI 平台工程负责人 Sherwin Wu 谈未来 12～24 个月的 AI 与 API</title>
+  <meta property="og:title" content="工程师变「巫师」、脚手架被模型吃掉：OpenAI 平台工程负责人 Sherwin Wu 谈未来 12～24 个月的 AI 与 API">
+  <meta property="og:description" content="OpenAI 平台负责人的一线观察把工程未来压缩成两句：人变成管理咒语与 Agent 的巫师，但别让扫帚淹了房子；组织与客户策略则要同时押注「上下文工程」与「模型进步曲线」，因为今天的脚手架很可能就是明天被吃掉的早餐。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/B26CwKm5C1k/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>工程师变「巫师」、脚手架被模型吃掉：OpenAI 平台工程负责人 Sherwin Wu 谈未来 12～24 个月的 AI 与 API</h1>
+  <div class="meta"> &middot; 1h19m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">工程</span>
+    <span class="tag">AI</span>
+    <span class="tag">OpenAI</span>
+    <span class="tag">Codex</span>
+    <span class="tag">API</span>
+    <span class="tag">平台</span>
+    <span class="tag">Lenny Podcast</span>
+    <span class="tag">Sherwin Wu</span>
+    <span class="tag">开发者工具</span>
+    <span class="tag">组织管理</span>
+    <span class="tag">BingX</span>
+  </div>
+  <div class="guest-meta">
+    <img class="guest-avatar" src="https://i.ytimg.com/vi/B26CwKm5C1k/maxresdefault.jpg" alt="Sherwin Wu" onerror="this.style.display='none'">
+    <div class="guest-info">
+      <div class="guest-name">Sherwin Wu</div>
+    </div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=B26CwKm5C1k" target="_blank">&#9654; 观看原视频</a>
+  </div>
+
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>本期 Lenny’s Podcast 嘉宾为 OpenAI API 与开发者平台工程负责人 Sherwin Wu。他给出内部量化信号：约 95% 工程师日常使用 Codex；合并进主干的 PR 100% 经 Codex 评审；重度使用 Codex 的工程师开 PR 数量比轻度用户高约 70% 且差距在拉大。他本人与多位工程管理者的个人代码亦主要由 Codex 产出。</li>
+  <li>他将软件工程角色变化概括为：一线 IC 越来越像「技术负责人」——同时管理大量 Agent 线程、检查进度、纠偏上下文，而非逐行手写。他援引 MIT《SICP》把编程比作「咒语/巫术」的隐喻，并延伸到当下：自然语言指令即咒语；同时提醒《魔法师的学徒》风险——高杠杆也意味着模型可能失控，资深者仍需把关。</li>
+  <li>OpenAI 内部有一支实验团队维护「100% 由 Codex 编写」的代码库且刻意不设「撸袖子自己写」的退路；由此暴露的典型问题是 Agent 做不出想要的功能。学习之一是：多数失败源于上下文不足或规格 underspec，需要把部落知识写进注释、结构、Markdown、skills 等，让模型可检索。团队计划就经验发博文。</li>
+  <li>Code review 与 CI：Codex 承担大量「无聊但必要」的审查与 lint/修复自动化，把人工评审从「全程盯」降到约 30% 注意力；小 PR 有时可主要信赖 Codex + 作者自检。多模型方面：对外部模型用得少，更强调 dogfood 与内部变体以获得不同视角。</li>
+  <li>管理侧变化慢于 IC，但趋势是：工具放大顶尖个体产出spread，经理应把更多时间花在头部绩效者身上（ unblock、组织清障）；ChatGPT 接组织知识后，绩效回顾、跨文档研究变容易，未来经理或可管理更大 span。</li>
+  <li>宏观上他看好「一人十亿美元公司」叙事，但认为市场未充分计价二阶效应：创业与垂直 SMB 软件大爆发、B2B SaaS「黄金时代」、大量千万美元级小公司；VC 追求千倍回报的项目池可能收缩，但对高能动性个体更友好。与 Lenny 讨论支持成本时，他认为软件生产成本下降会带来更多外包给小型定制工具商的组合。</li>
+  <li>企业 AI 部署：他观察许多落地可能负 ROI，硅谷易活在泡沫里；成功模式常是「高层买单 + 一线兴奋与自下而上最佳实践」双轮驱动，而非纯行政命令。建议组建内部「突击队/tiger team」做深度探索与知识传播，成员常是「工程相邻」的技术爱好者而非必有全职工程师。</li>
+  <li>产品哲学：在 API/Agent 脚手架领域，「模型会把你的脚手架当早餐吃掉」——向量库、Agent 框架、skills 文件等「时尚脚手架」会随模型变强而贬值；应平衡客户当下诉求与模型 12～24 个月走向。建议「为模型将要去的地方而建设，而非只为今天」。未来 6～18 个月他期待：模型可连贯执行更长时间任务（多小时级）、原生多模态尤其语音/音频在企业场景被低估将爆发。</li>
+  <li>对创业者：市场极大，失败多因产品未击中客户而非被 OpenAI「碾压」；OpenAI 自视为生态平台公司，新模型一般同步进 API、保持平台中立。API 栈从底层 Responses API（长跑 Agent）到 Agents SDK 再到 Agent Kit/Eval 等更高抽象。结尾寄语：未来 2～3 年仍是技术与创业最有趣阶段之一，建议亲身使用工具而非被资讯洪流淹没。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+  <p><strong>嘉宾：</strong>Sherwin Wu</p>
+  <p><strong>公司：</strong>OpenAI（API 与开发者平台）</p>
+  <p><strong>角色：</strong>OpenAI API 与开发者平台工程负责人（Head of Platform Engineering）</p>
+  <p><strong>背景：</strong>曾在 Opendoor 负责定价模型等工作；工程与管理经验丰富，现主导服务全球 AI 创业与企业的 API/平台能力。</p>
+  <p><strong>本期主题：</strong>OpenAI 内部 Codex 采用率与 PR 工作流、工程师角色向「Agent 管理者」演化、SICP/魔法师的学徒隐喻、全 Codex 代码库实验与上下文工程、Codex 代码评审与 CI 自动化、工程经理在 AI 时代的 span 与头部绩效者策略、「一人公司」多阶效应与 B2B 机遇、企业 AI 负 ROI 与自上而下反模式、tiger team、客户反馈 vs 模型路线图、脚手架被模型吞噬、Responses API/Agents SDK/Agent Kit、长程任务与音频多模态前瞻、平台使命与创业建议等。</p>
+  <p><strong>为什么重要：</strong>提供来自「AI 经济基础设施」负责人的一手组织数据与平台判断：对评估自家是否低估上下文工程、是否只有行政驱动缺乏自下而上、以及产品应绑定「模型进步曲线」还是「当下局部最优」有直接参照价值。</p>
+  <p><strong>适合团队：</strong>平台与开发者关系、基础设施与 SRE、工程效率与内部工具、企业解决方案与交付、产品与技术文档、技术品牌与社区、组织发展与人事</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <h3>观点 1：量化信号：Codex 已成 OpenAI 工程默认工作方式</h3>
+  <h4>核心观点</h4>
+  <p>绝大多数工程师每日使用 Codex；所有合并 PR 经 Codex 评审；高用量者产出显著更多 PR，组织能量集中在工具成熟度与信任曲线上。</p>
+  <h4>关键论据</h4>
+  <p>嘉宾给出约 95% 日活、100% PR Codex 审查、70%+ PR 数量差异等内部观察，并引用 Kevin Weil「这是模型最差的一刻」强调预期管理。</p>
+  <h4>典型案例</h4>
+  <p>管理者个人代码亦主要由 Codex 生成，体现工具已覆盖非一线编码场景。</p>
+  <h4>对公司的启发</h4>
+  <p>若贵司仍在「试点 AI 写代码」，可对标本数据设定 adoption、PR 吞吐、评审耗时等北极星，而非仅统计许可证开通数。</p>
+  <h3>观点 2：IC 工程师 →「管理 Agent 舰队」的技术负责人</h3>
+  <h4>核心观点</h4>
+  <p>工作从手写转向并行管理多线程任务：检查 Agent 状态、给反馈、防跑偏；乐趣与风险同时上升。</p>
+  <h4>关键论据</h4>
+  <p>描述同事同时开 10～20 个线程（非全时跑满）并频繁 context-switch；与 Lenny 对「Agent 不顺时的焦虑」共鸣。</p>
+  <h4>典型案例</h4>
+  <p>全 Codex 代码库团队无法用传统「自己上手改」兜底，被迫系统化解决 Agent 协作问题。</p>
+  <h4>对公司的启发</h4>
+  <p>绩效与职级标准可能需要纳入「上下文设计、任务拆解、评审治理」而不仅是代码产量。</p>
+  <h3>观点 3：隐喻：SICP 的「咒语」+《魔法师的学徒》的风险</h3>
+  <h4>核心观点</h4>
+  <p>编程语言史就是降低对机器「念咒」门槛的历史；自然语言驱动 Agent 是下一阶。高杠杆咒语需要巫师 discipline，否则扫帚失控。</p>
+  <h4>关键论据</h4>
+  <p>回忆《计算机程序的构造和解释》将工程师比作巫师；对比 Mickey 放任扫帚的桥段与 vibe coding 极端情况。</p>
+  <h4>典型案例</h4>
+  <p>与「神灯/猴爪」类比并列：愿望必须精确，副作用需预见。</p>
+  <h4>对公司的启发</h4>
+  <p>内部培训可用统一隐喻对齐风险意识：鼓励用 Agent，但明确「负责人不可休眠」的治理底线。</p>
+  <h3>观点 4：Agent 失败常是上下文与规格问题，不是「模型完全不行」</h3>
+  <h4>核心观点</h4>
+  <p>underspec 与部落知识未入库时，Agent 易卡死；解法是把可检索知识结构化进仓库（注释、结构、MD、skills）。</p>
+  <h4>关键论据</h4>
+  <p>100% Codex 实验团队的经验归纳；计划对外分享博文。</p>
+  <h4>典型案例</h4>
+  <p>当功能做不出来时，团队不能退回手写，只能增强文档与规格。</p>
+  <h4>对公司的启发</h4>
+  <p>可审计「仓库对 Agent 友好度」：README、边界情况、示例、skills 是否覆盖关键路径。</p>
+  <h3>观点 5：Codex 评审 + CI 自动化：把人类从无聊环节解放</h3>
+  <h4>核心观点</h4>
+  <p>Codex 擅长代码审查；结合自动修 lint/重启 CI，可把评审从十几分钟缩到数分钟；人类注意力从 100% 降到约 30%。</p>
+  <h4>关键论据</h4>
+  <p>嘉宾回忆 Quora 新闻流模块每日几十 review 的痛苦对比；现用 Codex 作「聪明的第二双眼睛」。</p>
+  <h4>典型案例</h4>
+  <p>小 PR 在组织内可更多依赖 Codex + 作者，而非堆人力。</p>
+  <h4>对公司的启发</h4>
+  <p>需定义哪些 PR 类仍强制双人审（安全、合规、核心账务），避免「学徒扫帚」式自我循环盲区。</p>
+  <h3>观点 6：管理：头部绩效者放大效应与「外科医生」支持模型</h3>
+  <h4>核心观点</h4>
+  <p>AI 工具放大顶尖个体差距；经理应花 &gt;50% 时间在约 top 10% 身上 unblock。《人月神话》外科手术室隐喻：经理像护士团队托举主刀。</p>
+  <h4>关键论据</h4>
+  <p>让全 Codex 实验团队「放开跑」被点名为高杠杆；组织瓶颈更多在流程与跨部门。</p>
+  <h4>典型案例</h4>
+  <p>Lenny 联想到 a16z「AI 让好人更好、让极强的人极强」——嘉宾认同并加码时间分配建议。</p>
+  <h4>对公司的启发</h4>
+  <p>对交易平台类组织：识别 Agent 高玩并让其沉淀 playbooks，比平均摊派培训更有效。</p>
+  <h3>观点 7：「一人十亿美元公司」的二阶：创业潮与 B2B SaaS 黄金时代</h3>
+  <h4>核心观点</h4>
+  <p>市场常讨论一人独角兽，却少讨论伴随而生的百倍小型定制软件商、垂直工具与 VC 回报结构变化。</p>
+  <h4>关键论据</h4>
+  <p>垂直 AI 工具增多；可能出现大量 $10M～$50M 公司对个人已足够改变命运。</p>
+  <h4>典型案例</h4>
+  <p>与 Lenny 论支持工单规模化：未来可能由许多小型播客/通讯专用支持 SaaS 拼接外包。</p>
+  <h4>对公司的启发</h4>
+  <p>生态位上既可做平台，也可做「大创作者/大客户的专用外挂栈」——分发与信任将更关键（Lenny 补充）。</p>
+  <h3>观点 8：企业 AI 负 ROI：硅谷泡沫 + 缺自下而上</h3>
+  <h4>核心观点</h4>
+  <p>许多员工只做很基础的提问；纯 CEO 驱动、与真实工作脱节的 AI 倡议易失败；需高层支持与一线狂热并存。</p>
+  <h4>关键论据</h4>
+  <p>观察非科技行业用户的真实熟练度；对比 X 上 power user 的 skills/MCP 文化。</p>
+  <h4>典型案例</h4>
+  <p>OpenAI 内部 Codex 普及由员工自发应用引爆，而非仅靠口号。</p>
+  <h4>对公司的启发</h4>
+  <p>设立 tiger team：常由 Excel 高手型运营/支持负责人等非传统工程师牵头探索与内训。</p>
+  <h3>观点 9：客户声音 vs 模型方向：脚手架会被「吃掉」</h3>
+  <h4>核心观点</h4>
+  <p>若盲听客户对向量库/框架的增量需求，可能修在局部最优；模型变强后更简单架构反而胜。Nicholas（Fin 相关实践）语：models eat your scaffolding for breakfast。</p>
+  <h4>关键论据</h4>
+  <p>回顾 2022 以来 agent 框架、向量栈热度的起伏；skills/agents.md 亦可能未来被模型内化。</p>
+  <h4>典型案例</h4>
+  <p>OpenAI API 团队亦承认曾走弯路，随模型进步不断「吃苦教训」。</p>
+  <h4>对公司的启发</h4>
+  <p>路线图需显式字段：「若 12 个月后模型多模态/长程推理提升 X%，我们哪些模块应删除而非加强」。</p>
+  <h3>观点 10：产品建议：为「模型将到之处」而设计</h3>
+  <h4>核心观点</h4>
+  <p>做今天 80 分可用、明天模型升级后跃迁到 95 分的产品，而非假设能力静止。</p>
+  <h4>关键论据</h4>
+  <p>以某版本模型「突然解锁」产品体验为例说明拐点思维。</p>
+  <h4>典型案例</h4>
+  <p>创业公司在能力曲线上押注成功者众。</p>
+  <h4>对公司的启发</h4>
+  <p>合约/交易类产品中，可把「模型可承担任务时长」纳入功能分层：从分钟级交互走向可监督的多小时批处理。</p>
+  <h3>观点 11：12～18 个月：更长连贯任务 + 企业音频被低估</h3>
+  <h4>核心观点</h4>
+  <p>SWE-bench 类指标上多小时任务成功率在爬升；产品多按 10 分钟级交互设计，未来将不同。音频/语音原生多模态在企业通话、运营中潜力大。</p>
+  <h4>关键论据</h4>
+  <p>引用公开趋势图感受斜率；强调世界大量商务靠语音完成。</p>
+  <h4>典型案例</h4>
+  <p>已有人把 Codex 推到多小时任务，但仍属例外。</p>
+  <h4>对公司的启发</h4>
+  <p>客服、合规录音分析、销售辅助等可提前布局语音链路，而非只卷文本 coding 场景。</p>
+  <h3>观点 12：OpenAI 平台论：市场够大、API 是使命延伸</h3>
+  <h4>核心观点</h4>
+  <p>创业公司失败主因是没人爱产品而非被 lab 碾压；OpenAI 视自身为生态平台，模型普遍进 API，强调中立与 foster ecosystem。</p>
+  <h4>关键论据</h4>
+  <p>Cursor 等例；ChatGPT App 生态与 Apps SDK 与 API 团队协作；使命第二条「让益处扩散到全人类」需平台伙伴。</p>
+  <h4>典型案例</h4>
+  <p>Sign in with ChatGPT 等实验亦指向生态。</p>
+  <h4>对公司的启发</h4>
+  <p>可减少对「巨头随时抄你」的过度内耗，把注意力放在分销与不可替代工作流深度。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>双轮驱动 AI 落地（Top-down buy-in × Bottom-up adoption）</td><td>是否既有高层的工具预算与愿景，又有一线「发烧友」在真实工作流里迭代最佳实践？</td><td>企业级 Copilot、内部 Agent、跨部门自动化。</td><td>1）识别各职能中的技术相邻高潜者 → 2）组建专职或半专职 tiger team → 3）按职能场景做 last-mile 实验与文档 → 4）办内部分享与模板复制 → 5）把采纳与成果纳入认可体系而非空 KPI。</td><td>降低「买了没人会用」的负 ROI 概率。</td></tr>
+  <tr><td>上下文工程检查清单（Agent 卡死时）</td><td>失败是因为模型能力，还是规格/可检索知识不足？</td><td>仓库 onboarding、功能开发、跨服务改动。</td><td>1）复现最小失败任务 → 2）审计输入上下文是否含边界与反例 → 3）补充 MD/skills/注释/目录约定 → 4）用更小任务验证 → 5）沉淀为可复用提示或规则文件。</td><td>把「不可写」转为「可协作」，提高 Agent 上限。</td></tr>
+  <tr><td>脚手架生命周期（Scaffolding vs Model Trajectory）</td><td>这层编排多少是临时拐杖，多少应长期存在？</td><td>RAG、工具路由、子 Agent、skills 仓库设计。</td><td>1）标注每模块依赖的模型能力假设 → 2）设定 12～18 个月能力情景 → 3）为「模型变强」写删减测试 → 4）对客户承诺区分「稳定能力」与「过渡脚手架」 → 5）季度复盘是否应简化。</td><td>避免在局部最优上过度投资，被模型进步一次性清零。</td></tr>
+  <tr><td>PR 与 CI 的人机分工（Codex 时代）</td><td>哪些变更可由 Agent 评审闭环，哪些必须人类强制闸门？</td><td>高频小改动、内部工具、核心金融路径。</td><td>1）分类 PR 风险等级 → 2）默认跑 Codex 评审 + 自动修复轻量问题 → 3）定义人类最低审阅清单 → 4）监控「盲信」导致的事故 → 5）迭代信任边界。</td><td>吞吐上升同时保留安全底线。</td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>工程团队可对标 OpenAI 内部指标：Codex（或等价工具）日活率、经 AI 辅助的 PR 占比、评审耗时分布；避免仅采购不度量真实工作流嵌入。</li>
+  <li>合约/跟单/风控等核心路径应明确「Agent 不可单人闭环节点」：与高杠杆工具配套的是上下文规格、强制评审等级与回滚策略。</li>
+  <li>中文与多语言客服、语音工单、销售录音若占运营比重，可并行试验音频原生模型能力，不过度押注纯文本 Copilot。</li>
+  <li>企业客户侧推行 AI 时，避免「高管 KPI 式强推」：应找各业务线的 Excel/运营高手型 champion 组成 tiger team，做可复制的场景 playbook。</li>
+  <li>产品与技术路线需写入「模型进步情景」：长程任务（多小时）若成真，网格/策略回测/批量对账类工作流的产品形态可能从「逐步点选」转向「可监督的长跑任务」。</li>
+  <li>创业与平台合作心态：细分工作流深度 + 分发能力往往比「害怕 OpenAI 抄功能」更值得投精力；API 能力普遍开放时，护城河在数据闭环与合规交付。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+  <tr><td>建立 Codex/等价工具 adoption 与 PR 吞吐、评审时长的季度看板，并对齐安全评审分级。</td><td>工程效率组 + 各业务线 Tech Lead</td><td>工具买了但工程师仍手写、或评审成为新瓶颈。</td><td>用数据定位是工具问题还是流程/上下文问题。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>为核心仓库补齐 Agent 可读资产：边界案例、skills、onboarding MD，并对照「全 Agent 实验」方法做一次压力测试。</td><td>平台组 + 文档 + 各域 owner</td><td>AI 辅助开发在复杂模块上频繁失准。</td><td>降低 underspec 与部落知识导致的浪费。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>企业/机构客户侧：设立跨职能 tiger team，绑定 3～5 个真实高频场景做 deep dive，而非泛泛培训。</td><td>业务负责人 + IT + 一线 super user</td><td>AI 项目高层很热、一线冷，ROI 难看。</td><td>形成自下而上传播种子与可量化样板。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>路线图工作坊：为「模型更长程推理、更强音频」各写一页产品假设与弃用脚手架清单。</td><td>产品 + 架构师 + 研究/数据</td><td>过度投资可能很快被模型内化能力替代的中间层。</td><td>提前占位拐点，减少技术债一次性报废。</td><td class="priority-p1">P1</td></tr>
+  <tr><td>经理节奏：显式提高与 top 10% 工程师/Agent 高玩的 1:1 与 unblock 时间占比，并让其输出团队级 playbooks。</td><td>工程管理</td><td>强者愈强未被组织吸收，或瓶颈卡在跨团队流程。</td><td>放大高杠杆实践，缩短组织学习曲线。</td><td class="priority-p1">P1</td></tr>
+  <tr><td>定义 PR 风险矩阵：哪些类必须双人/专家审，哪些可走 Codex+自动 CI 快路径。</td><td>Tech Lead + 安全/合规</td><td>评审堆积或误把高风险变更交给自动化。</td><td>平衡速度与风险。</td><td class="priority-p1">P1</td></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 当 Codex 既写又审，组织如何设计「独立验证」避免系统性盲区——哪些模块强制异模型或强制人类专家？</p></div>
+<div class="discussion-q"><p>2. 上下文工程是否会演变为新的「文档暴政」，以及如何度量其边际收益？</p></div>
+<div class="discussion-q"><p>3. 「为模型未来而建设」与「当下客户合同学付」冲突时，初创公司现金流如何平衡？</p></div>
+<div class="discussion-q"><p>4. 音频原生能力在受监管金融场景下的存档、同意与审计链路应如何设计？</p></div>
+<div class="discussion-q"><p>5. 一人公司浪潮下，交易平台类企业如何与大量小型垂直工具商集成而非被碎片化拖垮？</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block">
+  <blockquote>这是模型最差的一刻——对软件工程也是如此——你会看到大家越来越信任它，模型也会越来越好。</blockquote>
+  <div class="quote-source">— Sherwin Wu，引用 Kevin Weil 的内部常用句</div>
+</div>
+<div class="quote-block">
+  <blockquote>一线工程师正在变成技术负责人：他们在管理一支支 Agent 舰队。</blockquote>
+  <div class="quote-source">— Sherwin Wu，谈角色变迁</div>
+</div>
+<div class="quote-block">
+  <blockquote>现在的咒语就是你对 Codex、Cursor 说的话——它真的会去替你干活。</blockquote>
+  <div class="quote-source">— Sherwin Wu，承接 SICP「巫术」隐喻</div>
+</div>
+<div class="quote-block">
+  <blockquote>很多时候不是 Agent 不行，而是你给它的上下文不够——underspec 或知识没进仓库。</blockquote>
+  <div class="quote-source">— Sherwin Wu，谈 100% Codex 实验</div>
+</div>
+<div class="quote-block">
+  <blockquote>模型会把你的脚手架当早餐吃掉。</blockquote>
+  <div class="quote-source">— Sherwin Wu，引用 Nicholas 文章语（谈客户诉求 vs 模型演进）</div>
+</div>
+<div class="quote-block">
+  <blockquote>要为模型将要去的地方而建设，而不是只为它今天在哪里。</blockquote>
+  <div class="quote-source">— Sherwin Wu，给 Builder 的建议</div>
+</div>
+<div class="quote-block">
+  <blockquote>未来 2～3 年会是科技和创业世界里极好玩的阶段——别把它当成理所当然。</blockquote>
+  <div class="quote-source">— Sherwin Wu，结尾寄语</div>
+</div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>OpenAI 平台负责人的一线观察把工程未来压缩成两句：人变成管理咒语与 Agent 的巫师，但别让扫帚淹了房子；组织与客户策略则要同时押注「上下文工程」与「模型进步曲线」，因为今天的脚手架很可能就是明天被吃掉的早餐。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+  <p><strong>YouTube 视频：</strong><a href="https://www.youtube.com/watch?v=B26CwKm5C1k">https://www.youtube.com/watch?v=B26CwKm5C1k</a></p>
+  <p><strong>发布时间：</strong>2026-04</p>
+  <p><strong>嘉宾：</strong>Sherwin Wu（OpenAI API / Developer Platform）</p>
+  <p><strong>Transcript 来源：</strong>youtube_auto_captions</p>
+  <p><strong>备注：</strong>基于节目转录稿整理；口语中 Codex 偶被转写为 codecs 等，已统一为 Codex；Kevin Weil 姓名以常见拼写为准；赞助与广告段落未纳入核心论点；内部实验与数据为嘉宾口述非审计财报。</p>
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>

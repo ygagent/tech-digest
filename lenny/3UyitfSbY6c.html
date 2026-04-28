@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 当 AI 改写旧剧本时，如何做 CEO？——Brian Halligan 谈红杉教练视角下的领导力、招聘与规模化</title>
+  <meta property="og:title" content="当 AI 改写旧剧本时，如何做 CEO？——Brian Halligan 谈红杉教练视角下的领导力、招聘与规模化">
+  <meta property="og:description" content="AI 把执行变快、把可选性变成税：新世代 CEO 的胜负手，是在更快节奏里做对高管团队、DRRI、客户重心与单向门决策，并接受「只有铅弹、没有银弹」的长期拉扯。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/3UyitfSbY6c/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>当 AI 改写旧剧本时，如何做 CEO？——Brian Halligan 谈红杉教练视角下的领导力、招聘与规模化</h1>
+  <div class="meta"> &middot; 1h14m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">CEO 领导力</span>
+    <span class="tag">红杉资本</span>
+    <span class="tag">HubSpot</span>
+    <span class="tag">规模化</span>
+    <span class="tag">AI 与组织</span>
+    <span class="tag">招聘与高管团队</span>
+    <span class="tag">Go-to-Market</span>
+    <span class="tag">Brian Halligan</span>
+    <span class="tag">Lenny&#x27;s Podcast</span>
+  </div>
+  <div class="guest-meta">
+    <img class="guest-avatar" src="https://i.ytimg.com/vi/3UyitfSbY6c/maxresdefault.jpg" alt="Sequoia CEO Coach Brian Halligan" onerror="this.style.display='none'">
+    <div class="guest-info">
+      <div class="guest-name">Sequoia CEO Coach Brian Halligan</div>
+    </div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=3UyitfSbY6c" target="_blank">&#9654; 观看原视频</a>
+  </div>
+
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>创业从未如此容易，但把公司做成持久、高影响力的组织从未如此困难：竞争与噪音爆炸，CEO 必须在更短周期内做更快、更好的单向门决策。</li>
+  <li>「大人桌」（约百人以上公司）CEO 的核心议题是高管团队与下一层组织设计，平均约一半时间花在招聘与面试上，且行业普遍高估面试直觉、低估高质量背调。</li>
+  <li>Halligan 用「LOCK(+S)」框架观察创始人：可亲/感召力（Lovable）、对问题的痴迷（Obsession）、不服输（Chip）、领域深耕（Knowledgeable），以及像 LLM 一样持续学习的「学生」（Student）。</li>
+  <li>AI 时代执行速度提升带来「可选性税」：能做更多项目反而容易过早追逐第二曲线、失焦；规划周期从年缩短到约季度，CEO 需更果断地推开单向门。</li>
+  <li>销售与深度信任关系可能是白领工作中最后被 AI 替代的一环；但漏斗顶端会从 Google 转向 Chatbot/AEO，网站与首页可能演变为「全知 Avatar + 人机协同销售」。</li>
+  <li>Halligan 的「Hagganisms」强调：坏消息要一口吃完别啃边（裁员/重组忌零碎）、危机要过度纠正并从中长出新能力、规模化后必须用 DRRI（唯一负责人）打通跨职能。</li>
+  <li>组织重心需在员工导向、客户导向、投资人导向之间清醒选择；HubSpot 曾过度员工/Glassdoor 导向，后通过客户面板、管理层薪酬与 NPS 结构把重心转向客户。</li>
+  <li>他因严重事故领悟「人生很短」：不适合管理八千人大公司的日常谐振时，应果断把权杖交给更合适的人——成功 CEO 也要诚实面对自己的 harmonic motion。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+<p>Brian Halligan 为 HubSpot 联合创始人并长期担任 CEO，离任后出任红杉资本（Sequoia）内部 CEO 教练：组织「小孩桌」（约百人以下）与「大人桌」CEO 同伴学习、一对一辅导顶尖创始人，并主持播客《Long Strange Trip》。他以「CEO 这门课的学生」自居，总结大量可复用的招聘、文化与管理教训（「Hagganisms」），亦著有《Marketing Lessons from the Grateful Dead》，现为波士顿红袜队部分所有者。</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <p>高速成长期 CEO 往往处于「建设性不满」状态：不沉溺已得成绩，始终盯终点；Halligan 观察这一代创始人整体更谦逊，与上一代刻板印象不同。</p>
+  <p>面试应少依赖履历 walkthrough，多用白板解题、实战文档讨论（如 Parker Conrad 让对方读董事会材料再聊——一味吹捧是红旗）；盲调要问「是否会热情返聘」「1–10 分多大概率挖回」等硬问题。</p>
+  <p>共识型「全员 3/4 分」候选人往往不如「有明显长短板但更尖锐」的人；HubSpot 缩小面试委员会规模后命中率提升。来自微软/Google/Salesforce 等巨头的「大 Logo」高管与中小公司期望常严重阻抗不匹配，历史 attrition 极高。</p>
+  <p>「2004 红袜队」式组队：重视内部提拔的「自家青训」，再配少数经战老将；外部候选人面试技巧强、你看不到其 wart，容易系统性高估外人、低估自家骨干。Brian Chesky 曾强调勿过度外聘与过度授权，但行业仍在走老剧本。</p>
+  <p>从创业到规模化，CEO 时间分配可从「90% 流汗 / 10% 点燃」转为相反；必须大量放手，但信任半径过小会成为规模化天花板——这是 Halligan 自认与许多被辅导 CEO 的共病。</p>
+  <p>「没有银弹，只有铅弹」：外部看长期向上，内部常是两步进、一步退；重大失误后要「Next play」（Krzyzewski）——迅速翻篇、执行下一回合，而非在情绪上叠加二次错误。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>LOCK（+S）——评估创始 CEO 的「锁」算法</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>CV &gt; EV &gt; TV &gt; Me</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>小孩桌 vs 大人桌</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>交易与加密产品同样面临「启动易、差异化与规模化难」：工具链与云降低启动成本，但信任、合规、流动性与品牌噪音使「突围」更像 Halligan 所说的学习竞赛——谁更快迭代认知与 GTM，谁更有优势。</li>
+  <li>跟单、合约、资管类产品高度依赖「人与人之间的信任与解释」——与嘉宾判断企业销售晚于研发/客服被 AI 颠覆的判断一致：BingX 侧应持续投资客户经理、社区与交易员关系，而非假设全自动成交流水线短期成立。</li>
+  <li>漏斗顶端正在从传统 SEO 转向 AI 答案与 AEO（Answer Engine Optimization）：多语言帮助中心、结构化产品事实、竞品对比素材需可被模型可靠引用，否则用户在 Chatbot 里完成决策链时品牌会缺席。</li>
+  <li>组织上可显式采用 DRRI：例如重大活动、上新、风控事件、区域增长项目必须单一负责人，避免销售/增长/产品/客服「都管等于都不管」——与交易所跨部门协作痛点高度同构。</li>
+  <li>在「员工体验」与「交易者体验」之间需明确重心：早期可偏内部凝聚力，但到一定规模后，若客户侧 NPS/留存信号弱于内部满意度，应像 HubSpot 一样用机制（指标、薪酬、例会结构）把重心迁回客户与合规可信。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 当 AI 让个体产出暴涨，公司应如何设计「聚焦机制」避免同时开太多战线？是否应有正式的「第二曲线门槛」与杀死项目的仪式？</p></div>
+<div class="discussion-q"><p>2. 在强调 DRRI 的文化里，如何保护横向协作与心理安全，避免变成「甩锅式问责」？</p></div>
+<div class="discussion-q"><p>3. 「客户优先」若压缩员工体验，在人才竞争激烈的加密/金融科技里，平衡点在哪里——HubSpot 的路径是否可直接照搬？</p></div>
+<div class="discussion-q"><p>4. 盲调与尖锐面试在关系导向的市场（尤其亚洲）落地时，如何兼顾人情与信息质量？</p></div>
+<div class="discussion-q"><p>5. Five-tool CEO（懂代码、品味、愿景、销售、感召）是否是可追求标准，还是会加剧创始人焦虑——团队互补是否应是更主流叙事？</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block"><blockquote>「关于当创始人 CEO，没有谁会来救你。父母不会，VC 也不会——第一次危机来临时你才真正明白。」</blockquote></div>
+<div class="quote-block"><blockquote>「创业从未如此容易；把它规模化成持久、高影响力的组织从未如此困难。」</blockquote></div>
+<div class="quote-block"><blockquote>「hire slow, fire fast——可没人听我的；大家往往是 hire fast, fire slow。」</blockquote></div>
+<div class="quote-block"><blockquote>「当你必须吃掉一个三明治时，别小口啃。」——Ruth Porat 语，Halligan 引用于裁员/重组应一次性做足。</blockquote></div>
+<div class="quote-block"><blockquote>「大多数公司死于暴饮暴食（overeating）而非消化不良；多数是自杀，不是他杀。」</blockquote></div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>AI 把执行变快、把可选性变成税：新世代 CEO 的胜负手，是在更快节奏里做对高管团队、DRRI、客户重心与单向门决策，并接受「只有铅弹、没有银弹」的长期拉扯。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>

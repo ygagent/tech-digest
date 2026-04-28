@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 人类存续与 AI：思科总裁 Jeetu Patel 谈超级周期、平台转型与领导力</title>
+  <meta property="og:title" content="人类存续与 AI：思科总裁 Jeetu Patel 谈超级周期、平台转型与领导力">
+  <meta property="og:description" content="把 AI 同时看作文明级基础设施与组织再造的赌注：在人口与采用落差之间，用平台化、开放生态与零丢包的叙事，把「permission to play」押在真正的超级周期上。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/ylNKlBlkFas/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>人类存续与 AI：思科总裁 Jeetu Patel 谈超级周期、平台转型与领导力</h1>
+  <div class="meta"> &middot; 1h27m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">AI 基础设施</span>
+    <span class="tag">企业转型</span>
+    <span class="tag">思科</span>
+    <span class="tag">超级周期</span>
+    <span class="tag">人口结构</span>
+    <span class="tag">平台战略</span>
+    <span class="tag">Permission to Play</span>
+    <span class="tag">组织沟通</span>
+    <span class="tag">Lenny&#x27;s Podcast</span>
+  </div>
+  <div class="guest-meta">
+    <img class="guest-avatar" src="https://i.ytimg.com/vi/ylNKlBlkFas/maxresdefault.jpg" alt="Jeetu Patel" onerror="this.style.display='none'">
+    <div class="guest-info">
+      <div class="guest-name">Jeetu Patel</div>
+    </div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=ylNKlBlkFas" target="_blank">&#9654; 观看原视频</a>
+  </div>
+
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>嘉宾认为 AI 不仅是生产力工具，更与人口老龄化、照护人力缺口相关——若大量人口处于「需要被照护却无人可托」的状态，人类整体福祉将受威胁，因此「成功的 AI」关乎集体生存。</li>
+  <li>思科峰会后的核心观察：能力过剩（capabilities overhang）真实存在——前沿能力与企业落地之间存在落差，组织内需要帮助；编码等场景进展快，其他职能则需更多业务语境与耐心。</li>
+  <li>思科向「AI 优先」转型的抓手包括：自上而下明确 AI 为不可动摇方向、不押注对冲；从「控股式多产品线」转向「松耦合、紧集成」的平台公司；拥抱开放生态，甚至与竞争对手合作以成就客户。</li>
+  <li>思科在 AI 时代的定位：连接 GPU 与数据中心（含跨数百公里同步训练集群）、光网络、安全与可观测性、数据平台；制约 AI 的三要素是算力/电力/带宽、信任赤字、高质量训练数据（尤其机器数据）。</li>
+  <li>对 AI 影响的判断：当前公众多将其视为聚合与问答，这只是冰山一角；未来会有超越人类语料的新洞见，物理世界将被「语言化」增强，关键是能力须服务于人并设好护栏。</li>
+  <li>领导力与规模化：勿把公司叙事外包给层层传递——要像网络避免「丢包」一样，由高层直接守住信息与强度；嘉宾反对「公开表扬、私下批评」的教条，主张在足够信任下公开直面问题、私下建立安全感。</li>
+  <li>个人与职业哲学：「Permission to play / Right to win」——市场是否逻辑上接受由你来做；六大要素排序为时机&gt;市场&gt;团队&gt;产品&gt;品牌&gt;渠道，缺一不可；区分超级周期与炒作周期（如 Web3 难懂则难成大众浪潮）。</li>
+  <li>给普通人的建议：选难而重要的问题以吸引最强团队；饥饿感难教但可自察；平台与运气重要，运气来临时要已做好准备；多付出、少算计、建立非交易型互助网络；耐力胜过纯智商。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+<p>Jeetu Patel（节目中亦称 G2），思科（Cisco）首席产品官兼总裁，管理约三万人规模的产品组织；曾在 Box 等公司任职，与 Aaron Levie 等硅谷领袖有长期合作与私交。主持思科 AI 峰会并对话 Jensen Huang、Marc Andreessen、Fei-Fei Li、云厂商与芯片高管等。成长经历包含印度童年困境、早年餐饮服务业（Sizzler）克服口吃、后赴美发展；强调人际关系、导师网络与「别把话憋在心里」等个人叙事。</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <p>「能力过剩」与「采用困境」并存：模型与应用能力在快速膨胀，但企业在非编码职能上的落地仍难，需要结构性帮助而非仅堆工具。</p>
+  <p>人口结构视角下的 AI：出生率下降、老年人口占比上升，历史上由年轻人照护老人的模式可能难以为继；若缺乏替代性生产力与照护能力，将带来大规模痛苦——这与「AI 抢工作」的单一叙事不同。</p>
+  <p>大公司实验不少，但实验成功后往往不敢「加倍押注」；思科对 AI 选择全情投入，并将个人成功与公司掌握 AI 熟练度绑定：不用 AI 长期会边缘化，用 AI 则不是被取代的威胁叙事。</p>
+  <p>平台化意味着客户无论买哪款产品都感受到一致的可靠、信任、设计与效率；生态上允许客户只买一部分，但两件联用时体验应「像魔法」；与竞品合作若符合客户成功，成功会回流到自己。</p>
+  <p>AI 产品心智：OpenAI 派驻工程师建议把 Copilot 类工具当作「新队友」而非「新工具」，框架一变，协作方式与产出会质变。</p>
+  <p>基础设施逻辑：应用层拿荣光，基础设施层常背锅；必须极度结果导向、关注生态与客户生死攸关场景（如医疗网络中断）。</p>
+  <p>经验与无经验的组合：纯经验易形成偏见；需保留「卸载学习」能力，用新人的问题刷新假设；对 AI 要「快进六个月」做规划，勿仅用今日假设锁死行动。</p>
+  <p>好公司的六要素栈：时机（最不可控却最重要）→市场→团队→产品→品牌→分销；市场差会拖累好团队；品牌信任一旦崩塌极难修复；仅造出不等于触达。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>六要素成功栈（Timing → Distribution）</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>Permission to Play / Right to Win</td><td></td><td></td><td></td><td></td></tr>
+  <tr><td>超级周期 vs 炒作周期</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>交易与跟单类产品依赖低延迟、高可靠基础设施与全球节点协同——嘉宾强调的「远距离数据中心如一集群般同步」与网络丢包隐喻，可映射到行情、撮合与风控数据链路的稳定性投资逻辑。</li>
+  <li>「信任赤字」在加密领域同样尖锐：模型幻觉在写诗可接受，在可审计、可合规、可解释的风控与推荐上不可接受；社区与合约场景需把安全、可观测与确定性边界当作产品核心，而非事后补丁。</li>
+  <li>能力过剩 vs 采用落差：许多团队已能「快速产码/产内容」，但难的是选对问题、控 AI Slop、保持品味与风控；对交易所与社区产品而言，比堆砌功能更重要的是「Permission to Play」——用户是否认为该由你提供某类服务（安全、深度、流动性文化）。</li>
+  <li>组织层面：叙事不可层层失真，一线销售与客服听到的必须是同一套优先级；公开辩论、私下托底的文化有助于快速暴露增长放缓与体验裂口，对高并发客诉与危机沟通尤为重要。</li>
+  <li>战略节奏：在加密与 AI 叠加的叙事浪潮中区分超级周期与炒作，避免为短期热点分散合规与技术债；同时「快进六个月」预设模型与监管环境，避免用当下经验否决必要布局。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 当「AI 关乎生存」与「AI 安全/对齐风险」同时成立时，机构应如何在叙事与资源上排序——加速落地与护栏建设之间的平衡点在哪里？</p></div>
+<div class="discussion-q"><p>2. 「公开批评、私下托底」在东亚或强层级文化中如何本地化，才能既保留心理安全又不沦为面子政治？</p></div>
+<div class="discussion-q"><p>3. 平台化与开放生态在强竞争赛道（如云、芯片、加密基础设施）中，如何设计「竞合」边界以避免核心差异化被稀释？</p></div>
+<div class="discussion-q"><p>4. 若时机权重高于团队，融资与人才市场是否系统性高估「明星团队」而低估「赛道时钟」——对创业者与投资人各意味着什么？</p></div>
+<div class="discussion-q"><p>5. 人口结构论点是否足以支撑「必须用 AI 补照护」的政策与伦理讨论，还是仍需更多跨国、跨制度的实证？</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block"><blockquote>「人类的存续取决于一次成功的 AI。」——在人口老龄化与照护人力可能不足的语境下提出。</blockquote></div>
+<div class="quote-block"><blockquote>「当超级周期来临时，不要对抗它。AI 就是超级周期。」</blockquote></div>
+<div class="quote-block"><blockquote>「别再把 Copilot 当成工具，把它当成团队里多了一位队友——你的用法会完全不一样。」</blockquote></div>
+<div class="quote-block"><blockquote>「大公司的问题常常不是不做实验，而是实验奏效后不敢 all in、一直在对冲。」</blockquote></div>
+<div class="quote-block"><blockquote>「如果你不在乎功劳归谁，你在人生里会走得更远。」——转述 Chuck Robbins</blockquote></div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>把 AI 同时看作文明级基础设施与组织再造的赌注：在人口与采用落差之间，用平台化、开放生态与零丢包的叙事，把「permission to play」押在真正的超级周期上。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>

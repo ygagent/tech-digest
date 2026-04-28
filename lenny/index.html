@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny's Podcast 深度精读</title>
+  <meta property="og:title" content="Lenny's Podcast 深度精读">
+  <meta property="og:description" content="全球产品、增长、AI 与创业方法论精读">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 14px 32px; display: flex; align-items: center; gap: 12px;
+      position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .container { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+    h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px; }
+    .intro {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px 24px; margin-bottom: 32px; font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.7; box-shadow: var(--shadow-sm);
+    }
+    .stats {
+      display: flex; gap: 16px; margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px 20px; flex: 1; text-align: center; box-shadow: var(--shadow-sm);
+    }
+    .stat-num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+    .article-list { list-style: none; }
+    .article-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface); margin-bottom: 14px;
+      overflow: hidden; transition: all 0.2s; box-shadow: var(--shadow-sm);
+    }
+    .article-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .article-link { display: flex; align-items: stretch; text-decoration: none; color: inherit; }
+    .article-thumb {
+      width: 180px; min-height: 120px; flex-shrink: 0;
+      object-fit: cover; background: var(--surface2);
+    }
+    .thumb-placeholder {
+      width: 180px; min-height: 120px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2d9f6f 0%, #1a7a4f 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.9); font-size: 1.5rem; font-weight: 800;
+    }
+    .article-body { flex: 1; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; }
+    .article-meta { display: flex; gap: 8px; margin-bottom: 6px; }
+    .article-date, .article-duration {
+      font-size: 0.7rem; font-weight: 600; color: var(--accent);
+      background: var(--accent-light); padding: 2px 8px; border-radius: 8px;
+    }
+    .article-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; line-height: 1.35; }
+    .article-card:hover .article-title { color: var(--accent); }
+    .article-guest { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; }
+    .article-summary { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 8px; }
+    .article-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .tag {
+      display: inline-block; font-size: 0.65rem; padding: 2px 7px; border-radius: 8px;
+      background: var(--surface2); color: var(--text-muted); font-weight: 500;
+    }
+    .footer {
+      margin-top: 48px; padding: 20px; text-align: center;
+      font-size: 0.85rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px; }
+      h1 { font-size: 1.4rem; }
+      .article-thumb, .thumb-placeholder { width: 100px; min-height: 90px; }
+      .article-title { font-size: 0.92rem; }
+      .stats { flex-direction: column; gap: 10px; }
+      .topbar-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>Lenny's Podcast 深度精读</h1>
+    <p class="subtitle">全球产品、增长、AI 与创业方法论精读</p>
+    <div class="intro">
+      这个专栏系统整理 Lenny's Podcast 中关于产品、增长、AI、创业和组织管理的高质量访谈内容。
+      我们不会简单搬运视频摘要，而是将全球一线从业者的经验，转化成适合公司内部学习、讨论和落地的中文深度精读文章，
+      帮助团队持续吸收外部先进方法论，提升产品判断、增长认知、AI 落地能力和工程组织效率。
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num">17</div>
+        <div class="stat-label">深度精读文章</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Lenny's Podcast</div>
+        <div class="stat-label">内容来源</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">公司级</div>
+        <div class="stat-label">内容定位</div>
+      </div>
+    </div>
+    <ul class="article-list">
+
+    <li class="article-card">
+      <a class="article-link" href="-7Yol5vX5xw.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/-7Yol5vX5xw/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h10m</span>
+          </div>
+          <div class="article-title">软件难成护城河：Snap CEO 谈分发、生态与「熔炉之年」的组织打法</div>
+          <div class="article-guest">Evan Spiegel - Snapchat CEO</div>
+          <div class="article-summary">当功能与模型越来越可复制，胜负越来越取决于分发、强关系网络、生态与硬件等「慢变量」；组织上则要在层级交付与扁平创新之间修桥，并用 JTBD 与护栏驾驭 AI，而非被 AI 拖着跑。</div>
+          <div class="article-tags"><span class="tag">消费者社交</span><span class="tag">分发与增长</span><span class="tag">产品护城河</span><span class="tag">设计驱动创新</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="PplmzlgE0kg.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/PplmzlgE0kg/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h25m</span>
+          </div>
+          <div class="article-title">从「六个月一版」到「一天上线」：Anthropic 产品团队如何把交付速度变成核心竞争力</div>
+          <div class="article-guest">Cat Wu - Head of Product, Claude Code</div>
+          <div class="article-summary">这期把 Anthropic 的「快」还原成可复制的目标收窄、低承诺预览、跨职能次日闭环与随模型删 harness——并提醒：真正的溢价在品味、评测与把自动化做到百分百可靠，而非多写几份 PRD。</div>
+          <div class="article-tags"><span class="tag">AI 原生产品</span><span class="tag">产品经理</span><span class="tag">组织流程</span><span class="tag">Claude Code</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="yUohoaC8_Hs.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/yUohoaC8_Hs/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h35m</span>
+          </div>
+          <div class="article-title">一半产品经理为何「危险」：从信息搬运工到判断者与建造者</div>
+          <div class="article-guest">Nikhyl Singhal - Meta, Google</div>
+          <div class="article-summary">岗位回暖与裁员并存的背后，是 PM 定义被重写：信息搬运让位于判断与建造——未来一两年混乱，但跨过再发明阈值、用工具淘汰自己的重复劳动的人，会同时拿到乐趣与溢价。</div>
+          <div class="article-tags"><span class="tag">产品经理</span><span class="tag">AI 与职业</span><span class="tag">组织变革</span><span class="tag">判断力</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="xCd9ykretlg.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/xCd9ykretlg/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h22m</span>
+          </div>
+          <div class="article-title">AI 时代如何打造世界级团队：Keith Rabois 的硬核真相</div>
+          <div class="article-guest">Keith Rabois - Khosla Ventures</div>
+          <div class="article-summary">AI 把「做出来」变便宜，却把「做对的事」与「足够快的组织」推到唯一壁垒：少而准的枪管、可复利的识人系统，以及在顺境中自找不舒服的领导力。</div>
+          <div class="article-tags"><span class="tag">人才与组织</span><span class="tag">AI 与产品</span><span class="tag">领导力</span><span class="tag">招聘</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="k-H4nsOTuxU.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/k-H4nsOTuxU/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h52m</span>
+          </div>
+          <div class="article-title">指数级增长下的增长团队：Anthropic 增长负责人谈「成功灾难」、激活与用 Claude 自动化增长实验</div>
+          <div class="article-guest">Head of Growth - Anthropic</div>
+          <div class="article-summary">当模型把价值曲线拉成指数时，增长团队的主要矛盾不再是「找不到增长点」，而是消化成功、用对的摩擦完成激活，并把实验闭环交给 AI——同时承认会议室里的人类对齐仍是瓶颈。</div>
+          <div class="article-tags"><span class="tag">增长</span><span class="tag">AI产品</span><span class="tag">激活与留存</span><span class="tag">组织设计</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="wc8FBhQtdsA.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/wc8FBhQtdsA/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h39m</span>
+          </div>
+          <div class="article-title">AI 国情咨文：已过拐点，「暗工厂」与 Agent 工程正在重写软件业</div>
+          <div class="article-guest"></div>
+          <div class="article-summary">拐点已过：代码极廉价、瓶颈外移到证明与治理，暗工厂与虚拟 QA 试探「无人读码」的边界——赢家属于用测试与能动性接住自动化、并对 Challenger 式侥幸保持警惕的组织与个人。</div>
+          <div class="article-tags"><span class="tag">AI 编程</span><span class="tag">Coding Agent</span><span class="tag">暗工厂</span><span class="tag">组织与职业</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="DIa0MYJzM5I.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/DIa0MYJzM5I/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h46m</span>
+          </div>
+          <div class="article-title">从怀疑者到真信徒：Claire Vo 谈 OpenClaw 如何改变她的工作与生活</div>
+          <div class="article-guest">Claire Vo</div>
+          <div class="article-summary">OpenClaw 的价值不在「一个超级聊天框」，而在为你关心的每个职能雇一位有边界、有心跳、会失忆也需你管理的数字同事——愿意熬过装机的 sharp edges，才能换来真正的杠杆。</div>
+          <div class="article-tags"><span class="tag">OpenClaw</span><span class="tag">AI Agent</span><span class="tag">本地自动化</span><span class="tag">生产力</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="RP4vJeIb7WU.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/RP4vJeIb7WU/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h33m</span>
+          </div>
+          <div class="article-title">影响力的艺术与科学：当 AI 让执行变廉价，什么技能反而被放大？——Jessica Fain 对话 Lenny</div>
+          <div class="article-guest">Jessica Fain</div>
+          <div class="article-summary">当建造变便宜，决定「什么值得建」与让组织买单的能力，才是产品人不可替代的杠杆；而对高管，少谈自我中心，多给语境、选项与对其成功的承接。</div>
+          <div class="article-tags"><span class="tag">影响力</span><span class="tag">高管沟通</span><span class="tag">产品管理</span><span class="tag">组织对齐</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="pEis2CBomVA.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/pEis2CBomVA/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h54m</span>
+          </div>
+          <div class="article-title">十亿美元级薪酬谈判的底层逻辑：Jacob Warwick 与 Lenny 谈高管报酬博弈论</div>
+          <div class="article-guest">Jacob Warwick</div>
+          <div class="article-summary">薪酬谈判从第一印象与第一次报数之前就已开始；用当面协作取代邮件对抗，用发现式对话把对方带进「问题解决后的未来」，你才能在信息劣势中夺回议价空间。</div>
+          <div class="article-tags"><span class="tag">薪酬谈判</span><span class="tag">高管职业</span><span class="tag">招聘与 offer</span><span class="tag">行为心理学</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="HEqrvF7ztBE.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/HEqrvF7ztBE/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h6m</span>
+          </div>
+          <div class="article-title">从工程师到百万订阅：Lenny Rachitsky 与妻子对谈——通讯、播客、创作焦虑与「最好内容来自真实经历」</div>
+          <div class="article-guest"></div>
+          <div class="article-summary">当订阅与播客把个人变成「周更机器」，可持续来自早期信号（写得开心且有人要）与 Lindy 式自我说服；而真正能穿越算法的，多半仍是实践者自现场带回来的、经无数次改稿仍说得简单的那点东西。</div>
+          <div class="article-tags"><span class="tag">创作者经济</span><span class="tag">Newsletter</span><span class="tag">播客</span><span class="tag">产品管理</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="_rcniEb9bLw.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/_rcniEb9bLw/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h24m</span>
+          </div>
+          <div class="article-title">真正的 AI 革命不在软件，而在农场、矿山与卡车：Qasar Younis 谈实体 AI 与「安静做事」</div>
+          <div class="article-guest">Qasar Younis</div>
+          <div class="article-summary">当舆论盯着聊天框与人形演示时，Younis 把镜头拧向矿卡、农田与干线物流：实体 AI 是工业级杠杆；而赢得这场长跑的，未必是最高调的发言者，而是把价值观写成可考核行为、敢在错误地基上硬重置、并读懂恐惧与股市是两条线的人。</div>
+          <div class="article-tags"><span class="tag">Applied Intuition</span><span class="tag">实体 AI</span><span class="tag">自动驾驶</span><span class="tag">农业自动化</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="eh8bcBIAAFo.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/eh8bcBIAAFo/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h17m</span>
+          </div>
+          <div class="article-title">设计流程已死？Anthropic 设计负责人 Jenny Wen 谈 AI 时代的设计分工、信任与招聘</div>
+          <div class="article-guest">Jenny Wen - head of design at Claude</div>
+          <div class="article-summary">AI 把工程油门踩到底后，设计的旧流程让位于两件事：别挡快速试错、同时用更短视距的原型把众人指向同一方向——Figma 仍管发散，代码与 agent 管落地，信任则来自持续迭代而非一次性完美亮相。</div>
+          <div class="article-tags"><span class="tag">设计</span><span class="tag">AI</span><span class="tag">Claude</span><span class="tag">Anthropic</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="ylNKlBlkFas.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/ylNKlBlkFas/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h27m</span>
+          </div>
+          <div class="article-title">人类存续与 AI：思科总裁 Jeetu Patel 谈超级周期、平台转型与领导力</div>
+          <div class="article-guest">Jeetu Patel</div>
+          <div class="article-summary">把 AI 同时看作文明级基础设施与组织再造的赌注：在人口与采用落差之间，用平台化、开放生态与零丢包的叙事，把「permission to play」押在真正的超级周期上。</div>
+          <div class="article-tags"><span class="tag">AI 基础设施</span><span class="tag">企业转型</span><span class="tag">思科</span><span class="tag">超级周期</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="We7BZVKbCVw.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/We7BZVKbCVw/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h27m</span>
+          </div>
+          <div class="article-title">当「写代码」被模型接管之后：Claude Code 负责人的下一幕</div>
+          <div class="article-guest">Boris Cherny</div>
+          <div class="article-summary">编码正被工具化，真正的杠杆转向「给模型目标与边界、让它在真实世界里长时行动」——赢家属于跟得上模型曲线、肯让组织为试验付成本的人。</div>
+          <div class="article-tags"><span class="tag">AI 编程</span><span class="tag">Agent 与工具使用</span><span class="tag">产品方法论</span><span class="tag">组织与生产力</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="3UyitfSbY6c.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/3UyitfSbY6c/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h14m</span>
+          </div>
+          <div class="article-title">当 AI 改写旧剧本时，如何做 CEO？——Brian Halligan 谈红杉教练视角下的领导力、招聘与规模化</div>
+          <div class="article-guest">Sequoia CEO Coach Brian Halligan</div>
+          <div class="article-summary">AI 把执行变快、把可选性变成税：新世代 CEO 的胜负手，是在更快节奏里做对高管团队、DRRI、客户重心与单向门决策，并接受「只有铅弹、没有银弹」的长期拉扯。</div>
+          <div class="article-tags"><span class="tag">CEO 领导力</span><span class="tag">红杉资本</span><span class="tag">HubSpot</span><span class="tag">规模化</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="B26CwKm5C1k.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/B26CwKm5C1k/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h19m</span>
+          </div>
+          <div class="article-title">工程师变「巫师」、脚手架被模型吃掉：OpenAI 平台工程负责人 Sherwin Wu 谈未来 12～24 个月的 AI 与 API</div>
+          <div class="article-guest">Sherwin Wu</div>
+          <div class="article-summary">OpenAI 平台负责人的一线观察把工程未来压缩成两句：人变成管理咒语与 Agent 的巫师，但别让扫帚淹了房子；组织与客户策略则要同时押注「上下文工程」与「模型进步曲线」，因为今天的脚手架很可能就是明天被吃掉的早餐。</div>
+          <div class="article-tags"><span class="tag">工程</span><span class="tag">AI</span><span class="tag">OpenAI</span><span class="tag">Codex</span></div>
+        </div>
+      </a>
+    </li>
+
+    <li class="article-card">
+      <a class="article-link" href="0XNkUdzxiZI.html">
+        <img class="article-thumb" src="https://i.ytimg.com/vi/0XNkUdzxiZI/maxresdefault.jpg" alt="" loading="lazy"
+             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-date"></span>
+            <span class="article-duration">1h42m</span>
+          </div>
+          <div class="article-title">「职业 Vibe Coder」崛起：Lovable 首位官方 Vibe 工程师谈清晰度、文档化代理与角色融合</div>
+          <div class="article-guest">The rise of the professional vibe coder - a new AI-era job</div>
+          <div class="article-summary">全职 vibe coder 的本质不是更会写提示，而是把清晰度、文档化上下文与品味当成生产函数：并行试错选对路，再用 PRD 集群与 rules 让代理稳定交付；排错靠「看见问题」与外部分诊；在人人「够用」的时代，魔法感与真人判断力才是溢价来源。</div>
+          <div class="article-tags"><span class="tag">Vibe Coding</span><span class="tag">AI 编程</span><span class="tag">Lovable</span><span class="tag">Lenny Podcast</span></div>
+        </div>
+      </a>
+    </li>
+    </ul>
+    <div class="footer">
+      <a href="../index.html">每日科技简报</a> &middot;
+      Lenny's Podcast 深度精读 &middot;
+      Powered by <a href="https://cursor.com">Cursor AI</a>
+    </div>
+  </div>
+</body>
+</html>

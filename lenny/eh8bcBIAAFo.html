@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 设计流程已死？Anthropic 设计负责人 Jenny Wen 谈 AI 时代的设计分工、信任与招聘</title>
+  <meta property="og:title" content="设计流程已死？Anthropic 设计负责人 Jenny Wen 谈 AI 时代的设计分工、信任与招聘">
+  <meta property="og:description" content="AI 把工程油门踩到底后，设计的旧流程让位于两件事：别挡快速试错、同时用更短视距的原型把众人指向同一方向——Figma 仍管发散，代码与 agent 管落地，信任则来自持续迭代而非一次性完美亮相。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/eh8bcBIAAFo/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>设计流程已死？Anthropic 设计负责人 Jenny Wen 谈 AI 时代的设计分工、信任与招聘</h1>
+  <div class="meta"> &middot; 1h17m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">设计</span>
+    <span class="tag">AI</span>
+    <span class="tag">Claude</span>
+    <span class="tag">Anthropic</span>
+    <span class="tag">Jenny Wen</span>
+    <span class="tag">Lenny Podcast</span>
+    <span class="tag">产品设计</span>
+    <span class="tag">Figma</span>
+    <span class="tag">Claude Code</span>
+    <span class="tag">BingX</span>
+  </div>
+  <div class="guest-meta">
+    <img class="guest-avatar" src="https://i.ytimg.com/vi/eh8bcBIAAFo/maxresdefault.jpg" alt="Jenny Wen" onerror="this.style.display='none'">
+    <div class="guest-info">
+      <div class="guest-name">Jenny Wen</div>
+      <div class="guest-title-text">head of design at Claude</div>
+    </div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=eh8bcBIAAFo" target="_blank">&#9654; 观看原视频</a>
+  </div>
+
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>本期 Lenny’s Podcast 嘉宾 Jenny Wen 曾任 Claude 设计负责人，现主导 Claude Co-work 设计；此前在 Figma 带领 FigJam 与 Slides 团队，并曾在 Dropbox、Square、Shopify 任职。她提出：被业界当作「福音」的经典设计流程——大量调研、发散收敛循环、长期守护流程本身——在工程侧被 AI 极大加速后已基本「失效」；设计被迫跟着变，而非设计圈单方面发起革命。</li>
+  <li>她将当下设计工作粗分为两类：其一为支撑实现与交付——工程师可用多种工具快速出 scrappy 版本，设计师往往没时间再做「精美高保真稿」，更优策略常是少当拦路虎、让团队先跑起来（let them cook），再以咨询式反馈纠偏；其二为方向与愿景——但技术迭代太快，愿景 horizon 从数年收缩到约 3～6 个月，载体不一定是华丽叙事 Deck，而可能是能指方向的代码原型。</li>
+  <li>她自述几年前约 60%～70% 时间在画稿与原型，如今mock/原型约 30%～40%，另有 30%～40% 与工程师结对、白板与评审，并有一块时间亲自写代码做最后一英里打磨。Anthropic 日常包含大量「跟上公司内部信息流」：模型研究、各团队代号项目、内测产品试玩——设计角色越来越像帮执行对齐、串联想法、保持体验整体感，而非只交稿。</li>
+  <li>工具栈上她以 Claude 系为主：对话逐步迁到 Co-work 处理长程任务；Claude Code 多在 VS Code 里改前端，也尝试在 Slack/移动端 @Claude 修小问题再收 PR。Figma 仍不可替代：适合并行探索 8～10 个方向及微调视觉交互；纯跟 coding agent 迭代往往过于线性、易过早锁死单一方向。</li>
+  <li>质量与信任：早发「研究预览」可以，但要承诺持续迭代、响应反馈；若早发后长期不改进才真正伤品牌——「用速度建立信任」的另一面是让用户感到被听见。关于人类价值：AI 的品味与判断会变强，但仍需有人对「做什么、不做什么」负责；许多最难问题本质是人际分歧而非写代码。</li>
+  <li>管理与 IC：她入职 Anthropic 先做 IC、短暂带团队后又回到全职 IC，认为在流程剧变期贴近一线能积累硬技能与管理同理心，并类比工程团队让 EM 轮岗摸技术的做法。招聘上她看重韧性与适应力，并归纳三类理想画像：强通才（多块「长板」的 block 型）、极深专才（T 的竖杠特别长）、以及被低估的「高潜应届生」——学习快、包袱少。</li>
+  <li>她还介绍「可读性框架」（创始人/想法各分可读 vs 难读的四象限）：前沿实验室里设计师可像内部 VC，识别能量高但尚未被讲清的原型（如内测的「Claude Studio」）再转化为叙事或形态——Co-work 中部分信息架构便来自此类探索。领导力方面：她反驳「管理者只做高杠杆事」——资深者亲自测产品、修 bug、为同事用心准备卡片等「看似低杠杆」行为，往往极高杠杆；团队间适度玩笑（roast）若建立在心理安全与高标准并存之上，反而是健康信号。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+  <p><strong>嘉宾：</strong>Jenny Wen</p>
+  <p><strong>公司：</strong>Anthropic（Claude / Claude Co-work）</p>
+  <p><strong>角色：</strong>Claude Co-work 设计负责人；曾任 Claude 设计负责人</p>
+  <p><strong>背景：</strong>前 Figma 设计总监，带队 FigJam 与 Slides；曾在 Dropbox、Square、Shopify 任设计师。活跃于设计前沿与 AI 产品形态探索。</p>
+  <p><strong>本期主题：</strong>AI 崛起下设计流程的重构、设计与工程协作比例、愿景时间尺度、Anthropic 设计师日常、Claude/Co-work/Figma 工具组合、早期发布与信任、人类决策责任、聊天与图形界面未来、IC 与管理、Co-work 产品叙事与内测原型、招聘三类画像、低杠杆工作的再定义、团队心理安全、可读性框架与闪电轮书单产品等。</p>
+  <p><strong>为什么重要：</strong>为「工程已 AI 化、设计如何跟」提供一线头部 AI 公司内部视角：既有对经典流程的告别，也保留 Figma、研究、原型与原则化辅导；对评估自家产品团队组织形态、发布节奏与设计师技能栈有参照价值。</p>
+  <p><strong>适合团队：</strong>产品设计、UX 研究、前端工程、设计系统、增长与品牌、技术文档与开发者体验、设计管理与人事</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <h3>观点 1：经典「信任流程」设计方法论在加速交付面前失焦</h3>
+  <h4>核心观点</h4>
+  <p>长时间调研—发散收敛—再守护流程本身的做法，在工程师可并行开多条实验分支时已难以成为瓶颈；设计更常被工程节奏倒逼重塑，而非单独宣言「我们要革命」。</p>
+  <h4>关键论据</h4>
+  <p>Jenny 在柏林演讲标题即「不要迷信设计流程」；并指出 Opus 4.6、假期里 Claude Code 普及等近几个月变化让数月前的判断都显得偏旧。</p>
+  <h4>典型案例</h4>
+  <p>工程师先做 scrappy 可试版本，设计师再介入对齐与打磨，而非等完整设计闸门。</p>
+  <h4>对公司的启发</h4>
+  <p>交易所与金融科技产品若工程侧已高频发版，设计流程需显式定义「何时拦、何时跟跑」，避免流程正义拖慢学习闭环。</p>
+  <h3>观点 2：设计工作二分：执行支撑 vs 缩短的愿景</h3>
+  <h4>核心观点</h4>
+  <p>一类工作是陪跑实现、咨询式反馈与串联体验；另一类是指向未来的愿景，但 horizon 缩短到约季度级，载体可能是可运行原型而非宏大 Deck。</p>
+  <h4>关键论据</h4>
+  <p>她对比过去 2～5～10 年愿景与当下「不知道两年后世界怎样」；强调在人人能开分支的世界里更需要统一方向以免浪费。</p>
+  <h4>典型案例</h4>
+  <p>Co-work 以研究预览推出，承认粗糙但相信内核价值。</p>
+  <h4>对公司的启发</h4>
+  <p>合规与风控类产品同样可用「预览 + 明确迭代承诺」管理预期，前提是路线图与对外沟通一致。</p>
+  <h3>观点 3：非确定性 AI 逼出「真机真用户」验证</h3>
+  <h4>核心观点</h4>
+  <p>模型输出难以用静态稿穷尽状态；可点击原型也不够，需要在真实模型与真实用例下观察，边做边发现场景。</p>
+  <h4>关键论据</h4>
+  <p>「无法 mock 所有状态」；Lenny 补充用户常出乎意料地使用 AI 产品。</p>
+  <h4>典型案例</h4>
+  <p>Co-work 等产品方向部分来自对内对外使用方式的意外发现。</p>
+  <h4>对公司的启发</h4>
+  <p>跟单、客服、行情助手等 AI 功能应以线上灰度与埋点反馈为主证据链，而非仅靠线框验收。</p>
+  <h3>观点 4：时间分配从「大部头视觉」转向「结对与实现」</h3>
+  <h4>核心观点</h4>
+  <p>mock/原型占比从约 60%～70% 降到约 30%～40%；与工程师 jam、结对显著上升；并有一块亲自写代码做 polish。</p>
+  <h4>关键论据</h4>
+  <p>嘉宾直接给出前后比例估算并描述与工程师合改首版、自己收尾的体验。</p>
+  <h4>典型案例</h4>
+  <p>IDE 里改 class/CSS 比反复让 agent「把这类改成那类」更快。</p>
+  <h4>对公司的启发</h4>
+  <p>设计系统若以代码与设计 token 为真源，设计师掌握工具链可减少与工程的往返成本。</p>
+  <h3>观点 5：Figma 仍是「多方向探索」的最佳画布</h3>
+  <h4>核心观点</h4>
+  <p>好设计需要同时扔多个方向再策展；与 agent 写代码往往线性深钻单一方向。Figma 适合 8～10 方案并行及字体、微交互等细粒度尝试。</p>
+  <h4>关键论据</h4>
+  <p>她自称前 Figmate，仍感到「就该用 Figma」；并对比 coding 工具的线性。</p>
+  <h4>典型案例</h4>
+  <p>重大导航或信息架构变更前在 Figma 批量试错再收敛到实现。</p>
+  <h4>对公司的启发</h4>
+  <p>活动页、交易界面大改版仍可坚持「多方案 Figma → 单一实现分支」，避免 agent 过早锁设计。</p>
+  <h3>观点 6：信任来自速度 + 被听见的闭环</h3>
+  <h4>核心观点</h4>
+  <p>早期发布可接受瑕疵，但要公开承诺迭代、快速修问题并回应反馈；早发后停滞才真正侵蚀品牌。</p>
+  <h4>关键论据</h4>
+  <p>研究预览标签、团队推特互动与「昨天已修」的公开节奏被点名。</p>
+  <h4>典型案例</h4>
+  <p>Co-work 标注研究预览并持续迭代首页与任务列表心智。</p>
+  <h4>对公司的启发</h4>
+  <p>上新功能、新市场活动时，对外话术需与真实迭代资源匹配，避免「一次性亮相后无声」。</p>
+  <h3>观点 7：人类剩余价值在问责与组织政治，不止「审美品味」</h3>
+  <h4>核心观点</h4>
+  <p>AI 会在品味与判断上变强；但谁为上线负责、两人争论功能边界时谁拍板，仍是人类硬问题。</p>
+  <h4>关键论据</h4>
+  <p>类比工程师仍需为 AI 写出代码是否真可用负责；放射科签字隐喻被提及。</p>
+  <h4>典型案例</h4>
+  <p>Boris 例：Claude Code 已参与想点子与选型，但最终仍要人按确认。</p>
+  <h4>对公司的启发</h4>
+  <p>产品委员会、风险评审与跨部门优先级仍需要明确 owner，而非假设模型输出即策略。</p>
+  <h3>观点 8：界面未来：聊天/终端长期存在 + 可点击控件与生成式 UI 并存</h3>
+  <h4>核心观点</h4>
+  <p>Chat 带来对模型的无限灵活接口；但股票、天气等仍用控件更高效；未来更多界面或由模型生成而非逐屏手搓。</p>
+  <h4>关键论据</h4>
+  <p>Claude 内 widget；WhatsApp/Telegram 等「另一种聊天入口」也是创新。</p>
+  <h4>典型案例</h4>
+  <p>Kevin Weil 侧证：对话适配不同智商水平的沟通方式。</p>
+  <h4>对公司的启发</h4>
+  <p>App 内助手可组合「固定关键路径控件 + 自然语言兜底」，降低纯聊天摩擦。</p>
+  <h3>观点 9：「可读性框架」：在难读想法里做内部 VC</h3>
+  <h4>核心观点</h4>
+  <p>创始人与想法各有可读/难读；双可读往往不够新；设计师可识别能量高但难讲清的内测原型，再用叙事与 UX 翻译给组织与市场。</p>
+  <h4>关键论据</h4>
+  <p>Evan Tan（SPC）二维框架；Claude Studio 内测界面起初「看不懂」但研究侧热情高，后析出 skills/指令等资产。</p>
+  <h4>典型案例</h4>
+  <p>从复杂 agent harness 界面中抽出计划、待办、上下文文件等 Co-work 有效模块。</p>
+  <h4>对公司的启发</h4>
+  <p>内部 hackathon 与高研原型需设计伙伴早期介入「翻译」，避免只有工程师懂价值。</p>
+  <h3>观点 10：领导力：低杠杆杂活可以是高杠杆信号</h3>
+  <h4>核心观点</h4>
+  <p>资深管理者亲自 dogfood、抠 bug、甚至提交 PR、为同事手写卡片，常被教科书归为低杠杆，实则塑造标准与信任。</p>
+  <h4>关键论据</h4>
+  <p>她举高管重度用产品、Mike Krieger 自己提 PR、纪念卡片等例。</p>
+  <h4>典型案例</h4>
+  <p>团队模仿她口头禅「next steps」开玩笑——反映心理安全。</p>
+  <h4>对公司的启发</h4>
+  <p>业务负责人定期走查核心交易路径，比只看汇总报表更能发现体验债务。</p>
+  <h3>观点 11：心理安全与高标准可并存（「严父」模型）</h3>
+  <h4>核心观点</h4>
+  <p>同事间能互相打趣不等于无纪律；前提是信任基底厚实，且 leader 明确追求卓越——类似关爱但要求严格的养育方式。</p>
+  <h4>关键论据</h4>
+  <p>她澄清并非强迫 roast，而是舒适区内的玩笑标志安全感；并提醒经理与下属做朋友需边界。</p>
+  <h4>典型案例</h4>
+  <p>crit 上被团队模仿口头禅仍能保持产出质量。</p>
+  <h4>对公司的启发</h4>
+  <p>评审文化可从「只说好话」转向「敢怼细节但不人身攻击」，适合高 stakes 金融产品迭代。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>设计工作二分法（执行支撑 / 短周期愿景）</td><td>当前阶段主要矛盾是帮团队 ship 得一致，还是为接下来数月统一方向？</td><td>工程已开多分支时的资源分配、路线图工作坊、设计 headcount 规划。</td><td>1）盘点并行实验数量与对外承诺 → 2）为执行侧设「不阻塞但要对齐」的触点（crit、设计系统）→ 3）为愿景侧定 3～6 月可证伪假设 → 4）用原型或灰度替代长 Deck → 5）每轮回顾调整两类时间占比。</td><td>避免设计同时想「控全场」与「造远景」而精疲力竭，又与工程现实对齐。</td></tr>
+  <tr><td>可读性四象限（创始人 × 想法）</td><td>这个原型/提案是「难读但能量高」还是「易懂但平庸」？谁能把它翻译为可传播叙事？</td><td>内测功能、0-1 产品、研究转产品的 handoff。</td><td>1）在 Slack/内测群中扫信号 → 2）标记高能量难读项 → 3）设计师或 PM 深度访谈开发者 → 4）抽象用户可感知的价值主张 → 5）选最小载体（界面、demo、故事）对外。</td><td>减少「好东西死在看不懂」的组织损耗。</td></tr>
+  <tr><td>早期发布与信任契约</td><td>若现在上线，我们能否展示持续改进而非一次性曝光？</td><td>研究预览、beta、新市场首登。</td><td>1）明确已知缺陷与适用人群 → 2）设反馈入口与响应 SLA → 3）公开小步快跑记录 → 4）对内同步修复优先级与资源 → 5）达不到承诺则收紧发布范围。</td><td>用速度换学习的同时控制品牌与合规预期。</td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>合约/现货/跟单等多线并行时，工程若已采用 AI 辅助高频改动，设计职能应写入明确的「陪跑节奏」（例如每日 standup 对齐体验回归点），避免只依赖传统里程碑评审。</li>
+  <li>交易与资产界面强调信任与风控文案：若采用「研究预览」式发布，需与客服、合规及公告渠道同一口径，防止用户误以为功能已完全稳定。</li>
+  <li>非确定性助手（行情解读、策略说明、客服）应以线上真实会话与埋点为主验收；静态设计稿仅覆盖模板态，需预留异常与模型漂移的 UI/兜底策略。</li>
+  <li>设计系统与组件库若以代码为真源，可鼓励 UI/UX 掌握 Claude Code 等工具做 token 级修改，缩短与 iOS/Android/Web 工程的最后一公里摩擦。</li>
+  <li>招聘上可对标三类画像：多技能通才（产品+视觉+实现）、单一维度顶尖专才（如动效/图标/技术美术）、以及高潜校招——在流程剧变期，后者有时比「流程惯性大的资深」更适配。</li>
+  <li>内部创新管道可借鉴「可读性框架」：量化团队、策略产品、增长实验常有「难读」原型，需设计伙伴早期介入翻译，避免只有少数人理解价值。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+  <tr><td>复盘设计时间饼图：mock、研究、与工程结对、直接实现各占多少；与 6 个月前对比并设定目标占比。</td><td>设计负责人 + 各产品线设计 IC</td><td>工程发版加速后设计成为瓶颈或相反脱节。</td><td>资源分配与招聘 JD 更贴近真实工作方式。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>定义「不阻塞交付」原则：哪些决策必须事前闸门、哪些可在实现后收敛，并写入团队公约。</td><td>产品 + 设计 + 工程负责人</td><td>多分支开发导致体验碎片化或设计过度门禁。</td><td>加快学习闭环且保持底线一致。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>为 AI 功能建立「真机/真模型」灰度与观测清单，替代纯静态稿验收。</td><td>产品 + 设计 + 数据 + 客服</td><td>助手类功能上线后用户用法与设计假设严重偏离。</td><td>提前暴露边界情况与会话失败模式。</td><td class="priority-p0">P0</td></tr>
+  <tr><td>更新设计系统文档与代码引用方式，降低 AI 生成界面偏离组件库的概率；安排设计师 IDE 培训。</td><td>设计系统 + 前端 + 设计</td><td>Claude Code 等工具产出未接入统一组件。</td><td>视觉与交互债务可控。</td><td class="priority-p1">P1</td></tr>
+  <tr><td>对设计经理推行短期 IC 轮岗或强制试用最新编码工具，避免管理与一线脱节。</td><td>设计管理 + HRBP</td><td>管理者无法共情新协作节奏。</td><td>提升指导质量与团队信任。</td><td class="priority-p1">P1</td></tr>
+  <tr><td>为重大 0-1 建立「难读想法」看板：内测能量信号、负责人、翻译里程碑。</td><td>产品技术委员会 + 设计</td><td>研究/工程原型难以被业务侧理解与支持。</td><td>提高内部创投命中率。</td><td class="priority-p2">P2</td></tr>
+  <tr><td>检查所有「beta/预览」功能的对外承诺与内部 backlog 是否匹配，避免沉默期损伤品牌。</td><td>产品 + 市场 + 客服</td><td>早发后长期无更新引发投诉。</td><td>与「信任来自速度」策略一致。</td><td class="priority-p1">P1</td></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 当 AI 让「人人能开分支」成为默认，设计系统与品牌规范应更多靠自动化检查还是靠文化共识？</p></div>
+<div class="discussion-q"><p>2. 愿景周期缩短到季度级后，战略岗位与设计的衔接是否会变得更像连续实验组合而非年度路线图？</p></div>
+<div class="discussion-q"><p>3. 若 AI 品味持续提升，设计教育应更强调叙事、伦理与组织决策，还是仍强化手工视觉基本功？</p></div>
+<div class="discussion-q"><p>4. 在受监管金融场景中，「研究预览」式发布与适当性、风险提示义务如何对齐？</p></div>
+<div class="discussion-q"><p>5. 心理安全与高标准的平衡在不同文化（全球化团队）中如何落地，而非简单复制 roast 式玩笑？</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block">
+  <blockquote>我们被教的那套设计流程——大量调研、发散收敛、像福音一样守护——基本上已经死了。</blockquote>
+  <div class="quote-source">— Jenny Wen，谈流程失效</div>
+</div>
+<div class="quote-block">
+  <blockquote>你作为设计师其实没时间再做那些精美 mock 了；不如别挡着，让他们先做起来。</blockquote>
+  <div class="quote-source">— Jenny Wen，谈执行支撑</div>
+</div>
+<div class="quote-block">
+  <blockquote>我们曾去做两年、五年甚至十年的愿景；现在技术变化太快，愿景更像三到六个月，而且不一定非得是精美 Deck——有时只是一个指方向的原型。</blockquote>
+  <div class="quote-source">— Jenny Wen，谈愿景尺度</div>
+</div>
+<div class="quote-block">
+  <blockquote>非确定性模型下你 mock 不全所有状态，甚至做不了可点原型——你得在真实模型下、看真实用户怎么用。</blockquote>
+  <div class="quote-source">— Jenny Wen，谈验证方式</div>
+</div>
+<div class="quote-block">
+  <blockquote>归根结底要有人决定到底做什么、什么才算重要——仍然需要有人对决策负责。</blockquote>
+  <div class="quote-source">— Jenny Wen，谈人类价值</div>
+</div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>AI 把工程油门踩到底后，设计的旧流程让位于两件事：别挡快速试错、同时用更短视距的原型把众人指向同一方向——Figma 仍管发散，代码与 agent 管落地，信任则来自持续迭代而非一次性完美亮相。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+  <p><strong>YouTube 视频：</strong><a href="https://www.youtube.com/watch?v=eh8bcBIAAFo">https://www.youtube.com/watch?v=eh8bcBIAAFo</a></p>
+  <p><strong>发布时间：</strong>2026-04</p>
+  <p><strong>嘉宾：</strong>Jenny Wen（Anthropic / Claude Co-work）</p>
+  <p><strong>Transcript 来源：</strong>youtube_auto_captions</p>
+  <p><strong>备注：</strong>基于节目转录稿整理；口语中的产品代号、版本号（如 Opus 4.6 等）以嘉宾表述为准；赞助段落未纳入核心论点。</p>
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>
