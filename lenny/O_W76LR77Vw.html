@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -383,12 +388,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>刻意人手偏少（Understaffing by design）</td><td>这个项目是否在用「刚好不够的人」逼出正确取舍，还是已经越过红线损害核心承诺？</td><td>多项目并行、资源永远紧张的增长期；需要砍掉伪需求时。</td><td>1）定义最小可行团队与单点备份。2）设硬性里程碑与延期触发条件。3）每周审视：延迟来自约束还是编制错误。4）达红线时补人或砍范围，避免「silent failure」。</td><td>减少组织假性忙碌，提高优先级清晰度；代价是要求领导者敢砍、敢补、敢承认误判。</td></tr>
   <tr><td>高 Alpha / 低 Beta 评估</td><td>人、流程或产品线的上行潜力与波动来源分别是什么？</td><td>高管评审、招聘终面、路线图仲裁、投后管理。</td><td>1）列出潜在上行场景与所需假设。2）识别 Beta：外生监管、渠道、关键人依赖等。3）设计实验或架构降低 Beta。4）资源向高 Alpha、可控风险项倾斜。</td><td>把「好听的故事」拆成可管理的风险—收益结构，减少用忙碌替代策略。</td></tr>
   <tr><td>PQL（节目内产品框架，需结合全文理解细节）</td><td>我们如何用统一标准讨论产品质量与产品杠杆，而不是各说各话？</td><td>多产品线公司、平台与中台博弈、PM 能力建设。</td><td>1）在组织内对齐 PQL 各维度定义（参照 Rippling 实践）。2）将路线图项目映射到框架。3）用同一套门槛做 kill/keep。4）与数据与客服反馈闭环。</td><td>降低产品政治化，提高跨团队资源谈判效率。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -403,6 +410,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为每个核心项目建立「编制—红线」表：最小人数、单点角色、允许的最长延期，并在周会显式过一遍是否越线。</td><td>项目负责人 / 工程与产品负责人</td><td>多项目抢人、优先级模糊</td><td>把「人手偏少」从口号变成可审计决策，避免静默崩盘</td><td class="priority-p0">P0</td></tr>
@@ -413,6 +421,7 @@
   <tr><td>成功复盘模板升级：强制区分能力 vs 时机 vs 结构红利；对「不可迁移」部分打标签，防止写入公司教条。</td><td>业务负责人 / 学习发展</td><td>大促或牛市后总结</td><td>提高组织学习质量，降低路径依赖</td><td class="priority-p2">P2</td></tr>
   <tr><td>建立 AI 假设清单：逐模块标注自动化风险与数据锁定效应，调整 R&amp;D 与合作伙伴策略；关键控制点人工终审不可省略。</td><td>技术 / 合规 / 产品</td><td>AI 功能快速扩散</td><td>避免「为 AI 而 AI」稀释安全与信任</td><td class="priority-p1">P1</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

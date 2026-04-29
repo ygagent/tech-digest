@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -354,12 +359,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>潜在需求（Latent demand）双维框架</td><td>用户正在用什么笨拙方式完成高价值事？模型在不受限时倾向调用哪些能力？</td><td>发现新产品形态、扩展 Agent 从单点工具到平台、优先级排序。</td><td>1）从行为数据与社群反馈中寻找「非设计用途」与高摩擦使用；2）将其抽象为可复制的工作流；3）并行观察模型在工具开放时的稳定行为；4）用最小产品包一层安全与引导；5）早发、快收反馈。</td><td>减少「拍脑袋路线图」；让需求证据与模型演化方向对齐，适合高速迭代期的 AI 产品。</td></tr>
   <tr><td>「为六个月后的模型而设计」赌注</td><td>若最强模型在工具使用、长程任务、计算机操作与 unattended 运行上继续走强，今天的架构会不会一票否决？</td><td>初创与内部创新项目在早期 PMF 不明显时的路线选择。</td><td>1）列出确信会随模型变强的能力维度（工具、长时运行等）；2）避免深度绑定当下弱点的编排；3）用可替换的工具层与评测夹住风险；4）接受前数月体验「不对」；5）在模型跃迁周做集中验收与推广。</td><td>降低每次模型发布后的重写幅度，把竞争力建立在「最先接住新模型」而非「最会包装旧模型」。</td></tr>
   <tr><td>安全与对齐三层观测</td><td>模型在训练与实验室里可靠，是否在真实工具链与权限下仍然可靠？</td><td>对外发布 Agent、在内网接 Slack/Gmail/交易系统、以及合规审计。</td><td>1）训练与对齐、可解释性监测；2）合成场景评测；3）受控外发与野外 telemetry；4）把学习反馈回训练与产品护栏；5）开源或标准化沙箱边界以降低生态风险。</td><td>把「安全」从宣言拆成可运营的发布节奏，特别适合高权限、高金额场景。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -374,6 +381,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>建立「反馈—快速可见响应」闭环：公开或内部渠道明确 SLA，鼓励用户/同事提交可复现描述，并用 Agent 先草稿修复或分类。</td><td>产品工程联合</td><td>开发者工具、内部平台、用户社区</td><td>提高有效反馈量与方向准确度，减少「黑箱感」。</td><td class="priority-p0">P0</td></tr>
@@ -384,6 +392,7 @@
   <tr><td>培训新人「先问最强模型能否端到端解决」并配套 heap/日志类问题的标准 Agent 剧本，减少路径依赖旧习惯。</td><td>工程负责人 / Mentor</td><td>线上缺陷与性能调查</td><td>缩短定位时间，拉齐代际工作方式。</td><td class="priority-p1">P1</td></tr>
   <tr><td>对权限型 Agent 落地沙箱、操作录像与批准点，并把野外异常纳入安全响应流程。</td><td>安全 / 合规</td><td>可访问账户、资金或敏感数据的自动化</td><td>满足审计与事故追溯，降低「模型失控」尾部风险。</td><td class="priority-p0">P0</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

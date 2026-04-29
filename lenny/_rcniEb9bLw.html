@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -371,6 +376,7 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>工业革命类比（净痛苦曲线）</td><td>在承认短期代价的前提下，这项技术是否可能在代际尺度上降低疾病、出行与通信成本？</td><td>对内对外的长期主义叙事、ESG 与社会影响沟通。</td><td>1）列出可量化伤害与收益类别 → 2）区分已发生代价与可预防代价 → 3）用历史案例校准时间尺度 → 4）将「分配」作为独立议题而非简单支持/反对技术。</td><td>避免非黑即白的恐慌 PR，把政策资源引向缓解阵痛而非禁止工具。</td></tr>
@@ -379,6 +385,7 @@
   <tr><td>价值观即成功学考古</td><td>若把过去 10 条关键赢面写下来，它们能否指导新人本周的具体行为？</td><td>从 10+ 人公司开始的文化固化。</td><td>1）复盘赢单与交付高峰 → 2）抽象 5–10 条可观察行为 → 3）写入晋升 rubric → 4）周会案例化复盘 → 5）淘汰与价值观冲突的「高绩效」。</td><td>避免墙上价值观与真实激励不一致。</td></tr>
   <tr><td>动量耳聋测试（Google/Facebook 镜像）</td><td>组织是否在用自己的 DNA 打一场需要不同物种才能赢的战争？</td><td>平台战略、第二曲线、竞争情报。</td><td>1）定义战场的成功定义由谁制定 → 2）识别文化 DNA 与隐性 KPI → 3）寻找需要新组织的子任务 → 4）允许内部「异质团队」 → 5）用客户指标而非内部声量衡量。</td><td>提前听见「市场变了」的弱信号，避免全体冲向错误山头。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -392,6 +399,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>在内部战略会上增加「物理 AI」扫描：农矿建运、国防与大型 OEM 软件预算迁移，评估是否与现有数据/支付/机构业务存在接口机会。</td><td>战略 + 研究</td><td>团队过度聚焦纯软件 LLM 而忽视实体世界资本开支周期。</td><td>对齐更长周期的产业贝塔与合作伙伴图谱。</td><td class="priority-p1">P1</td></tr>
@@ -401,6 +409,7 @@
   <tr><td>为高管与高潜设计「非舒适区」暴露：一线客服/清算/合规轮岗或共读旧书清单，补全「品味」与政策判断。</td><td>LD + 高管教练</td><td>窄路径晋升的管理者在危机中决策失衡。</td><td>提升组织柔性与共情型制度设计。</td><td class="priority-p2">P2</td></tr>
   <tr><td>国际业务尽调模板增加「组织目标函数」维度：利润、产业政策、数据主权、关键人风险，避免苹果式类比误读。</td><td>合规 + BD</td><td>与中国或类似体制主体合作时的意外条款与节奏。</td><td>合同与应急预案更贴近现实约束。</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -366,6 +371,7 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>先连接，再纠正（Connect before correct）</td><td>在给出纠正性信息前，对方是否已感到「被看见」？</td><td>1:1、跨部门冲突、客户投诉升级、亲子式「说教」易失败的任何对话。</td><td>1）简短复述对方处境或情绪。2）确认理解是否有误。3）再提出标准、期望或改进。4）约定跟进节点。</td><td>降低防御，提高信息真实度与行为改变概率。</td></tr>
@@ -373,6 +379,7 @@
   <tr><td>边界四要素（相对「模糊请求」）</td><td>这是可执行的自我边界，还是在逃避明确后果的讨好？</td><td>需求排期、对外承诺、团队行为红线、远程协作时段。</td><td>1）清晰陈述你的底线或规则。2）说明为什么（可选但利于接受度）。3）说明逾界时的系统性后果（非情绪惩罚）。4）一致执行。</td><td>提升可预测性，减少无休止的讨价还价与隐性怨恨。</td></tr>
   <tr><td>修复循环（Repair over perfection）</td><td>裂痕出现后，是否有人示范承担责任与修补？</td><td>公开失误、误解、客户事故、团队羞辱性事件之后。</td><td>1）尽快点名事实与影响。2）真诚道歉或承认（不甩锅）。3）说明已采取或将采取的纠正。4）邀请反馈并跟进。</td><td>将危机转化为信任资产；完美人设不可持续。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -387,6 +394,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>在绩效反馈模板中增加「连接句」占位（复述对方处境 1–2 句）再进入指标，培训管理者避免裸纠错。</td><td>HR / 各业务线负责人</td><td>季度 review、事故后谈话</td><td>提高反馈接受度与改进行动的真实性</td><td class="priority-p1">P1</td></tr>
@@ -396,6 +404,7 @@
   <tr><td>高管设定「可找到」规则：极端行情周内的 office hour、升级阈值与代班链，避免信息黑洞。</td><td>高管办</td><td>高波动市场、重大上线</td><td>稳定决策与执行节奏</td><td class="priority-p1">P1</td></tr>
   <tr><td>在管理者读书会或内训中引入本集与《Good Inside》框架，与现有教练（如 Radical Candor）对照：连接—边界—修复的次序。</td><td>L&amp;D / 管理梯队</td><td>管理梯队扩张、文化项目</td><td>统一困难对话的语言与预期</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

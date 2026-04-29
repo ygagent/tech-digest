@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -419,12 +424,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>AI 原生交付三件套</td><td>如何把「想法→用户」缩到最短且可重复？</td><td>高频迭代、强模型不确定、需跨职能同步的 AI 产品团队。</td><td>1）用用户-核心问题-主用例三元组写清目标，砍掉歧义方案；2）默认研究预览发布，明示早期边界以降低承诺成本；3）由 PM 设计跨职能接口：如固定频道/房间、工程 ready 信号、文档与 PMM 的次日响应 SLA。</td><td>把「快」从口号变成可复制的机制，而不是依赖个别英雄员工加班。</td></tr>
   <tr><td>原则 + 指标 自治决策栈</td><td>在 PRD 变薄时，如何避免「人人都问 PM」堵死进度？</td><td>工程师/设计师已部分 PM 化的组织；多产品线共享基础设施。</td><td>1）每周全员指标 readout，对齐驱动因子与趋势；2）成文团队原则：核心用户是谁、为何是他们、愿意牺牲什么；3）仅对高歧义或长周期基建保留一页纸 PRD（目标、愉悦路径、已知失败模式）。</td><td>用共享上下文替代冗长文档，提升边缘决策质量。</td></tr>
   <tr><td>Harness 生命周期（模型吃掉脚手架）</td><td>新模型上线后，哪些产品复杂度应删除而非累加？</td><td>强依赖 system prompt、工具链、子代理的 Agent 产品；技术债与模型能力强耦合的团队。</td><td>1）新模型发布时通读 system prompt，逐段质疑是否仍必要；2）识别「拐杖型功能」——为补模型短板而加，评估模型是否已内化；3）对历史上「准确度不够未发」的功能保留原型，模型换代后替换验证是否可 GA。</td><td>避免产品永久臃肿，并与模型路线图形成闭环投资。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -441,6 +448,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>设立每周 30–60 分钟全员指标 readout，并维护一页纸「团队原则」（核心用户、非目标、可接受的权衡）。</td><td>产品负责人 + 数据 + 各职能 lead</td><td>迭代快、信息易碎片化、新人增多</td><td>减少反复对齐与「问 PM」阻塞，决策更边缘化且一致</td><td class="priority-p0">P0</td></tr>
@@ -452,6 +460,7 @@
   <tr><td>为核心产品补一层「最小必要引导」（如必用能力 Top-N、沙盒任务），缓解快速发版带来的用户焦虑。</td><td>产品 + 设计 + 内容</td><td>功能重叠、用户不知道官方推荐路径</td><td>降低支持成本与流失，提高激活</td><td class="priority-p2">P2</td></tr>
   <tr><td>招聘与晋升标准显式加入「产品品位」与「端到端发货」证据，减少纯协调型 PM 依赖。</td><td>HRBP + 工程/产品总监</td><td>Engineer+PM 边界模糊、交付压力上升</td><td>编制效率更高，减少中间层摩擦</td><td class="priority-p1">P1</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -358,12 +363,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>分发三问（基于节目归纳）</td><td>用户为何会为新产品付出「注意与安装」？我们依赖哪类分发杠杆？</td><td>冷启动、国际化、新品类扩展；与 PMF 验证并行评估。</td><td>1）判断所处平台窗口（应用商店红利、资本补贴双边、生态嵌入）。2）列出可负担的分发实验与上限。3）将产品与分发假设绑定验证，而非先后割裂。</td><td>避免团队仅在功能差异化上内卷，而忽略「根本触达不到用户」的结构问题。</td></tr>
   <tr><td>Loonshots 双组织耦合</td><td>谁负责可靠交付，谁负责高风险试错，二者如何对话而不互毁？</td><td>大公司创新、监管行业中的新产品、需要高 SLO 的消费级平台。</td><td>1）承认层级体必然带来风险厌恶。2）设扁平创新单元（小、快、低头衔）。3）领导层固定节奏促成工程/运营与创意侧互馈。4）用共同指标或客户结果翻译两边语言。</td><td>把「创新文化」从口号变成可治理的组织接口，降低内部政治消耗。</td></tr>
   <tr><td>Jobs to be done × Agent 映射</td><td>对用户与商业客户而言，端到端任务链是什么？哪一段可被 Agent 可靠自动化？</td><td>AI 投入容易失控时的收敛工具；跨职能（法务、信任安全、GTM）协作。</td><td>1）列出用户侧旅程 JTBD（如下载、加固好友、使用 Lens 等）。2）列出广告主侧 JTBD（进入平台、配置投放等）。3）为每项配置团队、工具与产出度量。4）仅对边界清晰的 JTBD 构建 Agent，并配代码/发布护栏。</td><td>让 AI 与业务结果对齐，减少「为 Agent 而 Agent」的碎片化。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -378,6 +385,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为每条新业务线建立「分发假设」一页纸：默认渠道、单用户获取成本上限、90 天内可验证的实验清单，并与 PMF 里程碑绑定评审。</td><td>增长 / 战略 / 产品负责人</td><td>新品上线前或增长平台期</td><td>尽早暴露「根本触达不了用户」的风险，避免资源沉没在纯功能开发</td><td class="priority-p0">P0</td></tr>
@@ -389,6 +397,7 @@
   <tr><td>复制「报障—诊断—建议修复」链路：在内部包或灰度环境接入自动化根因摘要与修复建议，先从事故高发模块试点。</td><td>工程效能 / SRE / 客户端</td><td>版本频繁、线上问题复杂</td><td>缩短 MTTR，沉淀可审计的排障知识</td><td class="priority-p1">P1</td></tr>
   <tr><td>对设计师/PM 校招与转岗，试用「作品集广度 + 强叙事面试」：考察是否能为不同受众做出截然不同方案，并追问决策与学习过程，而非只看品牌履历。</td><td>设计 / 招聘</td><td>扩建体验团队</td><td>提高解决多元用户痛点的能力，减少风格艺术家型偏科</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

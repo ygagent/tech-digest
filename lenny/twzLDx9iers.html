@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -358,12 +363,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>Give Away Your Legos（交出乐高）</td><td>我手中哪块「只有我能做」的工作，正在阻止团队与公司的下一阶增长？</td><td>高速招聘、业务翻倍、从项目制走向产品线制时的个人与团队转型。</td><td>1）列出个人独占知识与决策清单。2）按风险排序，先做文档化 + 影子跟随。3）明确新 Owner 与决策权转移日期。4）用里程碑庆祝交接成功，而非只庆祝个人交付。</td><td>把规模化从口号变成可执行的交接节奏，降低关键人风险与政治化地盘战。</td></tr>
   <tr><td>恐惧双分（Growth Fear vs Threat Fear）</td><td>当前不适主要来自能力边界的扩展，还是来自价值观/安全感受损？</td><td>考虑是否接新 scope、是否换团队、是否晋升前的自我评估。</td><td>1）写下具体触发场景。2）问：成功后我会不会尊敬这段经历？3）问：失败的可逆性与支持系统是什么？4）征询信任同事的第三方框定。</td><td>减少把一切焦虑都「正能量化」或「一概逃避」两种极端。</td></tr>
   <tr><td>混乱期最小可行秩序（MVO in Chaos）</td><td>在还不能完善所有流程前，哪三条规则最能降低灾难概率？</td><td>融资后组织膨胀、多产品线并行、重大监管或事故后的修复期。</td><td>1）标定最高后果链路（资金、用户数据、合规）。2）为每条链路设单一问责点与升级路径。3）每周一次短复盘只改一条流程。4）刻意奖励「暴露早期风险」而非只奖励救火英雄。</td><td>用有限纪律换取扩展空间，避免过早全套流程化扼杀速度。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -378,6 +385,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>每位核心骨干季度填写「乐高清单」：独占知识项、计划交接对象、目标交接日期；由上级在 1:1 中逐项消纳。</td><td>工程 / 产品负责人、风控与运维负责人</td><td>团队规模 6 个月增长超过 30% 或关键系统仅 1–2 人熟</td><td>降低关键人风险，加速新人上手</td><td class="priority-p0">P0</td></tr>
@@ -389,6 +397,7 @@
   <tr><td>为高潜员工建立「stretch 任务 + 安全网」机制：明确试错边界、复盘模板与心理支持入口。</td><td>直属经理、HRBP</td><td>新业务线或新市场探索</td><td>把「喜欢被吓到」落实为可管理的风险承担</td><td class="priority-p1">P1</td></tr>
   <tr><td>对外复盘与危机沟通模板化：功劳归因团队、失败先问系统缺口，合规预审后发布。</td><td>公关、合规、业务负责人</td><td>重大客诉或市场异常波动</td><td>积累信任资本，避免短期卸责损害长期协作</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

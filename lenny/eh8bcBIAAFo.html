@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -387,12 +392,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>设计工作二分法（执行支撑 / 短周期愿景）</td><td>当前阶段主要矛盾是帮团队 ship 得一致，还是为接下来数月统一方向？</td><td>工程已开多分支时的资源分配、路线图工作坊、设计 headcount 规划。</td><td>1）盘点并行实验数量与对外承诺 → 2）为执行侧设「不阻塞但要对齐」的触点（crit、设计系统）→ 3）为愿景侧定 3～6 月可证伪假设 → 4）用原型或灰度替代长 Deck → 5）每轮回顾调整两类时间占比。</td><td>避免设计同时想「控全场」与「造远景」而精疲力竭，又与工程现实对齐。</td></tr>
   <tr><td>可读性四象限（创始人 × 想法）</td><td>这个原型/提案是「难读但能量高」还是「易懂但平庸」？谁能把它翻译为可传播叙事？</td><td>内测功能、0-1 产品、研究转产品的 handoff。</td><td>1）在 Slack/内测群中扫信号 → 2）标记高能量难读项 → 3）设计师或 PM 深度访谈开发者 → 4）抽象用户可感知的价值主张 → 5）选最小载体（界面、demo、故事）对外。</td><td>减少「好东西死在看不懂」的组织损耗。</td></tr>
   <tr><td>早期发布与信任契约</td><td>若现在上线，我们能否展示持续改进而非一次性曝光？</td><td>研究预览、beta、新市场首登。</td><td>1）明确已知缺陷与适用人群 → 2）设反馈入口与响应 SLA → 3）公开小步快跑记录 → 4）对内同步修复优先级与资源 → 5）达不到承诺则收紧发布范围。</td><td>用速度换学习的同时控制品牌与合规预期。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -407,6 +414,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>复盘设计时间饼图：mock、研究、与工程结对、直接实现各占多少；与 6 个月前对比并设定目标占比。</td><td>设计负责人 + 各产品线设计 IC</td><td>工程发版加速后设计成为瓶颈或相反脱节。</td><td>资源分配与招聘 JD 更贴近真实工作方式。</td><td class="priority-p0">P0</td></tr>
@@ -417,6 +425,7 @@
   <tr><td>为重大 0-1 建立「难读想法」看板：内测能量信号、负责人、翻译里程碑。</td><td>产品技术委员会 + 设计</td><td>研究/工程原型难以被业务侧理解与支持。</td><td>提高内部创投命中率。</td><td class="priority-p2">P2</td></tr>
   <tr><td>检查所有「beta/预览」功能的对外承诺与内部 backlog 是否匹配，避免沉默期损伤品牌。</td><td>产品 + 市场 + 客服</td><td>早发后长期无更新引发投诉。</td><td>与「信任来自速度」策略一致。</td><td class="priority-p1">P1</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

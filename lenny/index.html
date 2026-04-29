@@ -96,8 +96,19 @@
     @media (max-width: 640px) {
       .container { padding: 24px 16px; }
       h1 { font-size: 1.4rem; }
-      .article-thumb, .thumb-placeholder { width: 100px; min-height: 90px; }
-      .article-title { font-size: 0.92rem; }
+      .article-link { flex-direction: column; }
+      .article-thumb {
+        width: 100%; min-height: 160px; height: 160px;
+      }
+      .thumb-placeholder {
+        width: 100%; min-height: 120px; height: 120px;
+      }
+      .article-body { padding: 14px 16px; }
+      .article-title { font-size: 0.95rem; }
+      .article-summary {
+        display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
       .stats { flex-direction: column; gap: 10px; }
       .topbar-nav { display: none; }
     }

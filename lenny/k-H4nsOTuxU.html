@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -359,12 +364,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>增长实验自动化四段循环（CASH 方法论内核）</td><td>模型在「找事做、做出来、验质量、读数据」四步各有多强，能否周周爬坡？</td><td>高频、数据驱动、改动面相对可控的增长实验；需品牌与安全护栏。</td><td>1）机会识别（趋势与历史实验学习）→ 2）构建待上线改动 → 3）质量与品牌 gate → 4）上线后与数据复盘；对每段分别打分与迭代。</td><td>把低阶实验吞吐交给 AI，人类专注高赌注与跨团队对齐，缩短「能力悬垂」带来的落地延迟。</td></tr>
   <tr><td>好摩擦 vs 坏摩擦</td><td>这一步是否在帮助用户理解「为何选我」并路由到正确体验？</td><td>注册、KYC、开通交易、开通合约/杠杆、策略跟单等强合规或强路由场景。</td><td>1）区分无价值耗时与可解释的分步 → 2）用问答/测验收集意图与风险承受 → 3）个性化推荐产品与风控提示 → 4）A/B 验证完成率与长期留存/ARPU。</td><td>避免「极简漏斗」导致错误用户进错产品路径，降低客诉与资损风险。</td></tr>
   <tr><td>指数视角下的赌注组合（Bet Portfolio）</td><td>两年后的产品价值是线性小幅提升还是数量级跃迁？这如何改变实验组合？</td><td>AI Native 产品、交易工具、智能投顾/策略类功能等强技术曲线业务。</td><td>1）画出核心价值是否随模型/数据飞轮指数变化 → 2）若为指数，提高大 swing 资源占比 → 3）保留必要小微优化以复利 → 4）用 log 坐标审视增长，避免被短期噪声带偏。</td><td>在「大机会窗口」与「当下可交付」之间取得战略平衡，防止过度局部最优。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -378,6 +385,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>建立「模型/大版本发布 → 激活与新手路径」同步清单，每次大发布强制复盘首会话关键路径。</td><td>增长 + 产品 + 教研/内容</td><td>新模型、新交易功能或新跟单能力上线后，旧引导失效或用户仍停留在浅层用法。</td><td>缩短能力悬垂周期，提高首周激活与核心功能渗透率。</td><td class="priority-p0">P0</td></tr>
@@ -389,6 +397,7 @@
   <tr><td>用 log-linear 仪表板复盘核心增长指标，区分指数阶段与饱和阶段，校准赌注组合。</td><td>数据 + 战略</td><td>线性刻度掩盖早期真实增速或掩盖放缓信号。</td><td>战略对话与资源分配更一致。</td><td class="priority-p2">P2</td></tr>
   <tr><td>关键招聘或关键 BD 目标建立「高触达冷启动」 playbook（渠道、跟进节奏、极简价值陈述）。</td><td>人才招募 + 商务</td><td>竞争白热化下传统渠道响应率低。</td><td>提高顶级人才与战略合作伙伴触达效率。</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

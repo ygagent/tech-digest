@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -367,12 +372,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>人机吞吐瓶颈诊断（基于节目论点归纳）</td><td>限制端到端产出的是模型、工具链，还是人类输入/审查带宽？</td><td>引入或扩容编码 Agent 前后的产能规划、Sprint 承诺校准。</td><td>1）度量生成量 vs 合并量 vs 缺陷逃逸。2）抽样审查队列延迟与拒绝原因。3）区分「模型错误」与「需求不清/环境不稳」。4）对人侧瓶颈投入工具与流程（审查机器人、分层合并）。</td><td>避免单一维度加算力或换模型，却忽视人类侧队列与管理成本。</td></tr>
   <tr><td>主动队友信任分层</td><td>Agent 在哪些层级可自主行动，哪些必须人机共审？</td><td>企业内 Agent、长任务 runner、可写仓库的自动化。</td><td>1）列出操作类型（读代码、改配置、发 PR、部署）。2）按风险分级映射到自动/半自动/禁止。3）强制审计与回滚演练。4）随失败案例收紧或放宽策略。</td><td>在「主动性」与「可控性」之间可演进调节，降低事故面。</td></tr>
   <tr><td>AI 辅助变更的审查清单</td><td>合并 AI 生成 diff 时，我们固定检查什么？</td><td>大规模采用 Copilot/Agent 后的质量与安全基线。</td><td>1）意图与 spec 对齐。2）测试覆盖与边界条件。3）依赖与许可证。4）秘密与隐私。5）性能与可观测性。6）文档与运维可理解性。</td><td>把隐性专家经验显性化，缩短审阅时间并减少一致性问题。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -387,6 +394,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为编码 Agent 建立「生成—审查—合并」看板：跟踪待审 PR 年龄、按风险分级 SLA、拒绝原因分类。</td><td>研发效能负责人 / Tech Lead</td><td>Agent 使用率上升、合并队列变长</td><td>把人机瓶颈可视化，避免只看到 token 消耗却看不到交付结果</td><td class="priority-p0">P0</td></tr>
@@ -397,6 +405,7 @@
   <tr><td>若试用浏览器型 Agent 产品：先行完成 SSO、数据驻留、扩展白名单与会话审计方案，再扩大试点。</td><td>企业 IT / 安全 / 合规</td><td>引入 Atlas 类或嵌入式 Web Agent</td><td>避免便捷性以牺牲合规与事故追责能力为代价</td><td class="priority-p2">P2</td></tr>
   <tr><td>组织内部分享「问题分解、测试设计、代码阅读」训练模块，而非仅培训提示词技巧。</td><td>学习与发展 / 工程卓越</td><td>新入职与转岗工程师、PM</td><td>提升与 Agent 协作的实际上限</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

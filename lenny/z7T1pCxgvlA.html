@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -369,12 +374,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>AI 产品差异二象限（节目归纳）</td><td>我们的输出空间是确定性的吗？失败代价可否用单一测试套件覆盖？</td><td>立项评审、技术路线选择、与业务签 SLA 前。</td><td>1）列出开放域输入与不可接受输出类型。2）定义可接受输出集合或评分 rubric。3）设计人在环与降级。4）将监控指标与业务指标对齐。</td><td>避免用传统软件甘特图管理概率系统，减少上线后「无指标可归因」混乱。</td></tr>
   <tr><td>CC/CD：持续校准 × 持续开发</td><td>我们如何证明本周系统比上周更适配真实用户与真实数据？</td><td>模型/提示频繁变更的企业场景；多租户 B 端产品。</td><td>1）建立任务级评测与采样审计。2）生产日志→标注→新测例→回归。3）与客户成功共建「坏案例」入库机制。4）发布门禁与渐进 rollout。5）复盘写入策略与文档。</td><td>把「一次性上线」改为可度量演进，形成质量飞轮。</td></tr>
   <tr><td>分层评测栈（工程评测 + 生产监控 + 客户反馈）</td><td>离线好是否等于线上好？业务好是否等于安全？</td><td>模型迭代、Agent 工具链升级、提示大改。</td><td>1）工具/步骤级单测。2）场景级集成评测。3）线上分层发布与影子流量。4）客户工单与 NPS 结构化回填。5）安全红队定期抽签。</td><td>降低 evals 迷信与「单一总分」误导。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -389,6 +396,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>用一页纸写清「开放边界」：禁止输出、必须拒答、必须转人工的触发条件，并与法务预览。</td><td>产品 + 法务 + 信任安全</td><td>对客 AI 功能立项或 major 版本前</td><td>降低合规与舆情黑天鹅</td><td class="priority-p0">P0</td></tr>
@@ -399,6 +407,7 @@
   <tr><td>把客户成功通道与评测共建：严重误答 24h 内转测例 owner，纳入回归。</td><td>客户成功 + 工程</td><td>企业客户或高净值场景</td><td>飞轮式改进、减少重复事故</td><td class="priority-p1">P1</td></tr>
   <tr><td>培训 PM/研发「评测素养」：rubric 设计、抽样统计、混淆矩阵解读，纳入晋升材料。</td><td>研发负责人 + HR</td><td>组织规模化后</td><td>减少拍脑袋改提示/换模型</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

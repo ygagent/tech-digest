@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -350,12 +355,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>低心率临场三要素</td><td>我现在的急促感，来源是稀缺叙事、技能缺口还是体力透支？</td><td>重大会面、演讲、媒体采访、投资人会议前自检。</td><td>1）身体：睡眠、咖啡因、呼吸节奏。2）叙事：默念「机会不止一次、我无需一次证明一切」。3）行为：放慢首句、复述对方、用提问把球打回去。</td><td>把「自信」从抽象口号落到可操作的生理与对话节拍。</td></tr>
   <tr><td>场景化礼仪清单（入室—对话—离场）</td><td>在这一场景里，对方最可能因什么细节对我扣分？</td><td>峰会、晚宴、闭门会、线上一对一。</td><td>1）入室：时间、介绍、姓名、眼神。2）对话：欢迎他人、能量匹配、乒乓式提问。3）离场：感谢与下一步，不拖泥带水。</td><td>用同一框架覆盖线上线下，减少临场决策疲劳。</td></tr>
   <tr><td>信任信号 vs. 炫耀信号</td><td>我的着装、配饰、点单与小费，传递的是可靠还是「我需要被刮目相看」？</td><td>初次建立合作、跨境文化场合、高净值客户触达。</td><td>1）默认「略高一档平均」。2）消灭异味与夸张记忆点。3）在买单场景选择保守慷慨策略。</td><td>降低对方防御，把注意力留在议题与共赢上。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -370,6 +377,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>制作一页「对外信任场景 checklist」（入室、介绍、小型谈话、宴请、邮件/DM），纳入创始人与对外负责人会前 5 分钟流程。</td><td>高管办 / 品牌公关</td><td>融资、战略合作、监管沟通、媒体采访</td><td>降低临场随机性，统一信任信号</td><td class="priority-p0">P0</td></tr>
@@ -381,6 +389,7 @@
   <tr><td>峰会前发参会同事「姓名复述与介绍救援句式」备忘，降低多人场合忘名尴尬。</td><td>活动运营</td><td>行业大会、闭门晚宴</td><td>保护个人与公司专业形象</td><td class="priority-p2">P2</td></tr>
   <tr><td>管理层例会增加「本周一次高质量对外互动复盘」：哪些信号好、哪些急促，5 分钟就够。</td><td>高管团队</td><td>多线对外并行</td><td>把礼仪从个人天赋变为团队学习曲线</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

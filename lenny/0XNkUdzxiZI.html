@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -387,6 +392,7 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>并行四轨澄清法（脑暴 → 精化 → 视觉 → 代码参考）</td><td>我是否在用多条低成本路径验证方向，而不是锁死第一条 agent 输出？</td><td>0-1 产品、活动站、内部工具选型前的方向探索。</td><td>1）语音/文字脑暴开项目 A → 2）抽出清晰线程开项目 B 并附参考截图 → 3）寻找近似的代码片段/模板开项目 C → 4）并行对比后选胜者 → 5）仅对胜者进入重文档阶段。</td><td>降低迭代积分与心理沉没成本，更快对齐「到底要什么」。</td></tr>
@@ -394,6 +400,7 @@
   <tr><td>4×4 调试（每招一试）</td><td>问题是工具真不知道，还是我知道却没让它看见？</td><td>集成失败、幽灵 bug、长对话后行为异常。</td><td>1）内置 try to fix → 2）预览环境复现 + 要求加日志 → 3）导出仓库用外部分诊工具读全栈 → 4）版本回退与重写 prompt → 5）复盘写入 rules。</td><td>避免在同一坑里消耗积分与士气，形成可复用代理记忆。</td></tr>
   <tr><td>曝光时间（Exposure time）</td><td>我本周花多少小时「看最好的东西」而非「产最多的稿」？</td><td>提升品味、文案与设计 prompt 词汇。</td><td>1）列出本领域顶尖界面/作者 → 2）固定日程跟读长视频或拆解 Figma → 3）把观察转译成 design guidelines 与 prompt 短语 → 4）_ship 小项目验证 → 5）对比用户反馈迭代。</td><td>在「人人够用」时代堆高 magic 曲线。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -408,6 +415,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为代理驱动项目引入最小 PRD 包：master plan、implementation、design guidelines、user journey、tasks.md 与 rules 读档顺序。</td><td>产品 + 工程 + 设计</td><td>多任务、长会话、易上下文漂移的 AI 辅助开发。</td><td>减少假修复与重复解释，提升可测试交付比例。</td><td class="priority-p0">P0</td></tr>
@@ -417,6 +425,7 @@
   <tr><td>试点「作品集应用」招聘通道：关键岗位接受短链可交互 demo 替代部分简历筛选。</td><td>招聘 + 用人经理</td><td>传统简历难以识别 vibe/build 能力。</td><td>提高匹配效率与候选人体验。</td><td class="priority-p2">P2</td></tr>
   <tr><td>明确原型到生产的分级：哪些仅内网、哪些需渗透/合规/压测；禁止未评审代码接核心交易链路。</td><td>安全 + 合规 + 工程负责人</td><td>影子 IT 与快速 AI 交付冲突。</td><td>兼顾速度与风险边界。</td><td class="priority-p0">P0</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

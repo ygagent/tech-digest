@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -357,12 +362,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>数据三角：语料 × 环境 × 评测</td><td>我们的模型改进，究竟来自更多静态语料、更好的交互环境，还是更贴近业务的评测？</td><td>规划 RL、Agent、代码助手或内部 Copilot 的季度路线。</td><td>1）列出核心业务失败类型。2）映射到可采集数据与可仿真环境。3）设计防刷榜的内部指标与人工审计抽样。4）固定发布节奏对比「指标—用户满意度」双轴。</td><td>避免团队只在公开基准上内卷，而忽略可交互任务与真实错误分布。</td></tr>
   <tr><td>基准健康检查（反 Goodhart）</td><td>当前优化的指标，被「游戏」后会不会伤害真实用户任务？</td><td>引入新 KPI、与第三方模型对标、或对研发设 OKR 时。</td><td>1）区分「可公开宣传指标」与「不可游戏的核心任务」。2）为每条公开指标配一条「对抗性」或「长尾」测试。3）定期用生产日志重放评测。4）明确谁对指标扭曲负责（产品/研究/数据）。</td><td>降低组织层面的目标错位，减少模型「看起来很聪明」但一上线就翻车。</td></tr>
   <tr><td>品味与价值观 RACI</td><td>模型的语气、拒绝策略与创意边界，由谁定义、谁批准、谁承担后果？</td><td>多品牌、多地区、多监管环境下的生成式产品。</td><td>1）梳理法务/品牌/研究的 RACI。2）把「不可接受输出」写成可执行的否定样本规格。3）对齐到训练与推理护栏同一套源事实。4）建立季度复盘：事故类型 vs 规格缺口。</td><td>让「价值观」可运营，而不是停留在 slogan。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -377,6 +384,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为每条面向用户的模型能力升级建立「数据—环境—评测」变更说明，并在发布评审中强制附件。</td><td>ML / 产品 / 风控</td><td>大版本模型或新 Agent 能力上线前</td><td>减少「版本号营销」与真实能力之间的预期差</td><td class="priority-p0">P0</td></tr>
@@ -386,6 +394,7 @@
   <tr><td>为 Agent 类功能设计最小可仿真环境（规则可版本化），用于离线策略评估与上线前回归。</td><td>研究 / 后端 / 风控</td><td>多步工具调用、自动下单辅助、复杂工单</td><td>提前暴露长链错误与安全边界问题</td><td class="priority-p1">P1</td></tr>
   <tr><td>高管对齐「AGI/全自动」对外话术与内部工程现实，避免销售过度承诺传导至架构短视。</td><td>战略 / 投关 / 研发负责人</td><td>融资、品牌活动或竞品密集发声期</td><td>降低技术与合规双重反噬</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

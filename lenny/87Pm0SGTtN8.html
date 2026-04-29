@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -350,12 +355,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>人口—生产率—技术补偿三角（节目叙事归纳）</td><td>在长期劳动供给与生产率担忧下，新技术是缓解还是加剧分配矛盾？组织如何测度真实效率增益？</td><td>宏观汇报、政企客户提案、内部战略 offsite。</td><td>1）列出可量化的人口/用工约束假设。2）将 AI 用例映射到具体流程 KPI（周期、差错率、单位人力产出）。3）单列出无法自动化的治理与品牌成本。4）按季度复盘假设是否被数据证伪。</td><td>避免把「技术可用」直接等同于「经济问题解决」，同时保留对结构性机会的清醒押注。</td></tr>
   <tr><td>E 型职业 = 多技能组合 × AI 杠杆</td><td>在自动化抬高基线时，个人与团队如何设计「不可批量替换」的技能栈？</td><td>个人发展规划、关键岗位继任、复合型人才招聘。</td><td>1）画出主职能与两条相邻技能（如 PM + 数据 + 基础工程可读性）。2）为每维设 90 天可验证产出。3）选定 1–2 个 AI 工作流固定为团队标准（评审、调研、测试生成）。4）用业务结果而非工具熟练度做复盘。</td><td>把 AI 从「个体技巧」提升为「可复制的团队产能结构」。</td></tr>
   <tr><td>PM—设计—工程「墨西哥对峙」调解板</td><td>当实现成本下降，谁为意图、体验与技术债的最终形态负责？</td><td>跨职能扯皮、AI 原型泛滥、设计系统被绕开、工程 burnout。</td><td>1）为每一类需求指定单一 DRI（直接负责人）与指标。2）定义「可合并 PR」的体验门禁（设计令牌、无障碍、性能预算）。3）设双周三方对齐：范围、风险、债务偿还。4）将 AI 生成物纳入与普通代码同等的审查与溯源要求。</td><td>降低组织内耗，把工具红利转化为可持续交付而非一次性 demo。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -370,6 +377,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>组织一次「AI 与任务重组」工作坊：按团队列出核心任务 bundle，标注哪些可被辅助、哪些必须人类签字，并更新岗位描述与晋升标准。</td><td>人力 / 业务负责人 / 工程负责人</td><td>AI 工具大规模落地前后</td><td>减少泛化恐慌与盲目裁员/扩招，对齐真实生产率变化</td><td class="priority-p0">P0</td></tr>
@@ -381,6 +389,7 @@
   <tr><td>个人层面实践「反可替代」清单：选一项领域判断（风险、合规、细分客群）做深度资产，并固定公开输出节奏以积累信任。</td><td>全员 / 个人</td><td>职业规划与绩效周期</td><td>在基线能力被工具拉平时保留稀缺性</td><td class="priority-p2">P2</td></tr>
   <tr><td>审视信息食谱：减少中间层无效消费，为团队设定「原始来源 + 长文本深读」比例目标（按角色自选，不强制统一工具）。</td><td>个人 / 学习社群</td><td>信息过载、决策迟滞</td><td>提高信号噪声比与独立判断</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

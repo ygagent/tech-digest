@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -367,12 +372,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>增长停滞五步诊断（Jason Cohen）</td><td>瓶颈是在留住人、卖对人、卖贵/卖便宜、扩张质量，还是渠道与市场的错配？</td><td>月活/收入增速放缓、销售周期拉长、投放效率下滑但原因不明时。</td><td>1）logo 留存与核心使用是否健康。2）定价与包装是否阻断正确客户或吸引错误客户。3）NRR 是否支撑可持续扩张。4）主渠道是否进入大象曲线尾部。5）目标市场与定位是否仍成立。</td><td>把「增长团队加预算」从默认答案变成排序最后的手段，优先修结构性漏损。</td></tr>
   <tr><td>取消与流失：真因访谈清单</td><td>用户离开时说的理由，与行为与价值感知是否一致？</td><td>流失率上升、客诉集中在价格、竞品切换增多时。</td><td>1）优化取消流中的问卷与访谈，提高回复率。2）交叉比对最后 30 天行为与 support 记录。3）对「太贵」单独做价值/替代方案探针。4）输出可行动的三大根因假设并验证。</td><td>减少把定价当万能借口，避免错误降价侵蚀品牌与 NRR。</td></tr>
   <tr><td>大象曲线 × 渠道组合</td><td>当前主渠道处于曲线的哪一段？下一增长曲线在哪里？</td><td>单一渠道占比过高、CPA 攀升、行业流量红利消退时。</td><td>1）为每个渠道画时间与边际获客成本。2）区分直销与间接，评估可规模化上限。3）设「渠道实验预算」探索新通路。4）与定位调整联动，避免渠道与叙事脱节。</td><td>用组合思维对抗「指数增长永远持续」的幻觉。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -387,6 +394,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>用五步框架开一次增长诊断会：每层指定负责人、当前指标、下一项验证实验与截止日期。</td><td>增长负责人 / 产品负责人 / 数据</td><td>增速连续两个季度低于预期</td><td>避免全员只盯投放或只盯功能，快速定位主瓶颈层级</td><td class="priority-p0">P0</td></tr>
@@ -398,6 +406,7 @@
   <tr><td>半年度定位审计：对比竞品首页、客户访谈原话、赢单理由，修订核心叙事与案例库。</td><td>市场 / 产品 / 销售</td><td>功能完备但成交效率低</td><td>释放定位杠杆，避免只会堆功能</td><td class="priority-p2">P2</td></tr>
   <tr><td>高管工作坊：列出「维持 / 深耕 / 并购退出 / 收缩」选项，明确何种指标下应切换叙事，而非默认永远追求超高增长。</td><td>CEO / 战略 / 董事会</td><td>赛道天花板清晰或资本环境收紧</td><td>减少路径依赖与无效融资故事</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

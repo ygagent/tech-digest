@@ -110,7 +110,7 @@ def render_core_insights(data):
 def render_frameworks(data):
     parts = []
     if isinstance(data, list):
-        parts.append('<table class="action-table">\n')
+        parts.append('<div class="table-wrapper">\n<table class="action-table">\n')
         parts.append("  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>\n")
         for fw in data:
             if isinstance(fw, dict):
@@ -121,14 +121,14 @@ def render_frameworks(data):
                         val = "; ".join(val)
                     parts.append("<td>%s</td>" % e(val))
                 parts.append("</tr>\n")
-        parts.append("</table>\n")
+        parts.append("</table>\n</div>\n")
     return "".join(parts)
 
 
 def render_action_items(data):
     parts = []
     if isinstance(data, list):
-        parts.append('<table class="action-table">\n')
+        parts.append('<div class="table-wrapper">\n<table class="action-table">\n')
         parts.append("  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>\n")
         for item in data:
             if isinstance(item, dict):
@@ -141,7 +141,7 @@ def render_action_items(data):
                 parts.append("<td>%s</td>" % e(item.get("benefit", "")))
                 parts.append('<td class="%s">%s</td>' % (prio_cls, e(prio)))
                 parts.append("</tr>\n")
-        parts.append("</table>\n")
+        parts.append("</table>\n</div>\n")
     return "".join(parts)
 
 

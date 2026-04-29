@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -358,12 +363,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>双轨威胁清单（越狱 / 注入）</td><td>失败时损失来自「坏内容」还是来自「坏动作」？</td><td>设计 Copilot、客服机器人、内部问答与自动化代理前的威胁建模。</td><td>1）列出敏感话题与合规边界（越狱面）。2）列出所有不可信文本入口：邮件、网页、工单、用户上传。3）判断模型是否能把不可信文本与系统指令拼接。4）对「能触达工具/API」的路径强制人在环路或策略引擎。</td><td>避免只买内容审核却忽略工具链劫持。</td></tr>
   <tr><td>红队驱动的护栏验收</td><td>在真实集成与数据下，攻击者最少需要几步能达成目标？</td><td>采购 AI 安全产品、上线新插件、开放对外 Agent。</td><td>1）固定评测集与自家业务语料。2）多轮对抗迭代（含工具调用链）。3）记录绕过路径而非仅 pass/fail。4）把发现映射到架构改造而不仅是规则追加。</td><td>用实证压缩营销泡沫，形成可复现安全基线。</td></tr>
   <tr><td>高后果动作（HCA）网关</td><td>哪些操作一旦出错不可逆？谁有权批准？</td><td>金融、运维、人力、代码与客服系统中的自动化。</td><td>1）枚举 HCA 列表。2）每类动作设独立确认与双人规则。3）代理默认无权，显式授予最小权限。4）异常模式触发熔断与人工接管。</td><td>在模型能力上升时限制爆炸半径。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -378,6 +385,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为所有对外/对内 LLM 应用建立「不可信输入清单」与数据流图，标注与系统提示拼接点，并制定隔离或摘要化改造计划。</td><td>安全 + AI 平台 + 产品</td><td>已上线或计划上线 RAG、插件、浏览器类代理</td><td>把提示注入从隐性技术债变为可跟踪架构项</td><td class="priority-p0">P0</td></tr>
@@ -388,6 +396,7 @@
   <tr><td>多 Agent 系统引入「跨代理消息签名/允许列表」与全链路审计日志，禁任意代理互写未经校验的自然语言指令。</td><td>AI 平台架构师</td><td>工单、运维、营销自动化多代理编排</td><td>阻断二阶提示在代理间放大</td><td class="priority-p1">P1</td></tr>
   <tr><td>供应商安全 RFP 增加：在买方环境复现集成、接受第三方红队、披露已知绕过案例与修复 SLA。</td><td>采购 + 安全</td><td>选购企业级 guardrail 或 LLM 网关</td><td>降低虚假合规与无效采购</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

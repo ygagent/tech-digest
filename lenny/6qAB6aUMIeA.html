@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -358,12 +363,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>AI PLG 首胜漏斗（归纳）</td><td>用户第一次打开产品后，多少分钟内能产出一个愿意分享的可用物？</td><td>生成式产品冷启动、onboarding 改版、免费增值边界设计。</td><td>1）定义「首胜」标准（可运行、可分享、可编辑）。2）度量中位耗时与分场景成功率。3）用模板与约束收窄失败路径。4）在首胜后立刻引导分享或协作。</td><td>把增长责任前移到产品与模型质量，而非仅靠后置投放补课。</td></tr>
   <tr><td>作品即渠道循环</td><td>用户成功路径上，哪一步自然产生对外可见资产？</td><td>工具类、创作者类、低代码与报告类产品。</td><td>1）列出用户产出的对外可见形态（链接、图表、页面、小程序）。2）设计归因与品牌露出边界。3）策展头部作品并模板化。4）追踪「由作品页带来的注册占比」。</td><td>用供给侧规模换取分发规模，降低单一渠道的边际成本。</td></tr>
   <tr><td>氛围编程 × 场景收敛矩阵</td><td>哪些场景允许用户只描述「氛围」也能得到高完成度结果？</td><td>提示词产品化、行业套件规划、减少泛化承诺。</td><td>1）按行业/用例列出成功样本。2）为每格定义禁止项（易翻车需求）。3）把 UI 组件与生成策略绑定。4）用数据关闭低完成度场景的营销投放。</td><td>在能力快速扩张期保持口碑可控，避免「什么都能做」反噬。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -378,6 +385,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>为含 AI 生成能力的产品定义「首胜」指标（时间、可分享性、二次编辑率），并在数据分析看板中与注册漏斗并列。</td><td>产品 / 数据</td><td>生成类功能上线或改版</td><td>把 PLG 从概念落到可优化指标</td><td class="priority-p0">P0</td></tr>
@@ -389,6 +397,7 @@
   <tr><td>对生成/推荐类能力建立质量分与滥用监控（速率、阈值、人工复核队列），与功能开关联动。</td><td>平台 / 安全 / 客服</td><td>用户量陡增</td><td>控制支持与合规风险</td><td class="priority-p0">P0</td></tr>
   <tr><td>高管双轨沟通：对外讲清增长驱动因子，对内同步质量与稳定性指标，防止目标撕裂。</td><td>高管团队</td><td>组织快速扩张</td><td>降低战略误读与执行摇摆</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

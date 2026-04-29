@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -356,12 +361,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>建造者 vs 信息搬运工（PM 分型）</td><td>你的日常成就是否依赖「把真相包装到会议上」还是「把假设变成可测的交付」？</td><td>自评、招聘画像、团队重组与培养路径设计。</td><td>1）列出过去 90 天最高杠杆活动，标记多少比例可被 AI 或流程替代；2）识别是否享受动手建造与工具化；3）若不享受建造，诚实评估是否离开纯科技产品主航道或换细分职能；4）若是建造者，把「判断练习」嵌入每次发布（成功标准、放弃标准）。</td><td>解释「岗位多却有人找不到工作」的悖论，对齐市场真实需求。</td></tr>
   <tr><td>跨越再发明阈值（Reinvention threshold）</td><td>你是否愿把「保持现代化」排在短期舒适与面子之前？</td><td>中层管理者、大厂资深 IC、家庭负担重的「权力岁月」人群。</td><td>1）承认目标持续移动，单次培训不够；2）主动制造「第一次喜悦」项目（工作或个人场景均可）；3）用「淘汰自己的重复劳动」清单驱动学习；4）接受阶段性让各方「平等失望」以挤出时间；5）与上级对齐长期 Skip 目标（下一跳之后的竞争力）。</td><td>把焦虑转化为可执行的心理与日程策略，避免「等风暴过去」。</td></tr>
   <tr><td>Skip 思维（下一跳之后的下一跳）</td><td>当前选择能否保住两年后的高选择权与高建造者溢价？</td><td>换工作、接降 Title、是否去「更 AI 原生」团队等职业决策。</td><td>1）短期 swallow ego：可为保持现代而接受更小 scope 或更 hands-on；2）评估平台是否正在更新产品操作系统；3）把薪酬与 title 放在「是否上船去新世界」之后排序；4）选定能积累可展示判断与工具栈的环境。</td><td>在剧变期避免用旧指标体系（纯 title/纯现金）做局部最优。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -376,6 +383,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>用两周记录会议与文档类型，标记「信息搬运 vs 判断/建造」占比，并删除或自动化最低杠杆的 20%。</td><td>产品负责人 / PMO</td><td>评审过多、PRD 层层转述</td><td>释放时间转向实验与工具化，降低有责无权感。</td><td class="priority-p0">P0</td></tr>
@@ -386,6 +394,7 @@
   <tr><td>试点自动化 product review / 站会摘要：单一数据源 + Agent 草稿，人类只做分歧裁决。</td><td>平台工程 / 产品运营</td><td>远程多时区、信息过载</td><td>减少戏剧化对齐，提高地面真相质量。</td><td class="priority-p1">P1</td></tr>
   <tr><td>在个人层面实践 Skip 决策：评估 offer 时加入「两年后是否仍现代」权重，必要时为上手新栈接受短期 title/scope 调整。</td><td>个人 / 高管教练</td><td>职业转折点、裁员潮</td><td>保住长期选择权与高建造者溢价。</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

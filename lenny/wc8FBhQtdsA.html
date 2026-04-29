@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -348,12 +353,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>编码 Agent 拐点识别框架</td><td>当前模型是否在「少监护」前提下达到可重复的端到端交付，使组织愿意改流程与编制？</td><td>决定是否扩大 Agent 写码范围、是否投资暗工厂式流水线、如何设定人机闸门。</td><td>1）用固定内部基准（缺陷率、修复时长、回滚率）对比两代模型；2）度量「首次成功运行」比例与人工打断次数；3）对核心域做红队与安全回归；4）仅在指标跨阈值后更新政策（如禁止手敲或强制测试门禁）；5）每季度复评以防模型退化或供应商切换。</td><td>把「体感好用」转成可运营指标，适合强监管与高可用业务。</td></tr>
   <tr><td>暗工厂治理三角</td><td>在不通读每行代码的情况下，凭什么相信系统仍满足专业标准？</td><td>大规模 Agent 交付、模拟环境 QA、跨系统集成测试、合规审计准备。</td><td>1）自动化测试与契约测试作为一等公民；2）模拟外部依赖（API 级假 Slack/Jira 等）支撑规模与速率；3）虚拟用户/员工 swarm 做负载与流程探索；4）安全与渗透测试独立验证（区分真漏洞与 slop 报告）；5）抽样人工审计与事后复盘制度化。</td><td>为「关灯软件工厂」提供可辩护的质量与安全边界，而非仅靠信任模型品牌。</td></tr>
   <tr><td>职业能动性投资框架</td><td>个人与团队如何把 Agent 从「省力」转为「能力提升与更大赌注」，并避免倦怠与技能萎缩？</td><td>中段工程师发展、团队文化、绩效目标设定。</td><td>1）显式选择更高野心项目；2）用 Agent 攻克过去因学习曲线放弃的技能栈；3）坚持可验证学习（测试、复盘、对比模型输出）；4）设定并行度与在线时长上限；5）把「发现问题与定义验收」写入晋升标准。</td><td>缓解夹心层焦虑，并与组织需要的判断力对齐。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -369,6 +376,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>建立「模型代数 × 业务域」矩阵：按季度跑统一基准，记录 Agent 首次成功率、人工干预次数与事故关联，再更新是否允许自主合并或 YOLO。</td><td>工程效率 / 架构委</td><td>编码 Agent 推广与供应商切换</td><td>决策基于证据，减少体感争论与一刀切禁止。</td><td class="priority-p0">P0</td></tr>
@@ -380,6 +388,7 @@
   <tr><td>制定并行 Agent 与异步任务的工作守则：上限并行数、离线时段、禁止睡眠剥夺式排程，纳入工程文化宣导。</td><td>工程负责人 / 健康与安全相关职能</td><td>高投入 AI 原生团队</td><td>降低倦怠与决策失误率，防范 Challenger 式文化累积。</td><td class="priority-p2">P2</td></tr>
   <tr><td>建设可检索的内部模式库（或受控 Git 研究仓），让 Agent 组合历史工具与脚本，减少重复造轮。</td><td>开发者体验</td><td>数据新闻式工具链、运营脚本、内部仪表盘</td><td>放大「上下文复用」红利，缩短从想法到可运行原型的时间。</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

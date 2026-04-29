@@ -66,7 +66,13 @@ def generate_index_html(entries):
     for entry in entries:
         tags_html = ""
         for tag in entry.get("tags", [])[:4]:
-            tags_html += '<span class="tag">%s</span>' % e(tag)
+            if tag and tag.strip():
+                tags_html += '<span class="tag">%s</span>' % e(tag)
+
+        date_val = entry.get("published_at", "").strip()
+        date_html = '<span class="article-date">%s</span>' % e(date_val) if date_val else ""
+        dur_val = entry.get("duration", "").strip()
+        dur_html = '<span class="article-duration">%s</span>' % e(dur_val) if dur_val else ""
 
         cards_html.append("""
     <li class="article-card">
@@ -76,8 +82,7 @@ def generate_index_html(entries):
         <div class="thumb-placeholder" style="display:none">LP</div>
         <div class="article-body">
           <div class="article-meta">
-            <span class="article-date">%s</span>
-            <span class="article-duration">%s</span>
+            %s%s
           </div>
           <div class="article-title">%s</div>
           <div class="article-guest">%s%s</div>
@@ -88,8 +93,8 @@ def generate_index_html(entries):
     </li>""" % (
             e(entry.get("html_file", "")),
             e(entry.get("thumbnail", "")),
-            e(entry.get("published_at", "")),
-            e(entry.get("duration", "")),
+            date_html,
+            dur_html,
             e(entry.get("title", "")),
             e(entry.get("guest", "")),
             (" - " + e(entry["guest_title"])) if entry.get("guest_title") else "",
@@ -204,8 +209,19 @@ INDEX_PAGE_TEMPLATE = """<!DOCTYPE html>
     @media (max-width: 640px) {
       .container { padding: 24px 16px; }
       h1 { font-size: 1.4rem; }
-      .article-thumb, .thumb-placeholder { width: 100px; min-height: 90px; }
-      .article-title { font-size: 0.92rem; }
+      .article-link { flex-direction: column; }
+      .article-thumb {
+        width: 100%; min-height: 160px; height: 160px;
+      }
+      .thumb-placeholder {
+        width: 100%; min-height: 120px; height: 120px;
+      }
+      .article-body { padding: 14px 16px; }
+      .article-title { font-size: 0.95rem; }
+      .article-summary {
+        display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
       .stats { flex-direction: column; gap: 10px; }
       .topbar-nav { display: none; }
     }

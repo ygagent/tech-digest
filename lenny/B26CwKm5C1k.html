@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -398,6 +403,7 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>双轮驱动 AI 落地（Top-down buy-in × Bottom-up adoption）</td><td>是否既有高层的工具预算与愿景，又有一线「发烧友」在真实工作流里迭代最佳实践？</td><td>企业级 Copilot、内部 Agent、跨部门自动化。</td><td>1）识别各职能中的技术相邻高潜者 → 2）组建专职或半专职 tiger team → 3）按职能场景做 last-mile 实验与文档 → 4）办内部分享与模板复制 → 5）把采纳与成果纳入认可体系而非空 KPI。</td><td>降低「买了没人会用」的负 ROI 概率。</td></tr>
@@ -405,6 +411,7 @@
   <tr><td>脚手架生命周期（Scaffolding vs Model Trajectory）</td><td>这层编排多少是临时拐杖，多少应长期存在？</td><td>RAG、工具路由、子 Agent、skills 仓库设计。</td><td>1）标注每模块依赖的模型能力假设 → 2）设定 12～18 个月能力情景 → 3）为「模型变强」写删减测试 → 4）对客户承诺区分「稳定能力」与「过渡脚手架」 → 5）季度复盘是否应简化。</td><td>避免在局部最优上过度投资，被模型进步一次性清零。</td></tr>
   <tr><td>PR 与 CI 的人机分工（Codex 时代）</td><td>哪些变更可由 Agent 评审闭环，哪些必须人类强制闸门？</td><td>高频小改动、内部工具、核心金融路径。</td><td>1）分类 PR 风险等级 → 2）默认跑 Codex 评审 + 自动修复轻量问题 → 3）定义人类最低审阅清单 → 4）监控「盲信」导致的事故 → 5）迭代信任边界。</td><td>吞吐上升同时保留安全底线。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -419,6 +426,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>建立 Codex/等价工具 adoption 与 PR 吞吐、评审时长的季度看板，并对齐安全评审分级。</td><td>工程效率组 + 各业务线 Tech Lead</td><td>工具买了但工程师仍手写、或评审成为新瓶颈。</td><td>用数据定位是工具问题还是流程/上下文问题。</td><td class="priority-p0">P0</td></tr>
@@ -428,6 +436,7 @@
   <tr><td>经理节奏：显式提高与 top 10% 工程师/Agent 高玩的 1:1 与 unblock 时间占比，并让其输出团队级 playbooks。</td><td>工程管理</td><td>强者愈强未被组织吸收，或瓶颈卡在跨团队流程。</td><td>放大高杠杆实践，缩短组织学习曲线。</td><td class="priority-p1">P1</td></tr>
   <tr><td>定义 PR 风险矩阵：哪些类必须双人/专家审，哪些可走 Codex+自动 CI 快路径。</td><td>Tech Lead + 安全/合规</td><td>评审堆积或误把高风险变更交给自动化。</td><td>平衡速度与风险。</td><td class="priority-p1">P1</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 

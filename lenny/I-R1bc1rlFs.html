@@ -85,8 +85,12 @@
       .topbar-nav { display: none; }
       .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
       .container { padding: 20px 16px 60px; }
-      .action-table { font-size: 0.82rem; }
+      .table-wrapper { margin: 12px -16px; padding: 0 16px; }
+      .action-table { min-width: 560px; font-size: 0.82rem; }
       .action-table th, .action-table td { padding: 8px 10px; }
+      .guest-meta { flex-wrap: wrap; gap: 12px; }
+      .video-link { margin-top: 4px; }
+      h1 { font-size: 1.3rem; }
     }
     .container {
       flex: 1; min-width: 0;
@@ -159,7 +163,8 @@
       padding: 18px 20px; margin: 12px 0; background: var(--surface);
     }
     .framework-card h4 { margin-top: 0; color: var(--accent); }
-    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+    .action-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.88rem; }
     .action-table th {
       background: var(--accent); color: white; padding: 10px 14px;
       text-align: left; font-weight: 600; font-size: 0.82rem;
@@ -367,12 +372,14 @@
 
   <h2 id="frameworks">04. 方法论提炼</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
   <tr><td>人机编制重构五问（基于节目归纳）</td><td>哪些销售步骤应被 Agent 吞掉，哪些必须保留人？</td><td>从传统 SDR/AE 编制转向 Agent 编排时的首轮盘点。</td><td>1）列出端到端漏斗任务。2）标注结构化程度与错误成本。3）匹配现成工具或定制工作流。4）设人审节点与 KPI。5）每季度复盘是否应「升权/降权」自动化。</td><td>避免一刀切裁人 or 堆砌工具，形成可审计的分工表。</td></tr>
   <tr><td>AI 邮件质量阶梯</td><td>产出从「能发」到「对方愿回」差在哪？</td><td>冷触达、会议跟进、活动后 nurture。</td><td>1）定义好邮件的可验证标准（个性化信号、事实准确性、CTA）。2）人机共创样本集。3）线上监测回复率与投诉。4）把失败样本回灌为约束。</td><td>把生成式 AI 从成本中心转为可度量渠道。</td></tr>
   <tr><td>隐身模式走查（Incognito test）</td><td>若抛开内部政治与历史路径，从零观察流程，摩擦在哪？</td><td>发现隐藏自动化机会、破除「我们一直这么做」。</td><td>1）选一条核心客户旅程。2）以新用户/新员工视角逐步记录。3）标重复、等待与手工拷贝。4）评估 Agent 替代与风险。5）优先高收益低风险的批次上线。</td><td>把机会发现从口号变为可重复方法。</td></tr>
 </table>
+</div>
 
   <h2 id="company-insights">05. 对公司的启发</h2>
 
@@ -387,6 +394,7 @@
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
+<div class="table-wrapper">
 <table class="action-table">
   <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
   <tr><td>绘制当前 GTM 流水线并标注「可 Agent 化」节点：为每节点写清输入/输出、错误成本、现有人力与工具。</td><td>RevOps + 销售负责人</td><td>评估 AI 销售转型或编制重构前</td><td>形成可评审的改造蓝图，减少拍脑袋裁岗</td><td class="priority-p0">P0</td></tr>
@@ -397,6 +405,7 @@
   <tr><td>针对一线销售与 SDR 启动「AI 时代技能重塑」计划：培训提示、数据解读、复杂谈判与客户研究。</td><td>HR + 销售赋能</td><td>编制收缩或工具替代焦虑上升</td><td>提高留存率与单兵产出</td><td class="priority-p1">P1</td></tr>
   <tr><td>在预算中单列 AI 运营成本（监控、数据、提示维护），与模型 API 费分开考核。</td><td>财务 + 运营</td><td>规模化使用 Agent</td><td>避免「上线即峰值、随后衰减」</td><td class="priority-p2">P2</td></tr>
 </table>
+</div>
 
   <h2 id="discussion">07. 讨论问题</h2>
 
