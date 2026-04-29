@@ -213,7 +213,6 @@
       <a href="#guest-background">02. 本期主题与嘉宾背景</a>
       <a href="#core-insights">03. 核心观点精读</a>
       <a href="#frameworks">04. 方法论提炼</a>
-      <a href="#bingx-insights">05. 对 BingX 的启发</a>
       <a href="#action-items">06. 公司级行动清单</a>
       <a href="#discussion">07. 讨论问题</a>
       <a href="#quotes">08. 关键表达与金句</a>
@@ -229,7 +228,6 @@
     <a href="#guest-background">02. 本期主题与嘉宾背景</a>
     <a href="#core-insights">03. 核心观点精读</a>
     <a href="#frameworks">04. 方法论提炼</a>
-    <a href="#bingx-insights">05. 对 BingX 的启发</a>
     <a href="#action-items">06. 公司级行动清单</a>
     <a href="#discussion">07. 讨论问题</a>
     <a href="#quotes">08. 关键表达与金句</a>
@@ -239,7 +237,7 @@
     <main class="container">
       <a class="back" href="index.html">← 返回专栏</a>
   <h1>AI 安全比预期更难：护栏失灵、提示注入与智能体时代的真实风险</h1>
-  <div class="meta"> &middot; 1h32m &middot; Lenny's Podcast 深度精读</div>
+  <div class="meta">2025-12-21 &middot; 1h32m &middot; Lenny's Podcast 深度精读</div>
   <div class="tags">
     <span class="tag">AI 安全</span>
     <span class="tag">提示注入</span>
@@ -364,17 +362,6 @@
   <tr><td>红队驱动的护栏验收</td><td>在真实集成与数据下，攻击者最少需要几步能达成目标？</td><td>采购 AI 安全产品、上线新插件、开放对外 Agent。</td><td>1）固定评测集与自家业务语料。2）多轮对抗迭代（含工具调用链）。3）记录绕过路径而非仅 pass/fail。4）把发现映射到架构改造而不仅是规则追加。</td><td>用实证压缩营销泡沫，形成可复现安全基线。</td></tr>
   <tr><td>高后果动作（HCA）网关</td><td>哪些操作一旦出错不可逆？谁有权批准？</td><td>金融、运维、人力、代码与客服系统中的自动化。</td><td>1）枚举 HCA 列表。2）每类动作设独立确认与双人规则。3）代理默认无权，显式授予最小权限。4）异常模式触发熔断与人工接管。</td><td>在模型能力上升时限制爆炸半径。</td></tr>
 </table>
-
-  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
-
-<ul>
-  <li>客服与社群机器人若直接读取用户消息并触发内部工具（查询订单、改状态、发券），需按「提示注入」面做威胁建模：不可信输入与系统提示必须结构隔离，关键指令走签名或独立通道。</li>
-  <li>内部 Copilot 若接 MCP/插件访问行情、风控或后台接口，应默认最小权限 + 按操作类型分级确认；避免「模型读完自然语言就等价于运维已授权」。</li>
-  <li>营销与增长场景的网页抓取 Agent（活动页、竞品页）易受隐藏文本诱导；对外自动化应域名白名单与内容清洗，敏感发布前人工复核。</li>
-  <li>多 Agent 编排（工单分类、风险评估、自动回复）需防止二阶提示在代理间传递；日志应能重建一次请求的跨代理上下文，便于事后溯源。</li>
-  <li>采购「AI 护栏」应用红队验收压测；把预算倾斜到架构（权限、隔离、审计）与常态化红队，而非单次合规盖章。</li>
-  <li>安全与 AI 平台、业务产品需联席评审：新功能上线前回答「不可信数据从哪来、能触发什么动作、失败时如何限损」三问。</li>
-</ul>
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 

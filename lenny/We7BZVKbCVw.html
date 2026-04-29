@@ -213,7 +213,6 @@
       <a href="#guest-background">02. 本期主题与嘉宾背景</a>
       <a href="#core-insights">03. 核心观点精读</a>
       <a href="#frameworks">04. 方法论提炼</a>
-      <a href="#bingx-insights">05. 对 BingX 的启发</a>
       <a href="#action-items">06. 公司级行动清单</a>
       <a href="#discussion">07. 讨论问题</a>
       <a href="#quotes">08. 关键表达与金句</a>
@@ -229,7 +228,6 @@
     <a href="#guest-background">02. 本期主题与嘉宾背景</a>
     <a href="#core-insights">03. 核心观点精读</a>
     <a href="#frameworks">04. 方法论提炼</a>
-    <a href="#bingx-insights">05. 对 BingX 的启发</a>
     <a href="#action-items">06. 公司级行动清单</a>
     <a href="#discussion">07. 讨论问题</a>
     <a href="#quotes">08. 关键表达与金句</a>
@@ -239,7 +237,7 @@
     <main class="container">
       <a class="back" href="index.html">← 返回专栏</a>
   <h1>当「写代码」被模型接管之后：Claude Code 负责人的下一幕</h1>
-  <div class="meta"> &middot; 1h27m &middot; Lenny's Podcast 深度精读</div>
+  <div class="meta">2026-02-19 &middot; 1h27m &middot; Lenny's Podcast 深度精读</div>
   <div class="tags">
     <span class="tag">AI 编程</span>
     <span class="tag">Agent 与工具使用</span>
@@ -360,17 +358,6 @@
   <tr><td>「为六个月后的模型而设计」赌注</td><td>若最强模型在工具使用、长程任务、计算机操作与 unattended 运行上继续走强，今天的架构会不会一票否决？</td><td>初创与内部创新项目在早期 PMF 不明显时的路线选择。</td><td>1）列出确信会随模型变强的能力维度（工具、长时运行等）；2）避免深度绑定当下弱点的编排；3）用可替换的工具层与评测夹住风险；4）接受前数月体验「不对」；5）在模型跃迁周做集中验收与推广。</td><td>降低每次模型发布后的重写幅度，把竞争力建立在「最先接住新模型」而非「最会包装旧模型」。</td></tr>
   <tr><td>安全与对齐三层观测</td><td>模型在训练与实验室里可靠，是否在真实工具链与权限下仍然可靠？</td><td>对外发布 Agent、在内网接 Slack/Gmail/交易系统、以及合规审计。</td><td>1）训练与对齐、可解释性监测；2）合成场景评测；3）受控外发与野外 telemetry；4）把学习反馈回训练与产品护栏；5）开源或标准化沙箱边界以降低生态风险。</td><td>把「安全」从宣言拆成可运营的发布节奏，特别适合高权限、高金额场景。</td></tr>
 </table>
-
-  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
-
-<ul>
-  <li>合约与交易前端可评估「同一交易 Agent 内核 + 多端薄壳」：移动端行情、下单与风控确认仍做人机协同，把复杂编排交给模型与工具链，避免每次模型升级重做一套向导。</li>
-  <li>客诉、风控工单与异常订单调查典型是多工具、长链路任务，可借鉴「计划模式 → 自动执行 → 人审 PR/人审结论」的双闸门，平衡速度与责任认定。</li>
-  <li>工程效率上可设「探索期 token 预算」：对策略回测脚本、运营工具、内部仪表盘等非核心链路优先最强模型，验证收益后再做模型降级与缓存。</li>
-  <li>Agent 定义应对齐播客中的技术含义——能调用内部 API、工单系统、数据仓库与消息通道，而非仅聊天；交易所场景下工具设计（只读行情、模拟下单、受权真实下单）比提示词工程更关键。</li>
-  <li>组织上「略欠编制 + 强个体 + 全栈协作」可能加速 AI 采用；BingX 可试点小队的 PM/设计/工程共用同一 Agent 规范与评审流，减少交接与等待。</li>
-  <li>安全与合规视角：参考三层模型，把链上/法币/用户资产相关权限做成硬边界沙箱，野外行为日志与回放作为审计资产，而非事后辩解材料。</li>
-</ul>
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 

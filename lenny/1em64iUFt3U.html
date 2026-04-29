@@ -213,7 +213,6 @@
       <a href="#guest-background">02. 本期主题与嘉宾背景</a>
       <a href="#core-insights">03. 核心观点精读</a>
       <a href="#frameworks">04. 方法论提炼</a>
-      <a href="#bingx-insights">05. 对 BingX 的启发</a>
       <a href="#action-items">06. 公司级行动清单</a>
       <a href="#discussion">07. 讨论问题</a>
       <a href="#quotes">08. 关键表达与金句</a>
@@ -229,7 +228,6 @@
     <a href="#guest-background">02. 本期主题与嘉宾背景</a>
     <a href="#core-insights">03. 核心观点精读</a>
     <a href="#frameworks">04. 方法论提炼</a>
-    <a href="#bingx-insights">05. 对 BingX 的启发</a>
     <a href="#action-items">06. 公司级行动清单</a>
     <a href="#discussion">07. 讨论问题</a>
     <a href="#quotes">08. 关键表达与金句</a>
@@ -239,7 +237,7 @@
     <main class="container">
       <a class="back" href="index.html">← 返回专栏</a>
   <h1>不写代码也能 ship：Meta PM 用 Cursor 与多模型协作的完整 AI 工作流</h1>
-  <div class="meta"> &middot; 1h15m &middot; Lenny's Podcast 深度精读</div>
+  <div class="meta">2026-01-18 &middot; 1h15m &middot; Lenny's Podcast 深度精读</div>
   <div class="tags">
     <span class="tag">AI 原生工作流</span>
     <span class="tag">Cursor</span>
@@ -364,17 +362,6 @@
   <tr><td>多模型 RACI（简化版）</td><td>哪类决策必须人类批准，哪些可由模型提案？</td><td>质量敏感模块、需要对外发布的代码、涉及隐私与合规的功能。</td><td>1）列出交付物类型。2）为每类指定主生成模型与审阅模型。3）定义强制人工审阅的触发条件（权限、金额、P0 路径等）。4）记录一次互审的产出格式（问题清单、严重级别、建议补丁）。</td><td>减少单模型幻觉导致的「一次性通过」假象。</td></tr>
   <tr><td>斜杠命令资产化</td><td>哪些提示值得从聊天记录升格为团队命令？</td><td>多 PM/多设计共用同一 AI 工作流时。</td><td>1）统计一周内重复三次以上的提示模式。2）抽象变量（项目名、接口名、设计 token）。3）写成命令并配最短示例输入。4）与 PR/设计评审 checklist 联动。5）每季度做一次失效回顾。</td><td>把个人技巧变成可 onboarding 的资产。</td></tr>
 </table>
-
-  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
-
-<ul>
-  <li>交易与金融产品在「AI 生成界面/逻辑」场景下，须把资金路径、风控文案、强平与杠杆提示设为强制人工与第二模型双审，避免幻觉文案触达用户。</li>
-  <li>多模型分工可映射到内部：行情/合约逻辑解释、国际化文案、前端组件生成分别选用不同能力栈，统一在 CI 与回归用例处汇合。</li>
-  <li>斜杠命令适合沉淀为「合规话术生成」「工单分类草稿」「监控告警摘要」等低敏高频任务，并与内网模型网关策略对齐。</li>
-  <li>跟单与社区类产品可参考「强验收」思路：推荐流、风险提示、KOL 展示位等关键路径应用 peer review 与 postmortem 模板，防止快速迭代牺牲透明性。</li>
-  <li>初级从业者若具备「规格清晰 + AI 协作 + 质量意识」，可在作品集里用可运行 demo 证明闭环；招聘侧应追问边界案例而非仅工具熟练度。</li>
-  <li>大厂落地需把个人 Cursor 工作流映射到代码托管、密钥管理与第三方依赖审批，避免「快」在审计视角下不可追溯。</li>
-</ul>
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 

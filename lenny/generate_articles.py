@@ -76,7 +76,7 @@ ARTICLE_PROMPT_TEMPLATE = """你是一个公司级内容团队的高级编辑。
       "value": "对公司的参考价值"
     }}
   ],
-  "bingx-insights": [
+  "company-insights": [
     "启发1：结合交易所/AI Agent/产品体验/工程效率的具体思考...",
     "启发2：...",
     "启发3：..."
@@ -116,7 +116,7 @@ ARTICLE_PROMPT_TEMPLATE = """你是一个公司级内容团队的高级编辑。
 2. 核心观点至少 4-8 个，按主题重新组织，不要按时间线复述。
 3. 每个观点都要有：核心观点、论据、案例、公司启发。
 4. 方法论要可复用，能写成步骤或检查清单。
-5. BingX 启发要结合交易所、AI Agent、合约交易、大前端、工程效率等实际场景。
+5. 公司启发要结合交易所、AI Agent、合约交易、大前端、工程效率等实际场景。
 6. 行动清单 5-10 条，必须具体可执行。
 7. 讨论问题 3-5 个，要有启发性。
 8. 关键表达用中文转述，不要大段英文。
@@ -186,7 +186,7 @@ def quality_check(article, video):
 
     required_sections = [
         "exec-summary", "guest-background", "core-insights",
-        "frameworks", "bingx-insights", "action-items",
+        "frameworks", "company-insights", "action-items",
         "discussion", "quotes", "one-liner", "sources"
     ]
     present = sum(1 for s in required_sections if article.get(s))

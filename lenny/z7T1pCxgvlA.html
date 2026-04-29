@@ -213,7 +213,6 @@
       <a href="#guest-background">02. 本期主题与嘉宾背景</a>
       <a href="#core-insights">03. 核心观点精读</a>
       <a href="#frameworks">04. 方法论提炼</a>
-      <a href="#bingx-insights">05. 对 BingX 的启发</a>
       <a href="#action-items">06. 公司级行动清单</a>
       <a href="#discussion">07. 讨论问题</a>
       <a href="#quotes">08. 关键表达与金句</a>
@@ -229,7 +228,6 @@
     <a href="#guest-background">02. 本期主题与嘉宾背景</a>
     <a href="#core-insights">03. 核心观点精读</a>
     <a href="#frameworks">04. 方法论提炼</a>
-    <a href="#bingx-insights">05. 对 BingX 的启发</a>
     <a href="#action-items">06. 公司级行动清单</a>
     <a href="#discussion">07. 讨论问题</a>
     <a href="#quotes">08. 关键表达与金句</a>
@@ -239,7 +237,7 @@
     <main class="container">
       <a class="back" href="index.html">← 返回专栏</a>
   <h1>为何多数 AI 产品会失败：来自 50+ 次企业级部署的教训</h1>
-  <div class="meta"> &middot; 1h26m &middot; Lenny's Podcast 深度精读</div>
+  <div class="meta">2026-01-11 &middot; 1h26m &middot; Lenny's Podcast 深度精读</div>
   <div class="tags">
     <span class="tag">AI 产品化</span>
     <span class="tag">企业 AI</span>
@@ -375,17 +373,6 @@
   <tr><td>CC/CD：持续校准 × 持续开发</td><td>我们如何证明本周系统比上周更适配真实用户与真实数据？</td><td>模型/提示频繁变更的企业场景；多租户 B 端产品。</td><td>1）建立任务级评测与采样审计。2）生产日志→标注→新测例→回归。3）与客户成功共建「坏案例」入库机制。4）发布门禁与渐进 rollout。5）复盘写入策略与文档。</td><td>把「一次性上线」改为可度量演进，形成质量飞轮。</td></tr>
   <tr><td>分层评测栈（工程评测 + 生产监控 + 客户反馈）</td><td>离线好是否等于线上好？业务好是否等于安全？</td><td>模型迭代、Agent 工具链升级、提示大改。</td><td>1）工具/步骤级单测。2）场景级集成评测。3）线上分层发布与影子流量。4）客户工单与 NPS 结构化回填。5）安全红队定期抽签。</td><td>降低 evals 迷信与「单一总分」误导。</td></tr>
 </table>
-
-  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
-
-<ul>
-  <li>交易与客服类 AI：优先把「错误报价/错误合约条款」类风险做成评测与安全门禁，参考法律判例思维——财务损失与声誉损失可量化进 SLA。</li>
-  <li>跟单/策略说明类场景：输出非确定性高，宜显式展示数据来源与「不构成投资建议」边界，并把人在环审核写进核心路径而非事后补救。</li>
-  <li>内部 Agent 若接 API 密钥或用户持仓数据，需按最小权限与提示注入面做威胁建模，安全红队应覆盖工具调用链。</li>
-  <li>评测集应包含行情剧烈波动、极端杠杆、多语言客诉等长尾切片；公开排行榜仅作辅证，以内部任务 rubric 为准。</li>
-  <li>模型切换频繁时，为业务方提供「可解释的回归摘要」（哪些用例变好/变差），避免运营团队黑盒恐慌。</li>
-  <li>将 CC/CD 与发布日历绑定：每次大促/新品种上线前强制跑一轮相关评测与演练降级（回退规则、人工兜底人数）。</li>
-</ul>
 
   <h2 id="action-items">06. 公司级行动清单</h2>
 
