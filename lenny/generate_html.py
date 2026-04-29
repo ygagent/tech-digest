@@ -253,13 +253,29 @@ def build_main_content(content, video):
     audio_file = "audio/%s.mp3" % video.get("video_id", "")
     audio_path = OUTPUT_DIR / audio_file
     if audio_path.exists():
-        parts.append('  <div class="audio-player-card">\n')
-        parts.append('    <div class="audio-icon">&#9835;</div>\n')
-        parts.append('    <div class="audio-info">\n')
-        parts.append('      <div class="audio-label">收听本期精读音频</div>\n')
-        parts.append('      <audio controls preload="none" src="%s">您的浏览器不支持音频播放</audio>\n' % audio_file)
-        parts.append('    </div>\n')
-        parts.append('  </div>\n\n')
+        parts.append("""  <div class="audio-player-card" id="audioCard">
+    <audio id="audioEl" preload="metadata" src="%s"></audio>
+    <div class="audio-top">
+      <button class="audio-play-btn" id="audioPlayBtn" aria-label="播放">&#9654;</button>
+      <div class="audio-meta">
+        <div class="audio-label">收听本期精读音频</div>
+        <div class="audio-time"><span id="audioCur">0:00</span> / <span id="audioDur">--:--</span></div>
+      </div>
+    </div>
+    <div class="audio-progress-wrap" id="audioProgressWrap">
+      <div class="audio-progress-bar" id="audioProgressBar"></div>
+    </div>
+    <div class="audio-bottom">
+      <span class="audio-speed-label">倍速</span>
+      <button class="audio-speed-btn" data-speed="0.75">0.75</button>
+      <button class="audio-speed-btn active" data-speed="1">1x</button>
+      <button class="audio-speed-btn" data-speed="1.25">1.25</button>
+      <button class="audio-speed-btn" data-speed="1.5">1.5</button>
+      <button class="audio-speed-btn" data-speed="2">2x</button>
+    </div>
+  </div>
+
+""" % audio_file)
 
     section_renderers = {
         "exec-summary": render_exec_summary,

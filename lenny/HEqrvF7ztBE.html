@@ -125,19 +125,42 @@
       background: linear-gradient(135deg, var(--accent-light) 0%, #f0faf5 100%);
       border: 1px solid var(--accent); border-radius: var(--radius);
       padding: 16px 20px; margin-bottom: 28px;
-      display: flex; align-items: center; gap: 16px;
     }
-    .audio-icon {
-      width: 44px; height: 44px; flex-shrink: 0;
+    .audio-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .audio-play-btn {
+      width: 42px; height: 42px; flex-shrink: 0; border: none; cursor: pointer;
       background: var(--accent); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 1.2rem;
+      color: white; font-size: 1rem; transition: background 0.15s;
     }
-    .audio-info { flex: 1; min-width: 0; }
-    .audio-label { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
-    .audio-player-card audio {
-      width: 100%; height: 36px; border-radius: 18px;
+    .audio-play-btn:hover { background: var(--accent-hover); }
+    .audio-play-btn:active { transform: scale(0.95); }
+    .audio-meta { flex: 1; min-width: 0; }
+    .audio-label { font-size: 0.82rem; font-weight: 600; color: var(--accent); }
+    .audio-time { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .audio-progress-wrap {
+      width: 100%; height: 6px; background: rgba(45,159,111,0.2);
+      border-radius: 3px; cursor: pointer; position: relative;
     }
+    .audio-progress-bar {
+      height: 100%; background: var(--accent); border-radius: 3px;
+      width: 0%; transition: width 0.1s linear; position: relative;
+    }
+    .audio-progress-bar::after {
+      content: ''; position: absolute; right: -5px; top: -4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .audio-bottom { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .audio-speed-btn {
+      border: 1px solid var(--accent); background: transparent; color: var(--accent);
+      font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 10px;
+      cursor: pointer; transition: all 0.15s; min-width: 40px; text-align: center;
+    }
+    .audio-speed-btn.active, .audio-speed-btn:hover {
+      background: var(--accent); color: white;
+    }
+    .audio-speed-label { font-size: 0.7rem; color: var(--text-muted); margin-right: 4px; }
     h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
     .meta-tier {
       display: inline-block; font-size: 0.65rem; font-weight: 700;
@@ -284,11 +307,25 @@
     <span class="tag">Michelle Rial</span>
     <span class="tag">实践者智慧</span>
   </div>
-  <div class="audio-player-card">
-    <div class="audio-icon">&#9835;</div>
-    <div class="audio-info">
-      <div class="audio-label">收听本期精读音频</div>
-      <audio controls preload="none" src="audio/HEqrvF7ztBE.mp3">您的浏览器不支持音频播放</audio>
+  <div class="audio-player-card" id="audioCard">
+    <audio id="audioEl" preload="metadata" src="audio/HEqrvF7ztBE.mp3"></audio>
+    <div class="audio-top">
+      <button class="audio-play-btn" id="audioPlayBtn" aria-label="播放">&#9654;</button>
+      <div class="audio-meta">
+        <div class="audio-label">收听本期精读音频</div>
+        <div class="audio-time"><span id="audioCur">0:00</span> / <span id="audioDur">--:--</span></div>
+      </div>
+    </div>
+    <div class="audio-progress-wrap" id="audioProgressWrap">
+      <div class="audio-progress-bar" id="audioProgressBar"></div>
+    </div>
+    <div class="audio-bottom">
+      <span class="audio-speed-label">倍速</span>
+      <button class="audio-speed-btn" data-speed="0.75">0.75</button>
+      <button class="audio-speed-btn active" data-speed="1">1x</button>
+      <button class="audio-speed-btn" data-speed="1.25">1.25</button>
+      <button class="audio-speed-btn" data-speed="1.5">1.5</button>
+      <button class="audio-speed-btn" data-speed="2">2x</button>
     </div>
   </div>
 
@@ -412,6 +449,60 @@
       });
     }, {rootMargin: '-80px 0px -70% 0px'});
     sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+
+  (function(){
+    var au = document.getElementById('audioEl');
+    if (!au) return;
+    var btn = document.getElementById('audioPlayBtn');
+    var bar = document.getElementById('audioProgressBar');
+    var wrap = document.getElementById('audioProgressWrap');
+    var cur = document.getElementById('audioCur');
+    var dur = document.getElementById('audioDur');
+    var speeds = document.querySelectorAll('.audio-speed-btn');
+
+    function fmt(s) {
+      if (!s || !isFinite(s)) return '--:--';
+      s = Math.floor(s);
+      var m = Math.floor(s / 60), ss = s % 60;
+      return m + ':' + (ss < 10 ? '0' : '') + ss;
+    }
+
+    au.addEventListener('loadedmetadata', function() { dur.textContent = fmt(au.duration); });
+    au.addEventListener('timeupdate', function() {
+      cur.textContent = fmt(au.currentTime);
+      if (au.duration) bar.style.width = (au.currentTime / au.duration * 100) + '%';
+    });
+    au.addEventListener('ended', function() { btn.innerHTML = '&#9654;'; });
+
+    btn.addEventListener('click', function() {
+      if (au.paused) { au.play(); btn.innerHTML = '&#10074;&#10074;'; }
+      else { au.pause(); btn.innerHTML = '&#9654;'; }
+    });
+
+    wrap.addEventListener('click', function(e) {
+      var rect = wrap.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      if (au.duration) au.currentTime = pct * au.duration;
+    });
+
+    var dragging = false;
+    wrap.addEventListener('touchstart', function(e) { dragging = true; e.preventDefault(); }, {passive: false});
+    document.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      var rect = wrap.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
+      if (au.duration) { au.currentTime = pct * au.duration; bar.style.width = (pct * 100) + '%'; }
+    }, {passive: true});
+    document.addEventListener('touchend', function() { dragging = false; });
+
+    speeds.forEach(function(b) {
+      b.addEventListener('click', function() {
+        au.playbackRate = parseFloat(b.dataset.speed);
+        speeds.forEach(function(x) { x.classList.remove('active'); });
+        b.classList.add('active');
+      });
+    });
   })();
   </script>
 </body>
