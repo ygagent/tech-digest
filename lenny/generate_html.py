@@ -190,12 +190,41 @@ def render_sources(data):
     return "".join(parts)
 
 
+def format_views(n):
+    if n >= 1000000:
+        return "%.1fM" % (n / 1000000)
+    if n >= 1000:
+        return "%.1fK" % (n / 1000)
+    return str(n)
+
+
+def compute_tier(view_count):
+    if view_count >= 100000:
+        return "featured"
+    elif view_count >= 50000:
+        return "recommended"
+    return ""
+
+
 def build_main_content(content, video):
     parts = []
     title = content.get("title", video.get("title", ""))
-    parts.append("  <h1>%s</h1>\n" % e(title))
-    parts.append('  <div class="meta">%s &middot; %s &middot; Lenny\'s Podcast 深度精读</div>\n' % (
-        e(video.get("published_at", "")), e(video.get("duration", ""))
+    vc = video.get("view_count", 0)
+    tier = compute_tier(vc)
+
+    tier_html = ""
+    if tier == "featured":
+        tier_html = ' <span class="meta-tier meta-tier-featured">精选</span>'
+    elif tier == "recommended":
+        tier_html = ' <span class="meta-tier meta-tier-recommended">推荐</span>'
+
+    views_html = ""
+    if vc > 0:
+        views_html = " &middot; ▶ %s 播放" % format_views(vc)
+
+    parts.append("  <h1>%s%s</h1>\n" % (e(title), tier_html))
+    parts.append('  <div class="meta">%s &middot; %s%s &middot; Lenny\'s Podcast 深度精读</div>\n' % (
+        e(video.get("published_at", "")), e(video.get("duration", "")), views_html
     ))
 
     tags = content.get("tags", ["Lenny's Podcast", "Product", "Growth", "AI"])

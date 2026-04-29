@@ -18,6 +18,22 @@ def e(text):
     return escape(str(text)) if text else ""
 
 
+def compute_tier(view_count):
+    if view_count >= 100000:
+        return "featured"
+    elif view_count >= 50000:
+        return "recommended"
+    return ""
+
+
+def format_views(n):
+    if n >= 1000000:
+        return "%.1fM" % (n / 1000000)
+    if n >= 1000:
+        return "%.1fK" % (n / 1000)
+    return str(n)
+
+
 def build_index_json():
     if not VIDEOS_JSON.exists():
         return []
@@ -37,6 +53,7 @@ def build_index_json():
         if article_file.exists():
             article = json.loads(article_file.read_text(encoding="utf-8"))
 
+        vc = v.get("view_count", 0)
         entries.append({
             "video_id": vid,
             "title": article.get("title", v.get("title", "")),
@@ -44,6 +61,9 @@ def build_index_json():
             "guest_title": v.get("guest_title", ""),
             "published_at": v.get("published_at", ""),
             "duration": v.get("duration", ""),
+            "view_count": vc,
+            "view_count_display": format_views(vc),
+            "tier": compute_tier(vc),
             "one_liner": article.get("one-liner", ""),
             "tags": article.get("tags", []),
             "thumbnail": v.get("thumbnail", ""),
@@ -51,6 +71,7 @@ def build_index_json():
             "html_file": "%s.html" % vid,
         })
 
+    entries.sort(key=lambda x: x.get("view_count", 0), reverse=True)
     return entries
 
 
@@ -74,15 +95,33 @@ def generate_index_html(entries):
         dur_val = entry.get("duration", "").strip()
         dur_html = '<span class="article-duration">%s</span>' % e(dur_val) if dur_val else ""
 
+        tier = entry.get("tier", "")
+        vc_display = entry.get("view_count_display", "")
+        tier_html = ""
+        card_cls = "article-card"
+        if tier == "featured":
+            tier_html = '<span class="tier-badge tier-featured">精选</span>'
+            card_cls = "article-card article-card-featured"
+        elif tier == "recommended":
+            tier_html = '<span class="tier-badge tier-recommended">推荐</span>'
+            card_cls = "article-card article-card-recommended"
+
+        views_html = ""
+        if vc_display:
+            views_html = '<span class="article-views">▶ %s</span>' % e(vc_display)
+
         cards_html.append("""
-    <li class="article-card">
+    <li class="%s">
       <a class="article-link" href="%s">
-        <img class="article-thumb" src="%s" alt="" loading="lazy"
-             onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
-        <div class="thumb-placeholder" style="display:none">LP</div>
+        <div class="thumb-container">
+          <img class="article-thumb" src="%s" alt="" loading="lazy"
+               onerror="this.parentNode.querySelector('.thumb-placeholder').style.display='flex';this.style.display='none'">
+          <div class="thumb-placeholder" style="display:none">LP</div>
+          %s
+        </div>
         <div class="article-body">
           <div class="article-meta">
-            %s%s
+            %s%s%s
           </div>
           <div class="article-title">%s</div>
           <div class="article-guest">%s%s</div>
@@ -91,10 +130,13 @@ def generate_index_html(entries):
         </div>
       </a>
     </li>""" % (
+            card_cls,
             e(entry.get("html_file", "")),
             e(entry.get("thumbnail", "")),
+            tier_html,
             date_html,
             dur_html,
+            views_html,
             e(entry.get("title", "")),
             e(entry.get("guest", "")),
             (" - " + e(entry["guest_title"])) if entry.get("guest_title") else "",
@@ -102,8 +144,13 @@ def generate_index_html(entries):
             tags_html,
         ))
 
+    featured_count = sum(1 for e in entries if e.get("tier") == "featured")
+    recommended_count = sum(1 for e in entries if e.get("tier") == "recommended")
+
     html = INDEX_PAGE_TEMPLATE.replace("{{ARTICLE_CARDS}}", "\n".join(cards_html))
     html = html.replace("{{ARTICLE_COUNT}}", str(len(entries)))
+    html = html.replace("{{FEATURED_COUNT}}", str(featured_count))
+    html = html.replace("{{RECOMMENDED_COUNT}}", str(recommended_count))
 
     index_file = OUTPUT_DIR / "index.html"
     index_file.write_text(html, encoding="utf-8")
@@ -167,6 +214,8 @@ INDEX_PAGE_TEMPLATE = """<!DOCTYPE html>
       padding: 16px 20px; flex: 1; text-align: center; box-shadow: var(--shadow-sm);
     }
     .stat-num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .stat-featured { color: #e5a100; }
+    .stat-recommended { color: var(--accent); }
     .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
     .article-list { list-style: none; }
     .article-card {
@@ -175,22 +224,43 @@ INDEX_PAGE_TEMPLATE = """<!DOCTYPE html>
       overflow: hidden; transition: all 0.2s; box-shadow: var(--shadow-sm);
     }
     .article-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .article-card-featured { border-color: #e5a100; border-width: 2px; }
+    .article-card-featured:hover { border-color: #c88d00; }
+    .article-card-recommended { border-color: var(--accent); }
     .article-link { display: flex; align-items: stretch; text-decoration: none; color: inherit; }
+    .thumb-container { position: relative; flex-shrink: 0; width: 180px; min-height: 120px; }
     .article-thumb {
-      width: 180px; min-height: 120px; flex-shrink: 0;
-      object-fit: cover; background: var(--surface2);
+      width: 100%; height: 100%;
+      object-fit: cover; background: var(--surface2); display: block;
     }
     .thumb-placeholder {
-      width: 180px; min-height: 120px; flex-shrink: 0;
+      width: 100%; height: 100%; position: absolute; top: 0; left: 0;
       background: linear-gradient(135deg, #2d9f6f 0%, #1a7a4f 100%);
       display: flex; align-items: center; justify-content: center;
       color: rgba(255,255,255,0.9); font-size: 1.5rem; font-weight: 800;
     }
+    .tier-badge {
+      position: absolute; top: 8px; left: 8px; z-index: 2;
+      font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+      letter-spacing: 0.03em;
+    }
+    .tier-featured {
+      background: linear-gradient(135deg, #f5a623 0%, #e8890c 100%);
+      color: #fff; box-shadow: 0 2px 6px rgba(245,166,35,0.35);
+    }
+    .tier-recommended {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 6px rgba(45,159,111,0.3);
+    }
     .article-body { flex: 1; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; }
-    .article-meta { display: flex; gap: 8px; margin-bottom: 6px; }
+    .article-meta { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; flex-wrap: wrap; }
     .article-date, .article-duration {
       font-size: 0.7rem; font-weight: 600; color: var(--accent);
       background: var(--accent-light); padding: 2px 8px; border-radius: 8px;
+    }
+    .article-views {
+      font-size: 0.68rem; font-weight: 600; color: var(--text-muted);
+      padding: 2px 8px; border-radius: 8px; background: var(--surface2);
     }
     .article-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; line-height: 1.35; }
     .article-card:hover .article-title { color: var(--accent); }
@@ -210,12 +280,8 @@ INDEX_PAGE_TEMPLATE = """<!DOCTYPE html>
       .container { padding: 24px 16px; }
       h1 { font-size: 1.4rem; }
       .article-link { flex-direction: column; }
-      .article-thumb {
-        width: 100%; min-height: 160px; height: 160px;
-      }
-      .thumb-placeholder {
-        width: 100%; min-height: 120px; height: 120px;
-      }
+      .thumb-container { width: 100%; min-height: 160px; height: 160px; }
+      .article-thumb { width: 100%; height: 100%; }
       .article-body { padding: 14px 16px; }
       .article-title { font-size: 0.95rem; }
       .article-summary {
@@ -252,12 +318,12 @@ INDEX_PAGE_TEMPLATE = """<!DOCTYPE html>
         <div class="stat-label">深度精读文章</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">Lenny's Podcast</div>
-        <div class="stat-label">内容来源</div>
+        <div class="stat-num stat-featured">{{FEATURED_COUNT}}</div>
+        <div class="stat-label">精选 (10万+播放)</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num">公司级</div>
-        <div class="stat-label">内容定位</div>
+        <div class="stat-num stat-recommended">{{RECOMMENDED_COUNT}}</div>
+        <div class="stat-label">推荐 (5万+播放)</div>
       </div>
     </div>
     <ul class="article-list">
