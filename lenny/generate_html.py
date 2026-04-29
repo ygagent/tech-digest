@@ -250,6 +250,17 @@ def build_main_content(content, video):
             parts.append('    <a class="video-link" href="%s" target="_blank">&#9654; 观看原视频</a>\n' % e(vid_url))
         parts.append("  </div>\n\n")
 
+    audio_file = "audio/%s.mp3" % video.get("video_id", "")
+    audio_path = OUTPUT_DIR / audio_file
+    if audio_path.exists():
+        parts.append('  <div class="audio-player-card">\n')
+        parts.append('    <div class="audio-icon">&#9835;</div>\n')
+        parts.append('    <div class="audio-info">\n')
+        parts.append('      <div class="audio-label">收听本期精读音频</div>\n')
+        parts.append('      <audio controls preload="none" src="%s">您的浏览器不支持音频播放</audio>\n' % audio_file)
+        parts.append('    </div>\n')
+        parts.append('  </div>\n\n')
+
     section_renderers = {
         "exec-summary": render_exec_summary,
         "guest-background": render_guest_background,
