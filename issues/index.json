@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-04-29",
+    "title": "第 6 期：GitHub 信任危机 — Ghostty 出走、RCE 核弹与 Actions 供应链溃堤",
+    "highlights": "Ghostty 离开 GitHub · Warp 开源 · GitHub RCE 核弹 · Claude Design · DeepSeek V4 降价 75% · Vercel 安全事件",
+    "image": "https://mitchellh.com/images/ghostty/logo.png"
+  },
+  {
     "date": "2026-04-28",
     "title": "第 5 期：AGI 条款已死 — AI 行业同日完成三个「断奶」",
     "highlights": "AGI 条款已死 · OpenAI-微软结束独占 · GitHub Copilot 按量计费 · 中国叫停 Meta 收购 Manus · David Silver 11 亿新实验室 · Mercor 4TB 泄露 · Claude Design 发布",

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日科技情报 #6 — 2026-04-29</title>
+  <meta property="og:title" content="GitHub 信任危机 — Ghostty 出走、RCE 核弹与 Actions 供应链溃堤">
+  <meta property="og:description" content="Warp 开源 · Claude Design · DeepSeek V4 降价 75% · Vercel 安全事件 · OpenAI 造手机">
+  <meta property="og:image" content="https://mitchellh.com/images/ghostty/logo.png">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --green-deep: #1a7a4c; --green-light2: #e0f5ea;
+      --yellow: #d4a017; --yellow-light: #fef9e7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    .topbar-date { font-size: 0.82rem; color: var(--text-muted); background: var(--surface2); padding: 5px 12px; border-radius: 16px; }
+    .page { display: flex; max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary {
+      cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none;
+    }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; color: var(--text); letter-spacing: -0.01em; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 28px; }
+    .hero-img { width: 100%; border-radius: var(--radius); margin-bottom: 10px; box-shadow: var(--shadow-md); }
+    .hero-caption { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 36px; text-align: center; font-style: italic; }
+    h2 {
+      font-size: 1.25rem; font-weight: 700; margin: 44px 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px; color: var(--text);
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    code {
+      background: var(--surface2); padding: 2px 6px; border-radius: 4px;
+      font-size: 0.88em; color: var(--accent-hover); font-family: "SF Mono", Monaco, monospace;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0; font-size: 0.93rem;
+      color: var(--text-secondary);
+    }
+    .article-img {
+      width: 100%; max-height: 380px; object-fit: cover;
+      border-radius: var(--radius-sm); margin: 12px 0 24px; box-shadow: var(--shadow-sm);
+    }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .tool-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; transition: all 0.2s; box-shadow: var(--shadow-sm);
+    }
+    .tool-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .tool-card h4 { font-size: 0.95rem; margin-bottom: 6px; font-weight: 600; }
+    .tool-card h4 a { color: var(--accent); }
+    .tool-card p { font-size: 0.83rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+    .tool-card .tag {
+      display: inline-block; font-size: 0.68rem; padding: 3px 8px; border-radius: 10px;
+      background: var(--accent); color: var(--accent-text); font-weight: 600; margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .tool-card .priority-tag {
+      display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 8px;
+      background: var(--surface2); color: var(--text-muted); font-weight: 600; margin-left: 6px;
+    }
+    .fun-card {
+      background: var(--orange-light); border: 1px solid #f5ddb8;
+      border-radius: var(--radius); padding: 20px 24px; margin: 14px 0;
+    }
+    .fun-card h4 { font-size: 1rem; margin-bottom: 8px; font-weight: 600; }
+    .fun-card h4 a { color: var(--orange); }
+    .fun-card p { font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.65; }
+    .quote-block {
+      background: var(--purple-light); border-left: 4px solid var(--purple);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 18px 0;
+    }
+    .quote-block h4 { font-size: 0.95rem; color: var(--purple); font-weight: 700; margin-bottom: 10px; }
+    .quote-block blockquote {
+      font-size: 1.02rem; line-height: 1.65; margin-bottom: 10px;
+      font-style: italic; color: var(--text);
+    }
+    .quote-block .quote-author { font-size: 0.82rem; color: var(--purple); font-weight: 600; margin-bottom: 6px; }
+    .quote-block .quote-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+    .quote-block .quote-comment {
+      font-size: 0.88rem; color: var(--text-secondary);
+      border-top: 1px solid #d8d0e8; padding-top: 10px; margin-top: 10px;
+    }
+    .quote-block .quote-team-insight {
+      font-size: 0.88rem; color: var(--green-deep); background: var(--accent-light);
+      border-radius: var(--radius-xs); padding: 8px 12px; margin-top: 8px;
+    }
+    .resource-item {
+      background: var(--blue-light); border: 1px solid #c8dbf8;
+      border-radius: var(--radius); padding: 18px 20px; margin: 12px 0;
+    }
+    .resource-item a { font-weight: 600; color: var(--blue); }
+    .resource-item p { font-size: 0.88rem; color: var(--text-secondary); margin: 6px 0 0; }
+    .concept-card {
+      background: var(--green-light2); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 16px 0;
+    }
+    .concept-card h4 { font-size: 1rem; font-weight: 700; color: var(--green-deep); margin-bottom: 10px; }
+    .concept-card .concept-field { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.6; }
+    .concept-card .concept-field strong { color: var(--text); font-size: 0.88rem; }
+    .insight-card {
+      background: var(--yellow-light); border-left: 4px solid var(--yellow);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 12px 0;
+    }
+    .insight-card p { font-size: 0.93rem; color: var(--text-secondary); margin: 0; line-height: 1.7; }
+    .insight-card .insight-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%; background: var(--yellow);
+      color: #fff; font-size: 0.75rem; font-weight: 700; margin-right: 10px; flex-shrink: 0;
+    }
+    .certainty-tag {
+      display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 8px;
+      font-weight: 600; margin-left: 8px;
+    }
+    .certainty-confirmed { background: var(--accent-light); color: var(--accent); }
+    .certainty-announced { background: var(--blue-light); color: var(--blue); }
+    .certainty-reported { background: var(--yellow-light); color: var(--yellow); }
+    .certainty-opinion { background: var(--purple-light); color: var(--purple); }
+    .certainty-rumor { background: var(--red-light); color: var(--red); }
+    .audio-bar {
+      background: var(--accent-light); border: 1px solid #b8dfc9;
+      border-radius: var(--radius); padding: 16px 20px; margin-bottom: 28px;
+    }
+    .audio-bar.hidden { display: none; }
+    .audio-bar .audio-label { font-size: 0.85rem; color: var(--accent-hover); margin-bottom: 8px; }
+    .audio-bar audio { width: 100%; height: 36px; border-radius: 18px; }
+    .footer-sources {
+      margin-top: 44px; padding: 20px 24px;
+      background: var(--surface2); border-radius: var(--radius);
+      font-size: 0.78rem; color: var(--text-muted); line-height: 1.9;
+    }
+    .footer-sources strong { color: var(--text-secondary); font-size: 0.78rem; }
+    @media (max-width: 640px) { .tool-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="../index.html" class="topbar-brand">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Tech Digest
+  </a>
+  <nav class="topbar-nav">
+    <a href="../index.html">Archive</a>
+    <a href="#headline" class="active">Today</a>
+    <a href="#tools">Tools</a>
+    <a href="#quotes">Quotes</a>
+    <a href="../lenny/index.html">Lenny 精读</a>
+  </nav>
+  <div class="topbar-right">
+    <span class="topbar-date">2026-04-29</span>
+  </div>
+</header>
+
+<details class="toc-mobile">
+  <summary>📑 目录导航</summary>
+  <div class="toc-dropdown">
+    <a href="#headline">🔥 头条深读</a>
+    <a href="#tech-news">📰 科技动态</a>
+    <a href="#ai">🤖 AI 相关</a>
+    <a href="#articles">📝 文章推荐</a>
+    <a href="#tools">🛠️ 工具推荐</a>
+    <a href="#ai-tools">🧠 AI 工具</a>
+    <a href="#concepts">🧩 本期概念库</a>
+    <a href="#fun">🎲 趣闻</a>
+    <a href="#resources">📚 资源</a>
+    <a href="#quotes">💬 言论</a>
+    <a href="#team-insights">✅ 对团队的启发</a>
+  </div>
+</details>
+
+<div class="page">
+<nav class="toc">
+  <div class="toc-title">本期目录</div>
+    <a href="#headline">🔥 头条深读</a>
+    <a href="#tech-news">📰 科技动态</a>
+    <a href="#ai">🤖 AI 相关</a>
+    <a href="#articles">📝 文章推荐</a>
+    <a href="#tools">🛠️ 工具推荐</a>
+    <a href="#ai-tools">🧠 AI 工具</a>
+    <a href="#concepts">🧩 本期概念库</a>
+    <a href="#fun">🎲 趣闻</a>
+    <a href="#resources">📚 资源</a>
+    <a href="#quotes">💬 言论</a>
+    <a href="#team-insights">✅ 对团队的启发</a>
+</nav>
+
+<main class="container">
+  <a href="../index.html" class="back">← 返回目录</a>
+
+  <h1>第 6 期：GitHub 信任危机 — Ghostty 出走、RCE 核弹与 Actions 供应链溃堤</h1>
+  <div class="meta">第 6 期 · 2026年4月29日，星期二</div>
+
+  <div class="audio-bar hidden" id="audioBar">
+    <div class="audio-label">🎧 收听本期音频版<br><small>由 NotebookLM 生成 · 双人对话播客风格</small></div>
+    <audio controls preload="none" id="audioPlayer"></audio>
+  </div>
+
+  <img class="hero-img" src="https://mitchellh.com/images/ghostty/logo.png" alt="Ghostty Logo">
+  <p class="hero-caption">Ghostty 离开 GitHub — 18 年的感情，抵不过每天一个 X</p>
+
+  <div class="callout">
+    <strong>⏱ 本期建议阅读顺序</strong><br>
+    5 分钟：读核心判断 + 头条深读 + 对团队的启发<br>
+    15 分钟：继续读安全相关（RCE 漏洞、Vercel 事件、Actions 分析）<br>
+    20 分钟：AI 动态（Claude Design、DeepSeek 降价、Warp 开源）<br>
+    30 分钟：读完概念库、言论和全部内容<br>
+  </div>
+
+  <div class="callout">
+    <strong>🎯 本期核心判断：</strong>开发者基础设施的信任正在被重新校准 — GitHub 的可用性、Actions 的安全模型、Vercel 的第三方供应链，都在同一周暴露了系统性风险。工具链不是选了就能忘的消耗品，它是需要持续审计和对冲的核心资产。
+  </div>
+
+  <h2 id="headline">🔥 头条深读</h2>
+
+  <p><strong>Mitchell Hashimoto 带着 Ghostty 离开了 GitHub。</strong>这位 GitHub 第 1299 号用户、Vagrant 和 HashiCorp 的创始人，在 GitHub 度过了 18 年——超过他人生的一半。他说「我的爱好、工作和热情都在一个地方，就是 GitHub。」但现在他要走了。</p>
+  <p>过去一个月，他在日记里每天标记「GitHub 宕机是否影响了我的工作」。几乎每天都打了 X。写这篇博客的那天，他因为 GitHub Actions 宕机已经 2 小时无法做 PR Review。他说：「这不再是一个可以做严肃工作的地方了。」</p>
+  <p>这不是孤立事件。同一周内：Wiz 研究团队公开了 CVE-2026-3854——一个影响 GitHub.com 和 GHES 的严重 RCE 漏洞，任何认证用户只需一个 <code>git push</code> 命令就能在后端服务器执行任意代码，跨租户访问数百万仓库。Andrew Nesbitt 发表了长文系统性分析 GitHub Actions 的安全模型为何是开源供应链「最弱的一环」——从 spotbugs 到 tj-actions 到 Trivy 到 elementary-data，18 个月内的每一起重大供应链事件都能追溯到一个 <code>.github/workflows</code> YAML 文件。</p>
+  <p>与此同时，Vercel 披露了一起安全事件：攻击者通过入侵第三方 AI 工具 Context.ai，接管了一名 Vercel 员工的 Google Workspace 账户，进而访问了 Vercel 内部系统和客户环境变量。</p>
+  <p><strong>判断：</strong>我们正在目睹一次「开发者基础设施信任的系统性重估」。GitHub 的可用性、Actions 的安全默认值、第三方 AI 工具的供应链风险，三重问题同时暴露。对团队的启发是：不要把所有鸡蛋放在一个篮子里，CI/CD 流水线需要像生产系统一样做安全审计，第三方 AI 工具的 OAuth 权限需要最小化。</p>
+
+  <h2 id="tech-news">📰 科技动态</h2>
+
+  <h3>1、OpenAI 正在研发自有智能手机，计划 2028 年量产 <span class="certainty-tag certainty-reported">reported</span></h3>
+  <p>分析师郭明錤透露，OpenAI 正与联发科和高通合作开发手机处理器，立讯精密为独家系统合作伙伴。Sam Altman 同日发推表示「是时候认真重新思考操作系统和 UI 设计了」。这标志着 OpenAI 从软件公司向硬件+软件一体化的战略转型。</p>
+  <h3>2、Google 向五角大楼开放 AI 工具，紧随 Anthropic 拒绝之后 <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>Google 成为继 OpenAI、xAI 之后第三家向美国国防部授予分类网络 AI 访问权限的公司。此前 Anthropic 因拒绝无限制使用条款被国防部标记为「供应链风险」。Google 合同中包含「不打算用于大规模监控或自主武器」的表述，但法律约束力存疑。950 名 Google 员工签署公开信表示反对。</p>
+  <h3>3、Apple 推出 App Store 年度承诺月付订阅模式 <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>Apple 允许开发者提供「按月付费、承诺 12 个月」的新订阅选项，本质上是将开发者已经在做的年费折算月价的营销手法正规化。初期不在美国和新加坡提供，可能与 Epic Games 诉讼有关。</p>
+
+  <h2 id="ai">🤖 AI 相关</h2>
+
+  <h3>1、DeepSeek V4-Pro 降价 75%，价格战再升级 <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>DeepSeek 宣布旗舰模型 V4-Pro 促销价降 75%（至 5 月 5 日），同时全 API 套件的缓存命中价格直降至原来的十分之一。V4-Pro 即使在原价下已经低于 GPT-5.5、Claude Opus 4.7 和 Gemini 3.1 Pro。该模型拥有 1.6 万亿参数，基于华为昇腾芯片训练，原生集成 Claude Code 和 OpenClaw。此举时机恰逢美国政府指控中国企业「工业化蒸馏」美国 AI 模型。</p>
+  <h3>2、Anthropic 发布 Claude Design — AI 协作设计工具 <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>Claude Design 由 Opus 4.7 驱动，支持设计探索、原型制作、演示文稿和营销材料。核心功能包括：品牌设计系统自动读取、内联注释和实时调节旋钮、组织级共享和协作、一键导出到 Canva/PDF/PPTX、以及向 Claude Code 的设计交接包。目前对 Pro、Max、Team 和 Enterprise 用户开放。</p>
+  <h3>3、OpenAI 模型正式入驻 Amazon Bedrock <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>AWS 宣布在 Amazon Bedrock 上提供 OpenAI 模型，企业客户可以直接通过 AWS 基础设施使用 OpenAI 的最新模型，无需单独管理 API 密钥。这是 OpenAI 首次通过第三方云平台分发模型。</p>
+
+  <h2 id="articles">📝 文章推荐</h2>
+
+  <h3>1、<a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html">GitHub Actions 是最弱的一环</a></h3>
+  <p>Andrew Nesbitt 系统梳理了过去 18 个月所有重大开源供应链事件（spotbugs → tj-actions → Ultralytics → nx → Trivy → elementary-data），发现每一起都可以追溯到 GitHub Actions 的几个相同特性：pull_request_target 触发器、${{ }} 模板注入、默认 write 权限的 GITHUB_TOKEN、可变 Git 标签引用。他提出的核心论点：「PyPI 和 npm 的可信发布把所有信任集中到了 GitHub Actions 上——我们花了十年加固包管理器，结果把信任全转移到了一个没有锁文件、没有哈希校验的 CI 平台上。」</p>
+  <h3>2、<a href="https://legallayer.substack.com/p/who-owns-the-claude-code-wrote">谁拥有 Claude Code 写的代码？</a></h3>
+  <p>Legal Layer 深度分析了 AI 生成代码的版权归属问题。核心结论：在当前法律框架下，纯 AI 生成的代码很可能不受版权保护，但人类在提示词和编辑过程中的创造性贡献可能赋予其版权。对使用 AI 编码工具的团队来说，保留人工审查和修改记录是关键。</p>
+  <h3>3、<a href="https://blog.cloudflare.com/the-ai-engineering-stack-cloudflare-built-internally">Cloudflare 内部构建的 AI 工程堆栈</a></h3>
+  <p>Cloudflare 分享了其内部如何构建 AI 工程堆栈的经验，涵盖模型选择、评测体系、上下文管理和部署策略。文章特别讨论了在长时间运行的 Agent 应用中管理上下文窗口的挑战。</p>
+
+  <h2 id="tools">🛠️ 工具推荐</h2>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <h4><a href="https://www.warp.dev/blog/warp-is-now-open-source">Warp 开源</a> <span class="priority-tag">P0</span></h4>
+      <p>Warp 终端客户端正式以 AGPL 协议开源，OpenAI 为创始赞助商。开源采用「Agent 优先」的工作流模式——人类管理 Agent 大规模构建生产级软件。同时新增对 Kimi、MiniMax、Qwen 等开源模型的支持，以及期待已久的配置文件功能。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://docs.zizmor.sh/">zizmor</a> <span class="priority-tag">P1</span></h4>
+      <p>GitHub Actions 安全审计工具，4 行 YAML 即可接入。能检测 dangerous-triggers、unpinned-uses、template-injection、excessive-permissions 等常见安全问题。在多起供应链事件中，zizmor 的默认规则集可以提前发现漏洞。</p>
+    </div>
+  </div>
+
+  <h2 id="ai-tools">🧠 AI 工具</h2>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <span class="tag">设计</span>
+      <h4><a href="https://www.anthropic.com/news/claude-design-anthropic-labs">Claude Design</a></h4>
+      <p>Anthropic 推出的 AI 协作设计工具。支持品牌设计系统自动读取、内联注释修改、组织级共享、一键导出 Canva/PDF/PPTX，以及向 Claude Code 的设计交接。对 Pro/Max/Team/Enterprise 用户开放。</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">编码</span>
+      <h4><a href="https://techcrunch.com/2026/04/28/lovable-launches-its-vibe-coding-app-on-ios-and-android/">Lovable Mobile</a></h4>
+      <p>Vibe Coding 平台 Lovable 推出 iOS/Android 移动应用，支持语音/文本提示随时启动 AI 构建，手机和电脑无缝切换项目。已合规 Apple 规则——生成的应用预览在浏览器中运行。</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">语音</span>
+      <h4><a href="https://github.com/microsoft/VibeVoice">VibeVoice</a></h4>
+      <p>微软开源的前沿语音 AI 工具，支持语音驱动的开发体验。</p>
+    </div>
+  </div>
+
+  <h2 id="concepts">🧩 本期概念库</h2>
+
+  <div class="concept-card">
+    <h4>1. Trust Rebalancing（信任再平衡）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>当组织将越来越多的关键流程集中到少数平台（如 GitHub、Vercel）时，这些平台的故障或安全事件会产生系统性风险。信任再平衡是指团队主动评估和分散对单一平台的依赖，建立冗余和替代方案。</div>
+    <div class="concept-field"><strong>背景来源：</strong>Mitchell Hashimoto: Ghostty Is Leaving GitHub</div>
+    <div class="concept-field"><strong>为什么重要：</strong>我们的 CI/CD、代码托管、包发布全部依赖 GitHub。一旦 GitHub 出问题，整个交付管线停摆。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>评估 CI/CD 的 GitHub 单点依赖，考虑 Self-hosted Runner + 镜像仓库作为应急方案。</div>
+  </div>
+  <div class="concept-card">
+    <h4>2. Blast Radius Audit（爆炸半径审计）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>对 CI/CD 流水线中每个第三方依赖、每个 OAuth 授权、每个 Token 权限做「最坏情况分析」——如果这个组件被攻破，影响范围有多大？Vercel 事件中，一个第三方 AI 工具的入侵最终导致客户环境变量泄露。</div>
+    <div class="concept-field"><strong>背景来源：</strong>Vercel April 2026 Security Incident + GitHub Actions 分析</div>
+    <div class="concept-field"><strong>为什么重要：</strong>第三方 AI 工具（如 Cursor 插件、MCP 服务器）在获取 OAuth 权限后可能成为攻击入口。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>盘点所有接入内部系统的第三方工具及其 OAuth 权限范围，实施最小权限原则。</div>
+  </div>
+  <div class="concept-card">
+    <h4>3. Agent-First Open Source（Agent 优先的开源）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>Warp 开源采用的新模式：人类负责方向设定和验证，Agent 负责实现。代码贡献通过 Agent 完成，社区成员更像是「Agent 的管理者」而非传统的代码贡献者。</div>
+    <div class="concept-field"><strong>背景来源：</strong>Warp is now open-source</div>
+    <div class="concept-field"><strong>为什么重要：</strong>这可能是开源协作的下一个范式转移——从 PR-driven 到 Agent-driven。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>关注 Warp 的 Oz 平台在实际开源项目中的表现，评估 Agent 驱动开发流程的可行性。</div>
+  </div>
+  <div class="concept-card">
+    <h4>4. AI-Augmented Vulnerability Discovery（AI 增强的漏洞发现）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>Wiz 团队使用 IDA MCP 等 AI 工具辅助逆向工程，在编译后的二进制文件中发现了 GitHub 的 RCE 漏洞。这是首批使用 AI 在闭源二进制中发现关键漏洞的案例之一。</div>
+    <div class="concept-field"><strong>背景来源：</strong>Wiz: GitHub RCE Vulnerability CVE-2026-3854</div>
+    <div class="concept-field"><strong>为什么重要：</strong>AI 正在改变安全研究的成本结构——以前「不划算」去审计的闭源系统现在变得可行了。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>在安全审计流程中引入 AI 辅助工具，提高内部安全审查的覆盖面和效率。</div>
+  </div>
+
+  <h2 id="fun">🎲 趣闻</h2>
+
+  <div class="fun-card">
+    <h4><a href="https://mitchellh.com/writing/ghostty-leaving-github">Ghostty 创始人的 GitHub 情书</a></h4>
+    <p>Mitchell Hashimoto 的告别文章读起来像一封情书：「有人 doom scroll 社交媒体，我 doom scroll GitHub Issues。度蜜月时老婆还没醒，我已经在刷 GitHub 了。」18 年的感情，抵不过每天一个宕机的 X。</p>
+  </div>
+
+  <h2 id="resources">📚 资源</h2>
+
+  <div class="resource-item">
+    <a href="https://github.blog/news-insights/product-news/whats-coming-to-our-github-actions-2026-security-roadmap/">GitHub Actions 2026 安全路线图</a>
+    <p>GitHub 官方发布的 Actions 安全改进计划：工作流锁文件（SHA 钉扎）、pull_request_target 策略控制、Workflow 级别的 Secrets 作用域、Runner 出口防火墙。但全部是 opt-in 且「3-6 个月公开预览」。</p>
+  </div>
+  <div class="resource-item">
+    <a href="https://vercel.com/kb/bulletin/vercel-april-2026-security-incident">Vercel 安全事件公告与 IOC</a>
+    <p>完整的事件时间线、影响范围、推荐操作和 IOC 指标。特别关注第三方 AI 工具 Context.ai 的 OAuth App ID 和环境变量轮换建议。</p>
+  </div>
+
+  <h2 id="quotes">💬 言论</h2>
+
+  <div class="quote-block">
+    <blockquote>这不再是一个可以做严肃工作的地方了。我想在那里，但它不想让我在那里。我想写代码，但它不让我写代码。</blockquote>
+    <div class="quote-author">— <a href="https://mitchellh.com/writing/ghostty-leaving-github">Mitchell Hashimoto</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：稳定性 / 工具链</div>
+    <div class="quote-comment"><strong>点评：</strong>从 Vagrant 创始人口中说出这句话的分量不言而喻。当你最忠实的用户开始离开，问题已经不是功能或价格，而是信任。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>审视我们对 GitHub 的依赖度——如果 GitHub 连续宕机一天，我们的交付能力受多大影响？</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>我们花了十年加固包管理器——锁文件、2FA、签名、审计日志、出处证明——然后把这一切用 OIDC 接到了一个没有这些属性的 CI 平台上。</blockquote>
+    <div class="quote-author">— <a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html">Andrew Nesbitt</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：安全 / 供应链</div>
+    <div class="quote-comment"><strong>点评：</strong>一句话概括了整个供应链安全的「水桶效应」。你最强的板，比不上你最短的板。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>检查我们的 CI 流水线：是否有 pull_request_target 触发器？第三方 Actions 是否用 SHA 钉扎？GITHUB_TOKEN 权限是否最小化？</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>开源一直是开发者学习、构建和推动前沿的核心方式。我们很高兴支持探索 AI 如何帮助维护者和贡献者更有效地大规模协作。</blockquote>
+    <div class="quote-author">— <a href="https://www.warp.dev/blog/warp-is-now-open-source">Thibault Sottiaux, OpenAI 工程负责人</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：AI Workflow / 开源</div>
+    <div class="quote-comment"><strong>点评：</strong>OpenAI 赞助 Warp 开源，背后的逻辑是把 Agent 驱动的开发流程「秀」出来——最好的广告不是说 Agent 能写代码，而是用它运行一个真实的大规模开源项目。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>关注 Warp + Oz 的 Agent 驱动开发模式在实际项目中的效果，评估类似流程是否适用于我们的开源/内源项目。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>是时候认真重新思考操作系统和用户界面的设计了。互联网也需要一个人类和 Agent 都能同样使用的协议。</blockquote>
+    <div class="quote-author">— <a href="https://x.com/sama/status/2048428561481265539">Sam Altman</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：AI 产品 / 硬件</div>
+    <div class="quote-comment"><strong>点评：</strong>在 OpenAI 手机消息曝光的同一天发这条推，时机绝非巧合。Altman 在暗示的不只是一部手机，而是 Agent-native 的整个计算范式。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>思考我们的产品界面在「Agent 时代」的适配——交易 API 是否能被 Agent 自然调用？用户交互流程是否需要为 Agent 代理场景重新设计？</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>利用 AI 辅助逆向工程工具（特别是 IDA MCP），我们得以快速分析编译后的二进制文件并重建内部协议——这在以前是不可行的。</blockquote>
+    <div class="quote-author">— <a href="https://www.wiz.io/blog/github-rce-vulnerability-cve-2026-3854">Wiz Research Team</a></div>
+    <div class="quote-meta">类型：摘要式转述 · 关键词：安全 / AI Workflow</div>
+    <div class="quote-comment"><strong>点评：</strong>AI 让安全研究的成本结构发生了质变。以前「不划算」去审计的闭源系统，现在可以用 AI 在合理时间内完成逆向分析。攻防双方都获得了加速，但攻击者的门槛降低得更快。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>在安全审计中引入 AI 辅助工具，特别是对第三方 SDK 和闭源组件的审查。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>Warp 的开源来自于我们对构建成功商业的渴望。我们是 VC 支持的初创公司，没有资源在价格上竞争或大规模补贴——我们需要提供最好的产品给最热情的社区。</blockquote>
+    <div class="quote-author">— <a href="https://www.warp.dev/blog/warp-is-now-open-source">Zach Lloyd, Warp CEO</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：开源 / 管理认知</div>
+    <div class="quote-comment"><strong>点评：</strong>这是最清醒的开源动机表述。不是理想主义，是生存策略——当你没有大公司的资源时，社区就是你的杠杆。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>开源不是慈善，是战略。评估我们的哪些内部工具如果开源，可以通过社区贡献获得更快的迭代速度。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>攻击者使用被入侵的 Context.ai（一个第三方 AI 工具）接管了 Vercel 员工的 Google Workspace 账户，进而访问了 Vercel 内部系统。</blockquote>
+    <div class="quote-author">— <a href="https://vercel.com/kb/bulletin/vercel-april-2026-security-incident">Vercel 安全团队</a></div>
+    <div class="quote-meta">类型：摘要式转述 · 关键词：安全 / AI Workflow</div>
+    <div class="quote-comment"><strong>点评：</strong>供应链攻击的新向量：第三方 AI 工具。当团队成员安装各种 AI 助手时，每个 OAuth 授权都是一个潜在的攻击入口。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>盘点团队成员使用的所有第三方 AI 工具及其 OAuth 权限，实施白名单制度。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>V4 运行在国产芯片上，使 AI 系统的构建和部署不再完全依赖 Nvidia，这可能加速国内采用并促进全球 AI 发展。</blockquote>
+    <div class="quote-author">— <a href="https://thenextweb.com/news/deepseek-v4-pro-price-cut-75-percent">Wei Sun, Counterpoint Research 首席分析师</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：AI 产品 / 硬件</div>
+    <div class="quote-comment"><strong>点评：</strong>DeepSeek V4 的真正意义不是又一个跑分领先，而是「全栈国产化」的证明——从芯片到框架到模型，完全脱离 Nvidia 依赖。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>关注 DeepSeek V4-Pro 的实际表现和定价，评估作为 Claude/GPT 的成本对冲方案的可行性。</div>
+  </div>
+
+  <h2 id="team-insights">✅ 对团队的启发</h2>
+
+  <div class="insight-card">
+    <p><span class="insight-num">1</span>CI/CD 安全审计：立即检查所有 GitHub Actions 工作流——是否有 pull_request_target 触发器、未钉扎的第三方 Actions、默认 write 权限的 GITHUB_TOKEN。安装 zizmor 做一次全量扫描。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">2</span>第三方工具权限盘点：列出团队成员使用的所有第三方 AI 工具及其 OAuth 权限范围。Vercel 事件证明「一个 AI 工具的入侵 = 一次全面的凭据泄露」。实施白名单制度和最小权限原则。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">3</span>工具链冗余方案：评估 GitHub 的单点依赖风险。考虑 Self-hosted Runner 作为 CI/CD 后备、代码镜像仓库（如 Gitea/Forgejo）作为读写应急方案。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">4</span>DeepSeek V4-Pro 成本评估：利用 75% 促销期测试 V4-Pro 在实际业务场景中的表现。如果质量达标，可以作为 Claude/GPT 的成本对冲方案，特别是对延迟不敏感的批量处理任务。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">5</span>Claude Design 评估：设计和产品团队可以试用 Claude Design 的原型制作能力，特别是设计到 Claude Code 的交接流程，评估是否能加速「想法→原型→实现」的链路。</p>
+  </div>
+
+
+
+  <div class="footer-sources">
+    <strong>信息源：</strong>60 个全球精选科技 / AI / 工程 / 系统可靠性信息源<br>
+    <strong>覆盖：</strong>Hacker News · TLDR · Anthropic · OpenAI · DeepMind · Simon Willison · Pragmatic Engineer · Cloudflare · Netflix · Stripe · GitHub · Jepsen · ACM Queue 等<br><br>
+    由 Cursor AI 自动生成 · 信息截止至 2026-04-29
+  </div>
+</main>
+</div>
+
+<script>
+  const today = '2026-04-29';
+  const audioPath = `../audio/${today}.m4a`;
+  fetch(audioPath, { method: 'HEAD' }).then(r => {
+    if (r.ok) {
+      document.getElementById('audioBar').classList.remove('hidden');
+      document.getElementById('audioPlayer').src = audioPath;
+    }
+  }).catch(() => {});
+
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href')?.replace('#','');
+    if (id) { const el = document.getElementById(id); if (el) sections.push({ id, el, link }); }
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const s = sections.find(s => s.el === entry.target);
+      if (s) s.link.classList.toggle('active', entry.isIntersecting);
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s.el));
+</script>
+</body>
+</html>
