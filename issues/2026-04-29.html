@@ -279,7 +279,7 @@
   <a href="../index.html" class="back">← 返回目录</a>
 
   <h1>第 6 期：GitHub 信任危机 — Ghostty 出走、RCE 核弹与 Actions 供应链溃堤</h1>
-  <div class="meta">第 6 期 · 2026年4月29日，星期二</div>
+  <div class="meta">第 6 期 · 2026年4月29日，星期三</div>
 
   <div class="audio-bar hidden" id="audioBar">
     <div class="audio-label">🎧 收听本期音频版<br><small>由 NotebookLM 生成 · 双人对话播客风格</small></div>
@@ -308,6 +308,7 @@
   <p>这不是孤立事件。同一周内：Wiz 研究团队公开了 CVE-2026-3854——一个影响 GitHub.com 和 GHES 的严重 RCE 漏洞，任何认证用户只需一个 <code>git push</code> 命令就能在后端服务器执行任意代码，跨租户访问数百万仓库。Andrew Nesbitt 发表了长文系统性分析 GitHub Actions 的安全模型为何是开源供应链「最弱的一环」——从 spotbugs 到 tj-actions 到 Trivy 到 elementary-data，18 个月内的每一起重大供应链事件都能追溯到一个 <code>.github/workflows</code> YAML 文件。</p>
   <p>与此同时，Vercel 披露了一起安全事件：攻击者通过入侵第三方 AI 工具 Context.ai，接管了一名 Vercel 员工的 Google Workspace 账户，进而访问了 Vercel 内部系统和客户环境变量。</p>
   <p><strong>判断：</strong>我们正在目睹一次「开发者基础设施信任的系统性重估」。GitHub 的可用性、Actions 的安全默认值、第三方 AI 工具的供应链风险，三重问题同时暴露。对团队的启发是：不要把所有鸡蛋放在一个篮子里，CI/CD 流水线需要像生产系统一样做安全审计，第三方 AI 工具的 OAuth 权限需要最小化。</p>
+  <img class="article-img" src="https://www.datocms-assets.com/75231/1777300906-github-2x-100-1.jpg?fm=webp" alt="GitHub RCE 漏洞 CVE-2026-3854 — Wiz Research">
 
   <h2 id="tech-news">📰 科技动态</h2>
 
@@ -324,6 +325,7 @@
   <p>DeepSeek 宣布旗舰模型 V4-Pro 促销价降 75%（至 5 月 5 日），同时全 API 套件的缓存命中价格直降至原来的十分之一。V4-Pro 即使在原价下已经低于 GPT-5.5、Claude Opus 4.7 和 Gemini 3.1 Pro。该模型拥有 1.6 万亿参数，基于华为昇腾芯片训练，原生集成 Claude Code 和 OpenClaw。此举时机恰逢美国政府指控中国企业「工业化蒸馏」美国 AI 模型。</p>
   <h3>2、Anthropic 发布 Claude Design — AI 协作设计工具 <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
   <p>Claude Design 由 Opus 4.7 驱动，支持设计探索、原型制作、演示文稿和营销材料。核心功能包括：品牌设计系统自动读取、内联注释和实时调节旋钮、组织级共享和协作、一键导出到 Canva/PDF/PPTX、以及向 Claude Code 的设计交接包。目前对 Pro、Max、Team 和 Enterprise 用户开放。</p>
+  <img class="article-img" src="https://www-cdn.anthropic.com/images/4zrzovbb/website/499e91975d880b35eac6e48ad43161de7d10416c-2876x1614.jpg" alt="Claude Design — Anthropic AI 协作设计工具">
   <h3>3、OpenAI 模型正式入驻 Amazon Bedrock <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
   <p>AWS 宣布在 Amazon Bedrock 上提供 OpenAI 模型，企业客户可以直接通过 AWS 基础设施使用 OpenAI 的最新模型，无需单独管理 API 密钥。这是 OpenAI 首次通过第三方云平台分发模型。</p>
 
@@ -331,6 +333,7 @@
 
   <h3>1、<a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html">GitHub Actions 是最弱的一环</a></h3>
   <p>Andrew Nesbitt 系统梳理了过去 18 个月所有重大开源供应链事件（spotbugs → tj-actions → Ultralytics → nx → Trivy → elementary-data），发现每一起都可以追溯到 GitHub Actions 的几个相同特性：pull_request_target 触发器、${{ }} 模板注入、默认 write 权限的 GITHUB_TOKEN、可变 Git 标签引用。他提出的核心论点：「PyPI 和 npm 的可信发布把所有信任集中到了 GitHub Actions 上——我们花了十年加固包管理器，结果把信任全转移到了一个没有锁文件、没有哈希校验的 CI 平台上。」</p>
+  <img class="article-img" src="https://nesbitt.io/images/boxes.png" alt="GitHub Actions 供应链安全分析">
   <h3>2、<a href="https://legallayer.substack.com/p/who-owns-the-claude-code-wrote">谁拥有 Claude Code 写的代码？</a></h3>
   <p>Legal Layer 深度分析了 AI 生成代码的版权归属问题。核心结论：在当前法律框架下，纯 AI 生成的代码很可能不受版权保护，但人类在提示词和编辑过程中的创造性贡献可能赋予其版权。对使用 AI 编码工具的团队来说，保留人工审查和修改记录是关键。</p>
   <h3>3、<a href="https://blog.cloudflare.com/the-ai-engineering-stack-cloudflare-built-internally">Cloudflare 内部构建的 AI 工程堆栈</a></h3>
@@ -348,6 +351,7 @@
       <p>GitHub Actions 安全审计工具，4 行 YAML 即可接入。能检测 dangerous-triggers、unpinned-uses、template-injection、excessive-permissions 等常见安全问题。在多起供应链事件中，zizmor 的默认规则集可以提前发现漏洞。</p>
     </div>
   </div>
+  <img class="article-img" src="https://www.warp.dev/images/blog/warp-is-now-open-source/hero.png" alt="Warp 终端正式开源 — Agent 优先的开发环境">
 
   <h2 id="ai-tools">🧠 AI 工具</h2>
 
@@ -417,6 +421,7 @@
     <a href="https://vercel.com/kb/bulletin/vercel-april-2026-security-incident">Vercel 安全事件公告与 IOC</a>
     <p>完整的事件时间线、影响范围、推荐操作和 IOC 指标。特别关注第三方 AI 工具 Context.ai 的 OAuth App ID 和环境变量轮换建议。</p>
   </div>
+  <img class="article-img" src="https://images.ctfassets.net/hjgychtc108g/7DjSnSWeGLxU1cL5MmavJY/f16cf2f7c52eea9be84fa25d7fb6faac/image.png" alt="Vercel 2026 年 4 月安全事件公告">
 
   <h2 id="quotes">💬 言论</h2>
 
