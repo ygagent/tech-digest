@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lenny 精读 - 为何多数 AI 产品会失败：来自 50+ 次企业级部署的教训</title>
+  <meta property="og:title" content="为何多数 AI 产品会失败：来自 50+ 次企业级部署的教训">
+  <meta property="og:description" content="企业 AI 的胜负手，是从非确定性与开放边界出发重建交付范式：用 CC/CD 把校准与开发绑成飞轮，用分层评测与生产监控对抗漂移，用人在环与纵深安全换信任，比单纯追逐新模型更能决定产品活不活得久。">
+  <meta property="og:image" content="https://i.ytimg.com/vi/z7T1pCxgvlA/maxresdefault.jpg">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .page { display: flex; max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary { cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none; }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+      .action-table { font-size: 0.82rem; }
+      .action-table th, .action-table td { padding: 8px 10px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    .guest-meta {
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .guest-avatar {
+      width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent-light); flex-shrink: 0;
+    }
+    .guest-info { flex: 1; }
+    .guest-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .guest-title-text { font-size: 0.85rem; color: var(--text-muted); }
+    .video-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: white; padding: 8px 16px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+    }
+    .video-link:hover { opacity: 0.85; color: white; text-decoration: none; }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px; }
+    .tags { margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    h2 {
+      font-size: 1.2rem; font-weight: 700; margin: 40px 0 16px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    h4 { font-size: 0.95rem; font-weight: 600; margin: 18px 0 6px; color: var(--text-secondary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    ul, ol { margin: 10px 0 14px 20px; color: var(--text-secondary); }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    blockquote {
+      border-left: 4px solid var(--accent); background: var(--accent-light);
+      padding: 14px 20px; margin: 16px 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--text-secondary); font-size: 0.95rem;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0;
+      font-size: 0.93rem; color: var(--text-secondary);
+    }
+    .callout-purple { background: var(--purple-light); border-left-color: var(--purple); }
+    .callout-blue { background: var(--blue-light); border-left-color: var(--blue); }
+    .callout-orange { background: var(--orange-light); border-left-color: var(--orange); }
+    .insight-card {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--accent);
+    }
+    .insight-card p { margin: 0; font-size: 0.92rem; }
+    .framework-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; margin: 12px 0; background: var(--surface);
+    }
+    .framework-card h4 { margin-top: 0; color: var(--accent); }
+    .action-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+    .action-table th {
+      background: var(--accent); color: white; padding: 10px 14px;
+      text-align: left; font-weight: 600; font-size: 0.82rem;
+    }
+    .action-table th:first-child { border-radius: var(--radius-xs) 0 0 0; }
+    .action-table th:last-child { border-radius: 0 var(--radius-xs) 0 0; }
+    .action-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .action-table tr:hover td { background: var(--surface2); }
+    .priority-p0 { color: var(--red); font-weight: 700; }
+    .priority-p1 { color: var(--orange); font-weight: 600; }
+    .priority-p2 { color: var(--blue); font-weight: 500; }
+    .discussion-q {
+      background: var(--purple-light); border-radius: var(--radius-sm);
+      padding: 14px 18px; margin: 10px 0; border-left: 3px solid var(--purple);
+    }
+    .discussion-q p { margin: 0; font-size: 0.92rem; color: var(--text); font-weight: 500; }
+    .quote-block {
+      background: var(--surface2); border-radius: var(--radius-sm);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .quote-block blockquote { margin: 0 0 8px; }
+    .quote-source { font-size: 0.82rem; color: var(--text-muted); }
+    .disclaimer {
+      margin-top: 40px; padding: 16px 20px;
+      background: var(--surface2); border-radius: var(--radius-sm);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .footer {
+      margin-top: 36px; padding: 20px; text-align: center;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="topbar-brand">
+      <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tech Digest
+    </a>
+    <nav class="topbar-nav">
+      <a href="../index.html">每日简报</a>
+      <a href="index.html" class="active">Lenny 精读</a>
+    </nav>
+  </header>
+
+  <details class="toc-mobile">
+    <summary>目录导航</summary>
+    <div class="toc-dropdown">
+      <a href="#exec-summary">01. 高层摘要</a>
+      <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+      <a href="#core-insights">03. 核心观点精读</a>
+      <a href="#frameworks">04. 方法论提炼</a>
+      <a href="#bingx-insights">05. 对 BingX 的启发</a>
+      <a href="#action-items">06. 公司级行动清单</a>
+      <a href="#discussion">07. 讨论问题</a>
+      <a href="#quotes">08. 关键表达与金句</a>
+      <a href="#one-liner">09. 一句话总结</a>
+      <a href="#sources">10. 原始资料</a>
+    </div>
+  </details>
+
+  <div class="page">
+    <aside class="toc">
+      <div class="toc-title">目录</div>
+    <a href="#exec-summary">01. 高层摘要</a>
+    <a href="#guest-background">02. 本期主题与嘉宾背景</a>
+    <a href="#core-insights">03. 核心观点精读</a>
+    <a href="#frameworks">04. 方法论提炼</a>
+    <a href="#bingx-insights">05. 对 BingX 的启发</a>
+    <a href="#action-items">06. 公司级行动清单</a>
+    <a href="#discussion">07. 讨论问题</a>
+    <a href="#quotes">08. 关键表达与金句</a>
+    <a href="#one-liner">09. 一句话总结</a>
+    <a href="#sources">10. 原始资料</a>
+    </aside>
+    <main class="container">
+      <a class="back" href="index.html">← 返回专栏</a>
+  <h1>为何多数 AI 产品会失败：来自 50+ 次企业级部署的教训</h1>
+  <div class="meta"> &middot; 1h26m &middot; Lenny's Podcast 深度精读</div>
+  <div class="tags">
+    <span class="tag">AI 产品化</span>
+    <span class="tag">企业 AI</span>
+    <span class="tag">评测与监控</span>
+    <span class="tag">信任与可靠性</span>
+    <span class="tag">人机协同</span>
+    <span class="tag">安全与提示注入</span>
+    <span class="tag">OpenAI</span>
+    <span class="tag">Google</span>
+    <span class="tag">Amazon</span>
+    <span class="tag">迭代方法论</span>
+  </div>
+  <h2 id="exec-summary">01. 高层摘要</h2>
+
+<ul>
+  <li>两位嘉宾在 OpenAI、Google、Amazon、Databricks 等机构参与过 50+ 企业级 AI 产品的建设与上线；本期目标是把「血泪换来的最佳实践」压缩成可执行清单，帮团队少走弯路。</li>
+  <li>AI 产品与传统软件在两条轴上根本不同：输出非确定性、边界与失败模式更难事先穷举——因此不能照搬瀑布或纯功能清单式交付，而要以校准、监控与人为控制为核心循环。</li>
+  <li>成功团队常见模式：从小场景切入、显式保留人类在环（human-in-the-loop）、把信任与可靠性当产品指标而非售后话题；挣扎团队则容易过度迷信单次评测集或模型版本号。</li>
+  <li>节目提出从实战经验沉淀的迭代框架（节目中称 CC/CD：持续校准 / 持续开发），强调用真实使用数据驱动模型与提示、护栏、工作流的共同演进，形成改进飞轮。</li>
+  <li>Evals（评测）被反复纠偏：它们是必要非充分条件；常见误区包括把离线分数当「上线即安全」、忽略分布漂移与对抗性输入（含提示注入、越狱），以及缺少生产侧持续监控。</li>
+  <li>以 OpenAI Codex 团队为例，节目讨论了如何把评测与客户反馈结合，避免工程自嗨；安全议题上引用生产环境智能体研究、提示注入专题等内容，强调企业级部署的攻防面。</li>
+  <li>尾声对比「被过度炒作」与「仍被低估」的概念，并展望 AI 能力曲线与组织技能栈：问题优先、实验纪律、评测素养、风险沟通与跨职能协作，比单纯追新模型更决定成败。</li>
+</ul>
+
+  <h2 id="guest-background">02. 本期主题与嘉宾背景</h2>
+
+  <p><strong>嘉宾：</strong>Aishwarya Naresh Reganti &amp; Kiriti Badam</p>
+  <p><strong>公司：</strong>OpenAI、Google、Amazon、Databricks 等（跨机构经验）</p>
+  <p><strong>角色：</strong>企业级 AI 产品构建与规模化实践者；联合开设 Maven 课程《Building Agentic AI Applications with a Problem-First Approach》</p>
+  <p><strong>背景：</strong>Aishwarya 活跃于生成式 AI 社区（如 awesome-generative-ai-guide）；二人长期身处大模型落地一线，覆盖从原型到企业采购、合规与运维全链路。</p>
+  <p><strong>本期主题：</strong>AI 产品与传统软件的关键差异、成功/失败组织模式、持续校准与持续开发（CC/CD）框架、信任与可靠性、评测与生产监控的边界、提示注入与安全、以及 AI 时代核心技能。</p>
+  <p><strong>为什么重要：</strong>当行业从 Demo 走向真实工单与收入，「能跑」与「能长期跑」的鸿沟被放大；本期把多家超大规模平台的共性教训抽象成可迁移框架，对 B 端产品与内部平台团队参考价值高。</p>
+  <p><strong>适合团队：</strong>AI/ML 产品、应用研究、平台工程、信任与安全、法务合规、客户成功、数据标注与评测运维、SRE/可观测性</p>
+
+  <h2 id="core-insights">03. 核心观点精读</h2>
+
+  <h3>观点 1：AI 产品与传统软件的两条根本差异</h3>
+  <h4>核心观点</h4>
+  <p>非确定性与开放边界使需求、测试与运维语义整体改写：同一输入可能得到多类可接受输出，失败模式呈长尾且依赖上下文。</p>
+  <h4>关键论据</h4>
+  <p>节目在总览企业 AI 开发难点后，专章对比传统软件与 AI 系统在规格、验收与回归上的不同（约 07:36 起）。</p>
+  <h4>典型案例</h4>
+  <p>描述中引用加航聊天机器人误导乘客判例等链接，说明「错误答案」在面向消费者场景可转化为法律责任与品牌风险，而非仅 Bug 工单。</p>
+  <h4>对公司的启发</h4>
+  <p>PRD 宜从「行为边界 + 可接受失败率 + 降级策略」写起，而非仅罗列功能；验收需包含红队、对抗样本与人工抽检协议。</p>
+  <h3>观点 2：从小做起、scaling 的是「学习系统」而非仅算力</h3>
+  <h4>核心观点</h4>
+  <p>先锁定窄场景与清晰成功指标，再扩展能力半径；规模化关键是数据飞轮与治理流程，而非一次上大模型。</p>
+  <h4>关键论据</h4>
+  <p>章节「Building AI products: start small and scale」（约 13:19）。</p>
+  <h4>典型案例</h4>
+  <p>与 LevelUp Labs、Booking.com 等被引用资源呼应：真实业务流量下的迭代比实验室排行榜更接近上线真相。</p>
+  <h4>对公司的启发</h4>
+  <p>试点阶段就接入日志、反馈标签与再训练/再提示节奏，避免「一锤子模型切换」式项目管理。</p>
+  <h3>观点 3：人类在环不是妥协，而是产品设计的默认项</h3>
+  <h4>核心观点</h4>
+  <p>在高风险或高模糊任务上，显式设计审核、编辑、撤销与责任归属，比追求全自动化更能赢得持续采用。</p>
+  <h4>关键论据</h4>
+  <p>章节「The importance of human control in AI systems」（约 15:23）。</p>
+  <h4>典型案例</h4>
+  <p>企业工作流中常见「生成—人工确认—发布」三段式；节目强调控制点应可配置、可审计。</p>
+  <h4>对公司的启发</h4>
+  <p>对金融、医疗、客服等场景，把 SLA 拆成「自动完成率」与「人工介入时延」两项，分别优化。</p>
+  <h3>观点 4：提示注入与越狱是企业部署的实锤风险面</h3>
+  <h4>核心观点</h4>
+  <p>将外部不可信文本拼进提示链时，攻击面从传统 API 扩展到语义层；需纵深防御而非仅依赖模型「拒绝」。</p>
+  <h4>关键论据</h4>
+  <p>「Avoiding prompt injection and jailbreaking」（约 22:38）；描述链接含 Sander Schulhoff 谈 AI 安全危机、以及 arXiv 生产环境智能体研究论文。</p>
+  <h4>典型案例</h4>
+  <p>引用节目中对安全专题与学术研究的索引，强调生产智能体与工具调用（tool use）放大后的泄露与越权可能。</p>
+  <h4>对公司的启发</h4>
+  <p>为 Agent 设计最小权限工具集、输入消毒、输出过滤与隔离上下文；红队应纳入发布门禁。</p>
+  <h3>观点 5：成功 vs 挣扎团队的组织模式分野</h3>
+  <h4>核心观点</h4>
+  <p>强者把评测、监控与客户反馈接成闭环；弱者把「跑分」当终点或把失败归咎于单一模型版本。</p>
+  <h4>关键论据</h4>
+  <p>「Patterns for successful AI product development」（约 25:18）及后续评测辩论段落。</p>
+  <h4>典型案例</h4>
+  <p>对比 LMArena、Artificial Analysis 等公开榜单在节目引用中的定位：对外部基准保持清醒，优先建内部任务级评测。</p>
+  <h4>对公司的启发</h4>
+  <p>设立跨职能「模型发布评审」：数据、安全、产品、法务共签，避免研发单独背锅。</p>
+  <h3>观点 6：Evals 必要但不万能：生产监控与客户声音同样构成真相</h3>
+  <h4>核心观点</h4>
+  <p>离线评测易与真实分布脱节；需持续监控漂移、边缘案例与业务指标（转化、工单重开率、投诉）。</p>
+  <h4>关键论据</h4>
+  <p>「The debate on evals and production monitoring」（约 33:20）；「Codex team&#x27;s approach to evals and customer feedback」（约 41:27）。</p>
+  <h4>典型案例</h4>
+  <p>Codex 路线说明如何把工程评测与用户反馈并表，防止「指标好、体验差」。</p>
+  <h4>对公司的启发</h4>
+  <p>构建分层评测：单元级（工具调用是否正确）、任务级（端到端是否完成）、业务级（是否省钱/增收）。</p>
+  <h3>观点 7：CC/CD：持续校准 + 持续开发，驱动改进飞轮</h3>
+  <h4>核心观点</h4>
+  <p>将模型、提示、策略与护栏视为需频繁对齐真实世界的系统；校准（数据、评测、人工标注）与产品开发同频迭代。</p>
+  <h4>关键论据</h4>
+  <p>「Continuous calibration, continuous development (CC/CD) framework」（约 45:41）；「Emerging patterns and calibration」（约 58:07）。</p>
+  <h4>典型案例</h4>
+  <p>可把每次重大客户投诉或事故转化为新的评测用例与回归集，形成组织记忆。</p>
+  <h4>对公司的启发</h4>
+  <p>在路线图并排展示「功能交付」与「评测/数据债务清偿」，避免后者永远排不进 Sprint。</p>
+  <h3>观点 8：信任与可靠性是被低估的增长杠杆</h3>
+  <h4>核心观点</h4>
+  <p>企业采购与终端用户复用，高度依赖可预测失败体验与透明恢复路径；可靠性工程思维应前置到产品设计。</p>
+  <h4>关键论据</h4>
+  <p>节目主旨条目中明确将「obsessing about customer trust and reliability」列为成功驱动因素；描述中法律判例链接强化该论点。</p>
+  <h4>典型案例</h4>
+  <p>语义扩散（Semantic Diffusion）等被引概念可提醒团队：对外承诺过度会反噬信任。</p>
+  <h4>对公司的启发</h4>
+  <p>产品界面应诚实展示不确定性（置信度、引用来源、可编辑输出），并把「一键转人工」做得显眼。</p>
+  <h3>观点 9：炒作与低估：校准预期，投资「慢变量」能力</h3>
+  <h4>核心观点</h4>
+  <p>市场叙事波动快于实际可用边界；团队应识别被过度包装的概念与仍供给不足的基础能力（数据、评测、治理）。</p>
+  <h4>关键论据</h4>
+  <p>「Overhyped and under-hyped AI concepts」（约 01:01:24）；「The future of AI」（约 01:05:17）。</p>
+  <h4>典型案例</h4>
+  <p>可对照节目中引用的 Every、Codex 产品 lead 访谈等素材，理解「100% AI 写代码」类叙事背后的选择条件。</p>
+  <h4>对公司的启发</h4>
+  <p>战略上为「模型可替换」留接口，把护城河放在数据、工作流嵌入度与合规资产。</p>
+  <h3>观点 10：AI 时代核心技能：问题优先、跨职能沟通与实验素养</h3>
+  <h4>核心观点</h4>
+  <p>比追新架构更重要的是：定义可测问题、设计实验、解读评测、与法务/安全共建边界。</p>
+  <h4>关键论据</h4>
+  <p>「Skills and best practices for building AI products」（约 01:08:41）；尾声闪电轮（约 01:14:04）。</p>
+  <h4>典型案例</h4>
+  <p>与嘉宾 Maven「问题优先的智能体应用」课程主张一致：从任务与约束出发，而非从模型 API 出发。</p>
+  <h4>对公司的启发</h4>
+  <p>招聘与晋升标准应纳入「评测设计」「失败案例分析」「负责任的发布记录」。</p>
+
+  <h2 id="frameworks">04. 方法论提炼</h2>
+
+<table class="action-table">
+  <tr><th>Framework</th><th>核心问题</th><th>使用场景</th><th>关键步骤</th><th>参考价值</th></tr>
+  <tr><td>AI 产品差异二象限（节目归纳）</td><td>我们的输出空间是确定性的吗？失败代价可否用单一测试套件覆盖？</td><td>立项评审、技术路线选择、与业务签 SLA 前。</td><td>1）列出开放域输入与不可接受输出类型。2）定义可接受输出集合或评分 rubric。3）设计人在环与降级。4）将监控指标与业务指标对齐。</td><td>避免用传统软件甘特图管理概率系统，减少上线后「无指标可归因」混乱。</td></tr>
+  <tr><td>CC/CD：持续校准 × 持续开发</td><td>我们如何证明本周系统比上周更适配真实用户与真实数据？</td><td>模型/提示频繁变更的企业场景；多租户 B 端产品。</td><td>1）建立任务级评测与采样审计。2）生产日志→标注→新测例→回归。3）与客户成功共建「坏案例」入库机制。4）发布门禁与渐进 rollout。5）复盘写入策略与文档。</td><td>把「一次性上线」改为可度量演进，形成质量飞轮。</td></tr>
+  <tr><td>分层评测栈（工程评测 + 生产监控 + 客户反馈）</td><td>离线好是否等于线上好？业务好是否等于安全？</td><td>模型迭代、Agent 工具链升级、提示大改。</td><td>1）工具/步骤级单测。2）场景级集成评测。3）线上分层发布与影子流量。4）客户工单与 NPS 结构化回填。5）安全红队定期抽签。</td><td>降低 evals 迷信与「单一总分」误导。</td></tr>
+</table>
+
+  <h2 id="bingx-insights">05. 对 BingX 的启发</h2>
+
+<ul>
+  <li>交易与客服类 AI：优先把「错误报价/错误合约条款」类风险做成评测与安全门禁，参考法律判例思维——财务损失与声誉损失可量化进 SLA。</li>
+  <li>跟单/策略说明类场景：输出非确定性高，宜显式展示数据来源与「不构成投资建议」边界，并把人在环审核写进核心路径而非事后补救。</li>
+  <li>内部 Agent 若接 API 密钥或用户持仓数据，需按最小权限与提示注入面做威胁建模，安全红队应覆盖工具调用链。</li>
+  <li>评测集应包含行情剧烈波动、极端杠杆、多语言客诉等长尾切片；公开排行榜仅作辅证，以内部任务 rubric 为准。</li>
+  <li>模型切换频繁时，为业务方提供「可解释的回归摘要」（哪些用例变好/变差），避免运营团队黑盒恐慌。</li>
+  <li>将 CC/CD 与发布日历绑定：每次大促/新品种上线前强制跑一轮相关评测与演练降级（回退规则、人工兜底人数）。</li>
+</ul>
+
+  <h2 id="action-items">06. 公司级行动清单</h2>
+
+<table class="action-table">
+  <tr><th>行动项</th><th>适用团队</th><th>适用场景</th><th>预期收益</th><th>优先级</th></tr>
+  <tr><td>用一页纸写清「开放边界」：禁止输出、必须拒答、必须转人工的触发条件，并与法务预览。</td><td>产品 + 法务 + 信任安全</td><td>对客 AI 功能立项或 major 版本前</td><td>降低合规与舆情黑天鹅</td><td class="priority-p0">P0</td></tr>
+  <tr><td>建立任务级评测集：从真实工单与日志抽样，至少覆盖 happy path、常见失败与恶意输入三类。</td><td>ML + 数据 + 业务代表</td><td>首版上线后 30 天内</td><td>模型迭代可回归、可归因</td><td class="priority-p0">P0</td></tr>
+  <tr><td>为 Agent/工具链做权限矩阵与审计日志：工具粒度 API scope、敏感操作二次确认。</td><td>安全 + 后端</td><td>接入交易或账户写操作前</td><td>压缩提示注入与越权面</td><td class="priority-p0">P0</td></tr>
+  <tr><td>上线分层监控：质量指标（幻觉率、工具错误率）与业务指标（工单重开率、转化率）同屏周报。</td><td>数据 + SRE + 产品</td><td>生产流量稳定后</td><td>早发现分布漂移与「指标好体验差」</td><td class="priority-p1">P1</td></tr>
+  <tr><td>每季度一次红队抽签：随机抽取生产提示模板与工具链做对抗测试，结果进入门禁。</td><td>安全 + AI 团队</td><td>持续运营期</td><td>避免静态评测过时</td><td class="priority-p1">P1</td></tr>
+  <tr><td>把客户成功通道与评测共建：严重误答 24h 内转测例 owner，纳入回归。</td><td>客户成功 + 工程</td><td>企业客户或高净值场景</td><td>飞轮式改进、减少重复事故</td><td class="priority-p1">P1</td></tr>
+  <tr><td>培训 PM/研发「评测素养」：rubric 设计、抽样统计、混淆矩阵解读，纳入晋升材料。</td><td>研发负责人 + HR</td><td>组织规模化后</td><td>减少拍脑袋改提示/换模型</td><td class="priority-p2">P2</td></tr>
+</table>
+
+  <h2 id="discussion">07. 讨论问题</h2>
+
+<div class="discussion-q"><p>1. 我们当前最大的风险是「模型不够好」还是「评测与监控不够」？若互换预算，优先补哪条链路？</p></div>
+<div class="discussion-q"><p>2. 哪些场景必须坚持人在环？控制点设在生成前、生成后还是工具调用前后？</p></div>
+<div class="discussion-q"><p>3. 离线评测集最近一次用生产真实 bad case 更新是什么时候？是否存在「评测绿、客诉红」的指标？</p></div>
+<div class="discussion-q"><p>4. 对提示注入与工具越权，现有纵深防御是否经独立红队验证？</p></div>
+<div class="discussion-q"><p>5. CC/CD 节奏上，产品迭代与数据/评测债务是否在同一看板上有同等可见度？</p></div>
+
+  <h2 id="quotes">08. 关键表达与金句</h2>
+
+<div class="quote-block">
+  <blockquote>AI 产品失败的根往往不在模型，而在把概率系统当成传统软件来管理。</blockquote>
+  <div class="quote-source">— 节目议题归纳 - Lenny&#x27;s Podcast（嘉宾：Aishwarya &amp; Kiriti）</div>
+</div>
+<div class="quote-block">
+  <blockquote>评测是必要的，但它永远不能替代你对真实世界漂移的敬畏。</blockquote>
+  <div class="quote-source">— 节目议题归纳 - Lenny&#x27;s Podcast</div>
+</div>
+<div class="quote-block">
+  <blockquote>信任不是营销话术，而是可设计的失败体验与恢复路径。</blockquote>
+  <div class="quote-source">— 节目议题归纳 - Lenny&#x27;s Podcast</div>
+</div>
+<div class="quote-block">
+  <blockquote>人类在环不是拖慢自动化，而是让自动化在组织里活得下去。</blockquote>
+  <div class="quote-source">— 节目议题归纳 - Lenny&#x27;s Podcast</div>
+</div>
+
+  <h2 id="one-liner">09. 一句话总结</h2>
+
+<div class="callout"><strong>一句话总结：</strong>企业 AI 的胜负手，是从非确定性与开放边界出发重建交付范式：用 CC/CD 把校准与开发绑成飞轮，用分层评测与生产监控对抗漂移，用人在环与纵深安全换信任，比单纯追逐新模型更能决定产品活不活得久。</div>
+
+  <h2 id="sources">10. 原始资料</h2>
+
+  <p><strong>YouTube 视频：</strong><a href="https://www.youtube.com/watch?v=z7T1pCxgvlA">https://www.youtube.com/watch?v=z7T1pCxgvlA</a></p>
+  <p><strong>发布时间：</strong>2026-01-11</p>
+  <p><strong>嘉宾：</strong>Aishwarya Naresh Reganti &amp; Kiriti Badam</p>
+  <p><strong>Transcript 来源：</strong>lennysnewsletter_show_notes</p>
+  <p><strong>备注：</strong>基于视频描述与公开 show notes 整理</p>
+
+
+      <div class="disclaimer">
+        本文为基于公开访谈内容整理的中文学习笔记与方法论提炼，不替代原始节目内容。建议结合原视频完整观看。
+        所有观点归原作者所有，本文仅做学习整理用途。
+      </div>
+      <div class="footer">
+        <a href="index.html">Lenny's Podcast 深度精读</a> · Powered by <a href="https://cursor.com">Cursor AI</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+  (function(){
+    var toc = document.querySelector('.toc');
+    var links = toc ? toc.querySelectorAll('a[href^="#"]') : [];
+    var sections = [];
+    links.forEach(function(a) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({el: el, link: a});
+    });
+    if (!sections.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          var match = sections.find(function(s) { return s.el === entry.target; });
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, {rootMargin: '-80px 0px -70% 0px'});
+    sections.forEach(function(s) { observer.observe(s.el); });
+  })();
+  </script>
+</body>
+</html>

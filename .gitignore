@@ -10,3 +10,4 @@ node_modules/
 *.key
 *.p12
 credentials*
+lenny/cookies.txt
