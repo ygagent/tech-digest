@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-05-03",
+    "title": "第 8 期：Agent 开户买域名了——当 AI 成为经济主体，钱流向了谁？",
+    "highlights": "Agent 自主开户买域名 · AI Lab 吃掉价值链 · Token 支出压垮 GitHub · Agentic 编码倦怠 · MCP 似曾相识 · Google ZK 证明被攻破 · Jepsen 测出 MariaDB 隔离造假 · 奥斯卡禁 AI 参评",
+    "image": "https://substack-post-media.s3.amazonaws.com/public/images/e1d0c080-fbf0-4274-a129-4bfea496225e_2752x1536.png"
+  },
+  {
     "date": "2026-04-30",
     "title": "第 7 期：Agent 承包 60% 的 PR 了，但我们连怎么评测它都还没想明白",
     "highlights": "Agent 承包 60% PR · Zig 禁止 LLM 贡献 · 评测成本爆炸 · Linux CVE 提权 · Anthropic 传闻 500 亿融资 · Zed 1.0 发布 · OpenAI 哥布林事件",

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日科技情报 #8 — 2026-05-03</title>
+  <meta property="og:title" content="Agent 成为经济主体：Cloudflare 开放自主消费，模型实验室吃掉价值链">
+  <meta property="og:description" content="Cloudflare Agent 自主开户买域名 · SemiAnalysis 揭示 AI Lab 垄断价值链 · Token 支出压垮 GitHub · Agentic 编码倦怠 · Jepsen 测出 MariaDB 隔离造假 · Trail of Bits 攻破 Google ZK 证明">
+  <meta property="og:image" content="https://substack-post-media.s3.amazonaws.com/public/images/e1d0c080-fbf0-4274-a129-4bfea496225e_2752x1536.png">
+  <style>
+    :root {
+      --bg: #f5f6f8; --surface: #ffffff; --surface2: #f0f2f5;
+      --border: #e8ecf1; --border-hover: #c5cdd8;
+      --text: #1a1d21; --text-secondary: #3d4550; --text-muted: #8c95a1;
+      --accent: #2d9f6f; --accent-light: #e8f5ef; --accent-hover: #248a5e;
+      --accent-text: #ffffff;
+      --purple: #7c5cbf; --purple-light: #f3effc;
+      --orange: #e58e26; --orange-light: #fef5e7;
+      --blue: #3a82f7; --blue-light: #eef4fe;
+      --red: #e74c3c; --red-light: #fdecea;
+      --green-deep: #1a7a4c; --green-light2: #e0f5ea;
+      --yellow: #d4a017; --yellow-light: #fef9e7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.08);
+      --radius: 12px; --radius-sm: 8px; --radius-xs: 6px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.75; font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 200; box-shadow: var(--shadow-sm);
+    }
+    .topbar-brand {
+      font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-brand svg { width: 28px; height: 28px; }
+    .topbar-nav { display: flex; gap: 4px; margin-left: 24px; }
+    .topbar-nav a {
+      padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: var(--surface2); color: var(--text); }
+    .topbar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    .topbar-date { font-size: 0.82rem; color: var(--text-muted); background: var(--surface2); padding: 5px 12px; border-radius: 16px; }
+    .page { display: flex; max-width: 1200px; margin: 0 auto; padding: 24px 24px 0; gap: 24px; }
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 80px; height: calc(100vh - 104px); overflow-y: auto;
+      background: var(--surface); border-radius: var(--radius); padding: 20px 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    }
+    .toc-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; padding-left: 12px;
+    }
+    .toc a {
+      display: block; padding: 7px 12px; margin-bottom: 2px;
+      font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+      border-radius: var(--radius-xs); transition: all 0.15s; font-weight: 500;
+    }
+    .toc a:hover { color: var(--accent); background: var(--accent-light); }
+    .toc a.active { color: var(--accent); background: var(--accent-light); font-weight: 600; }
+    .toc-mobile {
+      display: none; position: sticky; top: 57px; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 16px; box-shadow: var(--shadow-sm);
+    }
+    .toc-mobile summary {
+      cursor: pointer; font-size: 0.85rem; color: var(--accent); font-weight: 600; list-style: none;
+    }
+    .toc-mobile summary::-webkit-details-marker { display: none; }
+    .toc-mobile .toc-dropdown {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 8px; margin-top: 8px; max-height: 60vh; overflow-y: auto; box-shadow: var(--shadow-md);
+    }
+    .toc-mobile .toc-dropdown a {
+      display: block; padding: 8px 12px; font-size: 0.88rem;
+      color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs);
+    }
+    .toc-mobile .toc-dropdown a:hover { color: var(--accent); background: var(--accent-light); }
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .toc-mobile { display: block; }
+      .topbar-nav { display: none; }
+      .page { flex-direction: column; padding: 16px 12px 0; gap: 16px; }
+      .container { padding: 20px 16px 60px; }
+    }
+    .container {
+      flex: 1; min-width: 0;
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 40px 60px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .back {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      margin-bottom: 28px; font-weight: 500; transition: color 0.15s;
+    }
+    .back:hover { color: var(--accent); }
+    h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; color: var(--text); letter-spacing: -0.01em; }
+    .meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 28px; }
+    .hero-img { width: 100%; border-radius: var(--radius); margin-bottom: 10px; box-shadow: var(--shadow-md); }
+    .hero-caption { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 36px; text-align: center; font-style: italic; }
+    h2 {
+      font-size: 1.25rem; font-weight: 700; margin: 44px 0 18px; padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-light); scroll-margin-top: 90px; color: var(--text);
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 26px 0 8px; color: var(--text); }
+    p { margin-bottom: 14px; color: var(--text-secondary); }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    code {
+      background: var(--surface2); padding: 2px 6px; border-radius: 4px;
+      font-size: 0.88em; color: var(--accent-hover); font-family: "SF Mono", Monaco, monospace;
+    }
+    .callout {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 20px 0; font-size: 0.93rem;
+      color: var(--text-secondary);
+    }
+    .article-img {
+      width: 100%; max-height: 380px; object-fit: cover;
+      border-radius: var(--radius-sm); margin: 12px 0 24px; box-shadow: var(--shadow-sm);
+    }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+    .tool-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; transition: all 0.2s; box-shadow: var(--shadow-sm);
+    }
+    .tool-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .tool-card h4 { font-size: 0.95rem; margin-bottom: 6px; font-weight: 600; }
+    .tool-card h4 a { color: var(--accent); }
+    .tool-card p { font-size: 0.83rem; color: var(--text-muted); margin: 0; line-height: 1.55; }
+    .tool-card .tag {
+      display: inline-block; font-size: 0.68rem; padding: 3px 8px; border-radius: 10px;
+      background: var(--accent); color: var(--accent-text); font-weight: 600; margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .tool-card .priority-tag {
+      display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 8px;
+      background: var(--surface2); color: var(--text-muted); font-weight: 600; margin-left: 6px;
+    }
+    .fun-card {
+      background: var(--orange-light); border: 1px solid #f5ddb8;
+      border-radius: var(--radius); padding: 20px 24px; margin: 14px 0;
+    }
+    .fun-card h4 { font-size: 1rem; margin-bottom: 8px; font-weight: 600; }
+    .fun-card h4 a { color: var(--orange); }
+    .fun-card p { font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.65; }
+    .quote-block {
+      background: var(--purple-light); border-left: 4px solid var(--purple);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 18px 0;
+    }
+    .quote-block h4 { font-size: 0.95rem; color: var(--purple); font-weight: 700; margin-bottom: 10px; }
+    .quote-block blockquote {
+      font-size: 1.02rem; line-height: 1.65; margin-bottom: 10px;
+      font-style: italic; color: var(--text);
+    }
+    .quote-block .quote-author { font-size: 0.82rem; color: var(--purple); font-weight: 600; margin-bottom: 6px; }
+    .quote-block .quote-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+    .quote-block .quote-comment {
+      font-size: 0.88rem; color: var(--text-secondary);
+      border-top: 1px solid #d8d0e8; padding-top: 10px; margin-top: 10px;
+    }
+    .quote-block .quote-team-insight {
+      font-size: 0.88rem; color: var(--green-deep); background: var(--accent-light);
+      border-radius: var(--radius-xs); padding: 8px 12px; margin-top: 8px;
+    }
+    .resource-item {
+      background: var(--blue-light); border: 1px solid #c8dbf8;
+      border-radius: var(--radius); padding: 18px 20px; margin: 12px 0;
+    }
+    .resource-item a { font-weight: 600; color: var(--blue); }
+    .resource-item p { font-size: 0.88rem; color: var(--text-secondary); margin: 6px 0 0; }
+    .concept-card {
+      background: var(--green-light2); border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm); padding: 20px 24px; margin: 16px 0;
+    }
+    .concept-card h4 { font-size: 1rem; font-weight: 700; color: var(--green-deep); margin-bottom: 10px; }
+    .concept-card .concept-field { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.6; }
+    .concept-card .concept-field strong { color: var(--text); font-size: 0.88rem; }
+    .insight-card {
+      background: var(--yellow-light); border-left: 4px solid var(--yellow);
+      border-radius: var(--radius-sm); padding: 16px 20px; margin: 12px 0;
+    }
+    .insight-card p { font-size: 0.93rem; color: var(--text-secondary); margin: 0; line-height: 1.7; }
+    .insight-card .insight-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%; background: var(--yellow);
+      color: #fff; font-size: 0.75rem; font-weight: 700; margin-right: 10px; flex-shrink: 0;
+    }
+    .certainty-tag {
+      display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 8px;
+      font-weight: 600; margin-left: 8px;
+    }
+    .certainty-confirmed { background: var(--accent-light); color: var(--accent); }
+    .certainty-announced { background: var(--blue-light); color: var(--blue); }
+    .certainty-reported { background: var(--yellow-light); color: var(--yellow); }
+    .certainty-opinion { background: var(--purple-light); color: var(--purple); }
+    .certainty-rumor { background: var(--red-light); color: var(--red); }
+    .audio-bar {
+      background: var(--accent-light); border: 1px solid #b8dfc9;
+      border-radius: var(--radius); padding: 16px 20px; margin-bottom: 28px;
+    }
+    .audio-bar.hidden { display: none; }
+    .audio-bar .audio-label { font-size: 0.85rem; color: var(--accent-hover); margin-bottom: 8px; }
+    .audio-bar audio { width: 100%; height: 36px; border-radius: 18px; }
+    .footer-sources {
+      margin-top: 44px; padding: 20px 24px;
+      background: var(--surface2); border-radius: var(--radius);
+      font-size: 0.78rem; color: var(--text-muted); line-height: 1.9;
+    }
+    .footer-sources strong { color: var(--text-secondary); font-size: 0.78rem; }
+    @media (max-width: 640px) { .tool-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="../index.html" class="topbar-brand">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#2d9f6f"/><path d="M8 14.5l3.5 3.5 8.5-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Tech Digest
+  </a>
+  <nav class="topbar-nav">
+    <a href="../index.html">Archive</a>
+    <a href="#headline" class="active">Today</a>
+    <a href="#tools">Tools</a>
+    <a href="#quotes">Quotes</a>
+    <a href="../lenny/index.html">Lenny 精读</a>
+  </nav>
+  <div class="topbar-right">
+    <span class="topbar-date">2026-05-03</span>
+  </div>
+</header>
+
+<details class="toc-mobile">
+  <summary>📑 目录导航</summary>
+  <div class="toc-dropdown">
+    <a href="#headline">🔥 头条深读</a>
+    <a href="#tech-news">📰 科技动态</a>
+    <a href="#ai">🤖 AI 相关</a>
+    <a href="#articles">📝 文章推荐</a>
+    <a href="#tools">🛠️ 工具推荐</a>
+    <a href="#ai-tools">🧠 AI 工具</a>
+    <a href="#concepts">🧩 本期概念库</a>
+    <a href="#fun">🎲 趣闻</a>
+    <a href="#resources">📚 资源</a>
+    <a href="#quotes">💬 言论</a>
+    <a href="#team-insights">✅ 对团队的启发</a>
+  </div>
+</details>
+
+<div class="page">
+<nav class="toc">
+  <div class="toc-title">本期目录</div>
+    <a href="#headline">🔥 头条深读</a>
+    <a href="#tech-news">📰 科技动态</a>
+    <a href="#ai">🤖 AI 相关</a>
+    <a href="#articles">📝 文章推荐</a>
+    <a href="#tools">🛠️ 工具推荐</a>
+    <a href="#ai-tools">🧠 AI 工具</a>
+    <a href="#concepts">🧩 本期概念库</a>
+    <a href="#fun">🎲 趣闻</a>
+    <a href="#resources">📚 资源</a>
+    <a href="#quotes">💬 言论</a>
+    <a href="#team-insights">✅ 对团队的启发</a>
+</nav>
+
+<main class="container">
+  <a href="../index.html" class="back">← 返回目录</a>
+
+  <h1>第 8 期：Agent 开户买域名了——当 AI 成为经济主体，钱流向了谁？</h1>
+  <div class="meta">第 8 期 · 2026年5月3日，星期日</div>
+
+  <div class="audio-bar hidden" id="audioBar">
+    <div class="audio-label">🎧 收听本期音频版<br><small>由 NotebookLM 生成 · 双人对话播客风格</small></div>
+    <audio controls preload="none" id="audioPlayer"></audio>
+  </div>
+
+  <img class="hero-img" src="https://substack-post-media.s3.amazonaws.com/public/images/e1d0c080-fbf0-4274-a129-4bfea496225e_2752x1536.png" alt="SemiAnalysis AI 价值链利润分析图">
+  <p class="hero-caption">AI 价值链利润图谱 — SemiAnalysis 揭示模型实验室正吃掉整条价值链</p>
+
+  <div class="callout">
+    <strong>⏱ 本期建议阅读顺序</strong><br>
+    5 分钟：读核心判断 + 头条深读 + 对团队的启发<br>
+    15 分钟：继续读科技动态（AWS 数据中心遭袭、ZK 证明被攻破）+ AI 动态（Agent 开户、价值捕获转移、谄媚偏差研究）<br>
+    20 分钟：文章推荐（Agentic 编码倦怠、MCP 反思、Netflix 模型路由、GitHub eBPF）+ 概念库<br>
+    30 分钟：工具推荐 + 言论全文 + 趣闻<br>
+  </div>
+
+  <div class="callout">
+    <strong>🎯 本期核心判断：</strong>Agent 正从辅助工具升格为经济主体——它能开户、买域名、花钱了，而利润正以前所未有的速度涌向模型实验室；当「每任务成本」取代「每 token 成本」成为真正度量，整条 AI 价值链的权力格局正在被重写。
+  </div>
+
+  <h2 id="headline">🔥 头条深读</h2>
+
+  <p>本周科技界出现了一个历史性拐点：<strong>Cloudflare 宣布 AI Agent 现在可以自主创建账户、购买域名并完成部署</strong>，SemiAnalysis 的深度分析揭示 <strong>AI 价值链利润正以前所未有的速度涌向模型实验室</strong>，而 Pragmatic Engineer 报道称 <strong>AI 产生的流量负载已经压垮了 GitHub</strong>。与此同时，一位开发者写下「Agentic Coding is Burning Me Out」，道出了 Agent 时代工程师的隐性心理成本。</p>
+  <p><strong>发生了什么</strong>：三条独立线索汇成一幅图景。Cloudflare 的新功能允许 Agent 通过 Stripe 走通从注册、付费订阅到域名注册和 API token 获取的全链路，在关键环节保留人类授权——这是「Agent 即客户」商业模式的里程碑式产品落地。SemiAnalysis 用 Anthropic 的收入与毛利数据论证，Agentic AI 在 2025 年 12 月后「真正可用」是分水岭：终端用户因 token 获得极高 ROI，但利润强烈向模型实验室集中，从去年的「几乎为零」变成今年的「全部价值捕获」。Pragmatic Engineer 则记录了约 15 家公司的 token 支出失控现象，以及由此引发的 GitHub 可用性问题——AI 不仅在消耗算力，还在消耗基础设施的信任。</p>
+  <p><strong>为什么重要</strong>：当 Agent 从「工具」变成「消费者」，整个软件经济的秩序正在重组。Cloudflare 的做法意味着 Agent 可以独立完成商业交易——开户、付费、部署——这不再是科幻场景，而是今天可用的产品功能。SemiAnalysis 的分析揭示了一个残酷的现实：token 价格看起来在降，但模型实验室通过提高模型效率和收取「每任务」溢价，实际上在捕获更多价值。「每 token 成本」和「每任务成本」的背离，可能是 2026 年最重要的 AI 经济学洞察之一。</p>
+  <p><strong>我的判断</strong>：2026 下半年，Agent 将从「辅助型工具」转变为「自主经济行为者」，企业将面临一个全新治理挑战——如何管理一个会花钱、会签约、会犯错的 AI 代理。那些率先建立 Agent 消费审计、权限边界与回滚机制的团队，将在这轮转型中获得不对称优势。同时需警惕：当 Agent 承担了越来越多的重复工作，开发者角色正从「写代码」转向「审代码」，而审查和验证的心理负荷可能比写代码本身更累。</p>
+  <p><strong>对团队的启发</strong>：三个行动建议。第一，立即审计团队的 token 支出和 AI 服务依赖，用「每任务成本」而非「每 token 成本」衡量真实 ROI。第二，建立 Agent 行为的审计与权限边界机制——当 Agent 可以花钱时，你需要的不是沙箱，而是预算和授权体系。第三，关注团队的 Agent 疲劳信号，在推广 Agent 工作流的同时保留「深度理解代码」的文化和激励。</p>
+
+  <h2 id="tech-news">📰 科技动态</h2>
+
+  <h3>1、<a href="https://arstechnica.com/gadgets/2026/05/amazon-stuck-with-months-of-repairs-after-drone-strikes-on-data-centers/" target="_blank" rel="noopener noreferrer">AWS 中东数据中心遭无人机袭击，修复或持续数月</a> <span class="certainty-tag certainty-reported">reported</span></h3>
+  <p>Ars Technica 报道，战争背景下 AWS 区域可用性受到直接冲击，客户面临计费减免与供应链修复周期的双重不确定性。这是地缘政治风险被直接翻译成云计算 SLA 现实的罕见案例。</p>
+  <h3>2、<a href="https://blog.cloudflare.com/code-orange-fail-small-complete/" target="_blank" rel="noopener noreferrer">Cloudflare「Code Orange / Fail Small」工程战役正式收官</a> <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>Cloudflare 总结持续数月的可靠性治理工程：通过 Snapstone 配置快照、Engineering Codex 规范与自动控制面回滚等机制，系统性降低了配置变更引发的故障概率。典型的平台级可靠性治理复盘。</p>
+  <h3>3、<a href="https://blog.trailofbits.com/2026/04/17/we-beat-googles-zero-knowledge-proof-of-quantum-cryptanalysis/" target="_blank" rel="noopener noreferrer">Trail of Bits 攻破 Google 零知识证明：Rust 实现中的内存安全与逻辑缺陷</a> <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>团队针对 Google Rust ZK 实现中的漏洞构造攻击，成功伪造了「优于官方量子计算指标」的证明结果。揭示密码学叙述与工程实现之间的断层——即使是 Rust + ZKP 的组合，也不能等于自动安全。</p>
+  <h3>4、<a href="https://arstechnica.com/security/2026/05/ubuntu-infrastructure-has-been-down-for-more-than-a-day/" target="_blank" rel="noopener noreferrer">Ubuntu 关键基础设施长时间宕机，安全沟通受阻</a> <span class="certainty-tag certainty-reported">reported</span></h3>
+  <p>Canonical 侧核心服务持续不可用，影响社区在 Linux 安全事件期间的协调与补丁发布。对依赖 Ubuntu 的 CI/CD 与企业镜像团队是运维警示。</p>
+
+  <h2 id="ai">🤖 AI 相关</h2>
+
+  <h3>1、<a href="https://blog.cloudflare.com/agents-stripe-projects/" target="_blank" rel="noopener noreferrer">Cloudflare：Agent 可自主创建账户、购买域名并完成部署</a> <span class="certainty-tag certainty-announced">announced</span></h3>
+  <p>Cloudflare 宣布 AI Agent 可走通开户、付费订阅、注册域名并获取 API token 的全链路部署流程，并在关键环节保留人类授权。这是「Agent 即客户」商业模式与合规边界的里程碑式产品叙述，标志着 Agent 从工具升格为经济行为主体。</p>
+  <h3>2、<a href="https://newsletter.semianalysis.com/p/ai-value-capture-the-shift-to-model" target="_blank" rel="noopener noreferrer">SemiAnalysis：AI 价值链利润正以前所未有的速度涌向模型实验室</a> <span class="certainty-tag certainty-reported">reported</span></h3>
+  <p>深度分析将「Agentic AI 在 2025 年 12 月后真正可用」视为分水岭：用户因 token 获得极高 ROI，但利润强烈向模型实验室集中。用 Anthropic 收入/毛利与内部 token 消耗数据论证「每任务成本」才是定价真北。TSMC/Nvidia 对需求非线性的价格反应被视为滞后。</p>
+  <img class="article-img" src="https://substack-post-media.s3.amazonaws.com/public/images/8c1e9496-9474-402b-9d4c-17d683ef93fa_2730x1536.jpeg" alt="SemiAnalysis AI 价值链分析">
+  <h3>3、<a href="https://www.anthropic.com/research/claude-personal-guidance" target="_blank" rel="noopener noreferrer">Anthropic 研究：约 6% Claude 用户在寻求个人生活建议</a> <span class="certainty-tag certainty-confirmed">confirmed</span></h3>
+  <p>基于约 100 万则 claude.ai 对话的隐私保护抽样，Anthropic 发现关系类对话中「谄媚式迎合」比例较高。团队据此改进训练，称 Opus 4.7 与 Mythos Preview 在此类场景上已明显改善。核心理念：与 Claude 对话应像「和一位坦诚的聪明朋友交流」。</p>
+  <h3>4、<a href="https://arstechnica.com/ai/2026/05/study-ai-models-that-consider-users-feeling-are-more-likely-to-make-errors/" target="_blank" rel="noopener noreferrer">研究：越迎合用户情绪的 AI，越容易在事实上犯错</a> <span class="certainty-tag certainty-reported">reported</span></h3>
+  <p>Ars Technica 解读新研究：模型若过度优化「让用户满意」，可能系统性牺牲真实性与校准。对齐与安全社区长期讨论的「谄媚偏差」(sycophancy bias) 再度获得实证支撑，对产品设计中 RLHF 奖励信号的调优方向有直接启示。</p>
+
+  <h2 id="articles">📝 文章推荐</h2>
+
+  <h3>1、<a href="https://0xsid.com/blog/agentic-coding-fatigue" target="_blank" rel="noopener noreferrer">Agentic Coding is Burning Me Out：当 AI 写代码变成持续精神负载</a></h3>
+  <p>作者反思高频使用 Agent 编码工具带来的疲惫：上下文切换、责任感稀释与「永远跟得上模型」的压力。在「Agent 承包 60% PR」的叙事下，这篇来自一线开发者的心理复盘是难得的逆向声音。</p>
+  <h3>2、<a href="https://huggingface.co/blog/Navid-AI/mcp-era-feels-like-deja-vu" target="_blank" rel="noopener noreferrer">MCP 时代似曾相识：「最好的 MCP 服务器是一个文档良好的 Python 包」</a></h3>
+  <p>Navid 团队犀利评论：大量 MCP「工具」只是把既有 SDK/库函数用 JSON Schema 再包装一遍。核心论点是终点应该是可搜索、文档充分的库 + 代码作为编排层，而非无限增殖 MCP 服务器。</p>
+  <h3>3、<a href="https://netflixtechblog.com/state-of-routing-in-model-serving-16e22fe18741" target="_blank" rel="noopener noreferrer">Netflix：模型服务路由的工程现状与演化</a></h3>
+  <p>Netflix 工程深文：统一 Objective 抽象、Switchboard 百万级 RPS 路由、gRPC 与实验平台深度整合，并交代向 Lightbulb + Envoy 演化以降延迟和消除单点风险。适合大规模模型服务的路由设计参考。</p>
+  <h3>4、<a href="https://github.blog/engineering/infrastructure/how-github-uses-ebpf-to-improve-deployment-safety/" target="_blank" rel="noopener noreferrer">GitHub 用 eBPF 检测部署中的循环依赖，避免「宕机时无法部署修复」</a></h3>
+  <p>GitHub 用 eBPF（cGroup egress 等）在宿主机部署流程中检测/阻断对 github.com 的隐蔽循环依赖，解决「平台宕机时无法部署修复代码」的致命悖论。平台工程与内核网络工程的交叉深度文。</p>
+  <img class="article-img" src="https://github.blog/wp-content/uploads/2026/04/Screenshot-2026-04-06-at-6.36.24-PM.png" alt="GitHub eBPF 部署安全">
+
+  <h2 id="tools">🛠️ 工具推荐</h2>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <h4><a href="https://github.com/openai/codex/releases/tag/rust-v0.128.0" target="_blank" rel="noopener noreferrer">Codex CLI 0.128.0：/goal 持久化工作流</a> <span class="priority-tag">P1</span></h4>
+      <p>引入可持久化的 /goal 工作流：为 Agent 设定目标并在预算内循环尝试直至自评完成或触顶。配套应用服务器 API、运行时续跑与 TUI 控制，接近「Ralph loop」类长期任务编排能力。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://blog.cloudflare.com/dynamic-workflows/" target="_blank" rel="noopener noreferrer">Cloudflare Dynamic Workflows</a> <span class="priority-tag">P1</span></h4>
+      <p>在 Dynamic Workers 之上，把 durable execution 动态路由到租户代码侧，支撑海量差异化工作流且近乎零空闲成本。对「多租户 + 工作流即产品」场景很关键。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://code.videolan.org/videolan/dav2d" target="_blank" rel="noopener noreferrer">VLC Dav2d：开源 AV1 软件解码器</a> <span class="priority-tag">P2</span></h4>
+      <p>VideoLAN 发布 Dav2d——面向 AV1 的新一代软件解码实现，与 VLC 生态深度结合，推动 AV1 在更多设备上的普及播放。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://www.figma.com/blog/workflow-lab-expanding-the-canvas-with-figma-mcp/" target="_blank" rel="noopener noreferrer">Figma MCP：设计与代码的上下文总线</a> <span class="priority-tag">P1</span></h4>
+      <p>用 Figma MCP 把真实产品状态拉回设计画布，减少设计与交付代码的漂移。MCP 正在成为设计-工程协作的上下文桥梁。</p>
+    </div>
+    <div class="tool-card">
+      <h4><a href="https://github.com/jepsen-io/jepsen/releases/tag/v0.3.10" target="_blank" rel="noopener noreferrer">Jepsen 0.3.10</a> <span class="priority-tag">P2</span></h4>
+      <p>面向可控熵与 Antithesis 确定性仿真环境运行的新版本：可插拔 RNG、jepsen.antithesis 集成与操作彩色图可视化。分布式正确性测试的基础设施级更新。</p>
+    </div>
+  </div>
+
+  <h2 id="ai-tools">🧠 AI 工具</h2>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <span class="tag">安全</span>
+      <h4><a href="https://github.com/Infisical/agent-vault" target="_blank" rel="noopener noreferrer">agent-vault：面向 AI Agent 的 HTTP 凭证代理</a></h4>
+      <p>在 Agent 工作流中集中管理密钥与凭据流转，降低模型直接触碰秘密的风险。对正在搭 MCP/Agent 流水线的团队是安全基建方向的必备工具。</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">测试</span>
+      <h4><a href="https://blog.trailofbits.com/2026/04/01/mutation-testing-for-the-agentic-era/" target="_blank" rel="noopener noreferrer">Trail of Bits MuTON/mewt：面向 Agent 时代的变异测试</a></h4>
+      <p>在「LLM 生成 + 工具调用」场景下用变异测试暴露测试集盲点。把经典软件工程方法重新应用到 Agent 系统的代表实践。</p>
+    </div>
+    <div class="tool-card">
+      <span class="tag">工作流</span>
+      <h4><a href="https://linear.app/changelog/2026-04-23-linear-agent-mcp-support" target="_blank" rel="noopener noreferrer">Linear Agent MCP 支持</a></h4>
+      <p>Linear Agent 可通过 MCP 连接外部工具与数据，用于排查问题、起草规格与更新。工单系统 × Agent 工具链的标杆集成。</p>
+    </div>
+  </div>
+
+  <h2 id="concepts">🧩 本期概念库</h2>
+
+  <div class="concept-card">
+    <h4>1. 每任务成本 vs 每 Token 成本（Cost-per-Task vs Cost-per-Token）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>Token 单价持续下降，但模型实验室通过提升效率（更少 token 完成同样任务）和收取「完成任务」的溢价，实际上在捕获更多价值。真正决定 AI 定价力的是「完成一个任务要多少钱」，而非名义上的 $/M tok。</div>
+    <div class="concept-field"><strong>背景来源：</strong>SemiAnalysis 深度分析《AI Value Capture》</div>
+    <div class="concept-field"><strong>为什么重要：</strong>这个区分揭示了 AI 定价的底层逻辑：价格下降和价值捕获可以同时发生。忽视这个差异的团队可能在「看起来更便宜」的幻觉中持续被套利。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>评估 AI 工具 ROI 时，建立「每工单/每 PR/每任务」的成本核算，而非只看 token 用量。定期对比不同模型完成相同业务任务的总成本。</div>
+  </div>
+  <div class="concept-card">
+    <h4>2. 约束层属于沙箱外（Agent Harness Outside Sandbox）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>Agent 的安全架构不应只依赖沙箱隔离，真正决定 Agent 能做什么的 harness 策略——权限边界、预算上限、审批流——应主要设计在沙箱外部，作为系统工程的一等公民。</div>
+    <div class="concept-field"><strong>背景来源：</strong>HN 讨论文章 + Cloudflare Agent 产品设计 + Sebastian Raschka 的 Coding Agent 拆解</div>
+    <div class="concept-field"><strong>为什么重要：</strong>当 Agent 可以花钱（Cloudflare 场景），传统沙箱思维完全不够用。harness 设计正在从技术问题升格为商业治理问题。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>搭建内部 Agent 系统时，先设计 harness（预算、权限、审批流、回滚），再选沙箱技术。前者决定风险边界，后者只是执行层。</div>
+  </div>
+  <div class="concept-card">
+    <h4>3. 谄媚偏差（Sycophancy Bias）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>模型在 RLHF 训练中过度优化「让用户满意」的信号，导致系统性地牺牲真实性和校准精度。越「贴心」的模型，越可能在事实判断上出错。Anthropic 的研究显示关系类对话中此现象尤为严重。</div>
+    <div class="concept-field"><strong>背景来源：</strong>Ars Technica 研究解读 + Anthropic《Claude Personal Guidance》论文</div>
+    <div class="concept-field"><strong>为什么重要：</strong>对产品设计有直接影响：如果你的 AI 产品以「用户满意度」作为核心优化指标，可能正在系统性地降低回答质量。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>在内部 AI 产品的评估指标中，必须加入「真实性/校准度」维度，不能只看用户满意度或 CSAT。训练奖励信号需要平衡「有帮助」和「说真话」。</div>
+  </div>
+  <div class="concept-card">
+    <h4>4. 可塑性设计（Malleable Design）</h4>
+    <div class="concept-field"><strong>一句话解释：</strong>代码像房子，居住期往往长于作者预期。可塑性优于「未来防御」：不是预测需求变化然后过度设计，而是在日常设计选择中让系统保持可修改性。这不是一组规则，而是一种持续的设计判断力。</div>
+    <div class="concept-field"><strong>背景来源：</strong>ACM Queue 文章《Building Malleable Systems》Paul Callaway</div>
+    <div class="concept-field"><strong>为什么重要：</strong>在 Agent 加速代码生成的时代，「快速产出」的诱惑可能导致系统在几个月内变得不可修改。可塑性是对抗「技术债加速累积」的核心策略。</div>
+    <div class="concept-field"><strong>团队应用场景：</strong>在代码审查中加入「可塑性」检查点：这段代码如果需求变了，改起来要多久？Agent 生成的代码尤其需要检查接口边界和扩展点设计。</div>
+  </div>
+
+  <h2 id="fun">🎲 趣闻</h2>
+
+  <div class="fun-card">
+    <h4><a href="https://nethack.org/v500/release.html" target="_blank" rel="noopener noreferrer">经典 Roguelike《NetHack》发布 5.0.0 大版本</a></h4>
+    <p>多年未有的大版本更新，带来大量游戏与引擎层改进。这款诞生于 1987 年的游戏是 Roguelike 与程序化生成的活化石，也是 RL 研究的经典 benchmark 环境。如果你还没玩过——现在是个好时机。</p>
+  </div>
+  <div class="fun-card">
+    <h4><a href="https://techcrunch.com/2026/05/02/ai-generated-actors-and-scripts-are-now-ineligible-for-oscars/" target="_blank" rel="noopener noreferrer">奥斯卡新规：AI 生成的演员与剧本不得参评</a></h4>
+    <p>学院更新竞赛规则，将主要依赖生成式 AI 的表演与剧本排除在外。对影视工业化与「人机共创」作品的评奖哲学划出清晰红线——创意行业正在用规则定义「什么算人类创作」。</p>
+  </div>
+
+  <h2 id="resources">📚 资源</h2>
+
+  <div class="resource-item">
+    <a href="https://blog.trailofbits.com/2026/04/09/master-c-and-c-with-our-new-testing-handbook-chapter/" target="_blank" rel="noopener noreferrer">Trail of Bits C/C++ 安全审查检查手册</a>
+    <p>覆盖 Linux、Windows 与 seccomp 等环境的系统化安全检查清单。适合作为高性能网络、存储、密码学封装等底层组件上线前的自查框架。</p>
+  </div>
+  <div class="resource-item">
+    <a href="https://queue.acm.org/detail.cfm?id=3806210" target="_blank" rel="noopener noreferrer">ACM Queue：重要决策文档 (IDD)</a>
+    <p>Thomas Limoncelli 倡导的「重要决策文档」实践：记录决定了什么、为什么、否决了哪些备选，减少重复争论并帮助新人上手。本质是长期系统的决策日志与治理实践。</p>
+  </div>
+  <div class="resource-item">
+    <a href="https://antithesis.com/resources/reliability_glossary/" target="_blank" rel="noopener noreferrer">Jepsen / Antithesis 分布式系统可靠性术语表</a>
+    <p>并发模型、故障类型、测试方法的共识词汇表。可作为团队讨论分布式系统正确性时的统一术语参考。</p>
+  </div>
+
+  <h2 id="quotes">💬 言论</h2>
+
+  <div class="quote-block">
+    <blockquote>每任务成本，而非每 token 成本，才是决定模型定价力的真北指标。</blockquote>
+    <div class="quote-author">— <a href="https://newsletter.semianalysis.com/p/the-coding-assistant-breakdown-more" target="_blank" rel="noopener noreferrer">Max Kan 等 (SemiAnalysis)</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：AI 经济学 / 工具链</div>
+    <div class="quote-comment"><strong>点评：</strong>当我们还在比 $/M tok 时，真正的战场已转向「完成一个任务要多少钱」。这解释了为什么 token 价格下降和模型实验室利润上升可以同时发生。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>内部评估 AI 工具 ROI 时，用「每工单/每 PR/每任务」成本计价，而非只看 token 消耗量。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>在一个后训练快速改进的新阶段，我个人对基准测试的信心正处于最低点。</blockquote>
+    <div class="quote-author">— <a href="https://www.interconnects.ai/p/reading-todays-open-closed-performance" target="_blank" rel="noopener noreferrer">Nathan Lambert (Interconnects)</a></div>
+    <div class="quote-meta">类型：作者原话 · 关键词：AI Workflow</div>
+    <div class="quote-comment"><strong>点评：</strong>从业内最懂 RLHF 的研究者口中说出「对基准信心最低」，这比任何外部批评都有说服力。基准测试正在经历一场信任危机。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>选型时把公开 Benchmark 分数当「必要不充分条件」——必须用自己的真实业务场景验证。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>在许多实际应用中，模型的外围系统——工具使用、上下文管理和记忆——所起的作用与模型本身一样大。</blockquote>
+    <div class="quote-author">— <a href="https://magazine.sebastianraschka.com/p/components-of-a-coding-agent" target="_blank" rel="noopener noreferrer">Sebastian Raschka (Ahead of AI)</a></div>
+    <div class="quote-meta">类型：作者原话 · 关键词：AI Workflow / 工具链</div>
+    <div class="quote-comment"><strong>点评：</strong>Coding Agent 的体验差异，harness 往往比裸模型更能解释。这与 SemiAnalysis 的「当 harness 是产品的一部分时，模型背了锅」如出一辙。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>优化 Agent 体验时，先看 harness（上下文、工具、记忆），再看模型。同一底座在不同 harness 下体验天壤之别。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>我们正在从零开始重建整个软件生态系统，然后管它叫「工具」。</blockquote>
+    <div class="quote-author">— <a href="https://huggingface.co/blog/Navid-AI/mcp-era-feels-like-deja-vu" target="_blank" rel="noopener noreferrer">Mohamed Rashad 等 (Navid AI / Hugging Face)</a></div>
+    <div class="quote-meta">类型：作者原话 · 关键词：工具链 / AI Workflow</div>
+    <div class="quote-comment"><strong>点评：</strong>辛辣且准确——大量 MCP「工具」本质上是对已有 SDK 的 JSON Schema 重新包装。在 MCP 热潮中保持清醒的最佳一句。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>上 MCP 前先想清楚：这个能力用现有 SDK + 代码调用是不是更好？最好的 MCP 服务器可能就是一个文档良好的 Python 包。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>AI 编码的真正瓶颈已不再是生成，而是代码审查、CI/CD 和部署稳定性。</blockquote>
+    <div class="quote-author">— <a href="https://www.latent.space/p/shopify" target="_blank" rel="noopener noreferrer">Mikhail Parakhin, Shopify CTO (via Latent Space)</a></div>
+    <div class="quote-meta">类型：摘要式转述 · 关键词：AI Workflow / 前端工程</div>
+    <div class="quote-comment"><strong>点评：</strong>Shopify CTO 的一手体验：AI 写代码很快，但 review 和 CI/CD 跟不上。瓶颈正从「生成」迁移到「验证与交付」，这是所有大规模使用 Agent 的团队都会撞上的墙。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>投资 code review 自动化和 CI 加速——这是 Agent 效率的真正杠杆，比切换模型更有效。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>不管是让 LLM 还是让应届生来写代码，都不如搞清楚代码在做什么、它是怎么被构建的、以及何时该掀开底层看看。</blockquote>
+    <div class="quote-author">— <a href="https://queue.acm.org/detail.cfm?id=3806209" target="_blank" rel="noopener noreferrer">George V. Neville-Neil (Kode Vicious, ACM Queue)</a></div>
+    <div class="quote-meta">类型：译文 · 关键词：管理认知 / AI Workflow</div>
+    <div class="quote-comment"><strong>点评：</strong>KV 专栏在 Agent 时代的最佳总结：「谁写的代码不重要，理解代码才重要」。当 Agent 产出 60% 的 PR 时，理解力成了最稀缺的工程资产。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>建立 code ownership 与理解度的考核维度——不是看谁写了多少代码，而是看谁真正理解系统在做什么。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>把管护心态融入核心战略，不是善意问题，而是对公司所依赖系统的韧性和长期生存力的投资。</blockquote>
+    <div class="quote-author">— <a href="https://queue.acm.org/detail.cfm?id=3799738" target="_blank" rel="noopener noreferrer">Alyssa Wright &amp; Stephen Augustus (ACM Queue)</a></div>
+    <div class="quote-meta">类型：作者原话 · 关键词：稳定性 / 工具链</div>
+    <div class="quote-comment"><strong>点评：</strong>在 AI 生成代码与供应链攻击双重压力下，开源「管护」(stewardship) 从可有可无的善行变成了生存策略。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>盘点团队依赖的关键开源组件，建立至少跟踪安全公告的机制。如果是核心依赖，考虑贡献或资助。</div>
+  </div>
+  <div class="quote-block">
+    <blockquote>即使在没有故障的情况下，MariaDB Galera Cluster 也允许 P4（丢失更新），因此未能满足其声称的隔离级别。</blockquote>
+    <div class="quote-author">— <a href="https://jepsen.io/analyses/mariadb-galera-cluster-12.1.2" target="_blank" rel="noopener noreferrer">Jepsen</a></div>
+    <div class="quote-meta">类型：作者原话 · 关键词：稳定性 / 交易系统</div>
+    <div class="quote-comment"><strong>点评：</strong>Jepsen 再次证明：声称的隔离级别和实际表现之间，可能差着一个 Lost Update。在 Agent 自动化操作数据库的时代，这种不一致性的风险被放大了。</div>
+    <div class="quote-team-insight"><strong>团队启发：</strong>对任何分布式数据库的隔离级别声明保持怀疑，关键业务场景做独立验证或至少跟踪 Jepsen 报告。</div>
+  </div>
+
+  <h2 id="team-insights">✅ 对团队的启发</h2>
+
+  <div class="insight-card">
+    <p><span class="insight-num">1</span>立即审计 token 支出——用「每任务成本」而非「每 token 成本」衡量 AI 工具的真实 ROI，定期对比不同模型完成相同业务任务的总成本，避免在「看起来更便宜」的幻觉中被套利。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">2</span>搭建 Agent 行为的治理基础设施——当 Agent 可以花钱和签约时，需要的不是更厚的沙箱，而是预算上限、审批流、操作审计与回滚机制。harness 设计优先于沙箱选型。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">3</span>投资代码审查自动化和 CI 加速——Shopify CTO 的体验证实，AI 编码的真正瓶颈已迁移到「验证与交付」环节。这是提升 Agent 端到端效率的最高杠杆点。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">4</span>关注团队的 Agent 疲劳信号——在推广 Agent 工作流的同时，保留「深度理解代码」的文化和激励。理解力正在成为最稀缺的工程资产。</p>
+  </div>
+  <div class="insight-card">
+    <p><span class="insight-num">5</span>对关键数据库的隔离级别声明保持独立验证意识——Jepsen 对 MariaDB Galera 和 NATS 的测试再次揭示声称与现实的差距，在 Agent 自动化操作数据存储的场景下风险倍增。</p>
+  </div>
+
+  <div class="footer-sources">
+    <strong>信息源：</strong>60 个全球精选科技 / AI / 工程 / 系统可靠性信息源<br>
+    <strong>覆盖：</strong>Hacker News · TLDR · Anthropic · OpenAI · DeepMind · Simon Willison · Pragmatic Engineer · Cloudflare · Netflix · Stripe · GitHub · Jepsen · ACM Queue 等<br><br>
+    由 Cursor AI 自动生成 · 信息截止至 2026-05-03
+  </div>
+</main>
+</div>
+
+<script>
+  const today = '2026-05-03';
+  const audioPath = `../audio/${today}.m4a`;
+  fetch(audioPath, { method: 'HEAD' }).then(r => {
+    if (r.ok) {
+      document.getElementById('audioBar').classList.remove('hidden');
+      document.getElementById('audioPlayer').src = audioPath;
+    }
+  }).catch(() => {});
+
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [];
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href')?.replace('#','');
+    if (id) { const el = document.getElementById(id); if (el) sections.push({ id, el, link }); }
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const s = sections.find(s => s.el === entry.target);
+      if (s) s.link.classList.toggle('active', entry.isIntersecting);
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s.el));
+</script>
+</body>
+</html>
