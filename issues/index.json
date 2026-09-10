@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-10",
+    "title": "第 95 期：工具变慢了，先找真正花时间的那一步",
+    "highlights": [
+      "主故事：JetBrains 把部分启动延迟定位到安全扫描；厂商复盘不等于本机结论",
+      "5 项工具：合并冲突 Skill、Git diff、jq 可先用；ADB 与 TeamAI 需确认接入条件",
+      "Codex、Claude Code、React 与 Apple 提审更新，分别标明版本、阶段与适用边界",
+      "X 已成功抓取；旧教程标明原始日期，不把转发时间包装成发布时间"
+    ],
+    "image": "https://blog.jetbrains.com/wp-content/uploads/2026/09/DefenderPerformanceToolScreenshot.png"
+  },
+  {
     "date": "2026-09-09",
     "title": "第 94 期：请求失败了，先别急着改业务代码",
     "highlights": [

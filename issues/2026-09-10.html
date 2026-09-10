@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 95 期：工具变慢了，先找真正花时间的那一步</title><meta name="description" content="我的判断：研发提效先缩小问题与权限范围，再增加 Agent 的自动化程度。">
+<meta property="og:title" content="第 95 期：工具变慢了，先找真正花时间的那一步"><meta property="og:description" content="我的判断：研发提效先缩小问题与权限范围，再增加 Agent 的自动化程度。"><meta property="og:image" content="https://blog.jetbrains.com/wp-content/uploads/2026/09/DefenderPerformanceToolScreenshot.png"><style>
+:root{color-scheme:light;--ink:#17251e;--muted:#66756d;--green:#008a58;--green-soft:#eaf6ef;--line:#d9e1dc;--paper:#fff;--bg:#f5f7f5;--red:#9d2c2c;--gold:#8b6200}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Noto Sans CJK SC",sans-serif;line-height:1.72;letter-spacing:0}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}.topbar{height:56px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:10}.brand{font-weight:750}.nav{display:flex;gap:20px;font-size:14px}.layout{display:grid;grid-template-columns:190px minmax(0,820px);gap:38px;max-width:1090px;margin:0 auto;padding:34px 20px 80px}.toc{position:sticky;top:84px;align-self:start;font-size:14px}.toc strong{display:block;margin-bottom:10px}.toc a{display:block;color:var(--muted);padding:4px 0}.content{min-width:0}.back{font-size:14px}.hero h1{font-size:34px;line-height:1.25;margin:18px 0 8px}.meta{color:var(--muted);font-size:14px}.highlights{background:var(--green-soft);border-left:4px solid var(--green);padding:16px 18px;border-radius:5px}.article-img{display:block;width:100%;max-height:520px;object-fit:contain;background:#fff;border:1px solid #e6ebe8;border-radius:6px;margin:24px 0 8px}.hero-caption{text-align:center;color:var(--muted);font-size:13px}h2{font-size:22px;margin:46px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--ink)}h3{font-size:18px;line-height:1.45;margin:0 0 10px}h4{font-size:16px;margin:22px 0 4px}.main-story{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--green);padding:24px;border-radius:6px}.story-hook,.hook{font-weight:650}.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.story-field{background:#f6f8f6;border:1px solid var(--line);padding:14px;border-radius:5px}.story-field strong{display:block;margin-bottom:5px}.number-chip{display:inline-block;background:#eef1ef;border:1px solid var(--line);padding:5px 9px;margin:3px;border-radius:4px;font-size:13px}.story-line{border-left:4px solid var(--gold);padding:10px 14px;background:#fff9e8;font-weight:650}.trend-grid,.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trend-card,.tool-card{background:var(--paper);border:1px solid var(--line);padding:16px;border-radius:6px}.trend-conflict{font-weight:700;color:var(--red)}.trend-card small{color:var(--muted)}.entry,.curiosity,.quote,.resource,.concept,.podcast{padding:20px 0;border-bottom:1px solid var(--line)}.entry p,.curiosity p,.quote p{margin:8px 0}.why{color:#315744}.fact{color:var(--muted);font-size:14px}.tag,.priority,.certainty{display:inline-block;font-size:11px;line-height:1;padding:5px 7px;border-radius:3px;margin-right:6px}.tag{background:#e8f1ec;color:#23523b}.priority{background:#fff0c8;color:#714e00}.certainty{background:#eef0ef;color:#45534b}.certainty-confirmed,.certainty-announced{background:#e7f5ec;color:#17683e}.certainty-reported{background:#fff3d5;color:#795400}.certainty-opinion,.certainty-inference{background:#f5e9ea;color:#803638}blockquote{font-size:19px;margin:0 0 12px;border-left:4px solid var(--green);padding-left:16px}.team{color:#315744}.insight{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;border-bottom:1px solid var(--line);padding:10px 0}.insight strong{display:grid;place-items:center;width:28px;height:28px;background:var(--ink);color:#fff;border-radius:4px}.insight p{margin:0}.footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}@media(max-width:820px){.topbar{padding:0 14px}.nav{gap:12px}.layout{display:block;padding:22px 16px 60px}.toc{display:none}.hero h1{font-size:28px}.story-grid,.trend-grid,.tool-grid{grid-template-columns:1fr}.main-story{padding:18px}.article-img{max-height:400px}}@media(max-width:420px){.nav a:nth-child(n+3){display:none}.hero h1{font-size:25px;overflow-wrap:anywhere}h2{font-size:20px}.highlights{padding:13px}.content{overflow-wrap:anywhere}}
+</style></head>
+<body><header class="topbar"><a class="brand" href="../index.html">Tech Digest</a><nav class="nav"><a href="index.html">Archive</a><a href="2026-09-10.html">Today</a><a href="#tools">Tools</a><a href="#quotes">Quotes</a></nav><span>2026-09-10</span></header>
+<div class="layout"><aside class="toc"><strong>本期目录</strong><a href="#main-story">🔥 主故事</a><a href="#trends">⚡ 冲突趋势</a><a href="#tech-news">📰 科技动态</a><a href="#ai">🤖 AI 相关</a><a href="#articles">📝 文章推荐</a><a href="#tools">🛠️ 工具推荐</a><a href="#ai-tools">🧠 AI 工具</a><a href="#concepts">🧩 概念库</a><a href="#curiosity">🎲 好奇心</a><a href="#resources">📚 资源</a><a href="#quotes">💬 言论</a><a href="#podcast">🎙️ 播客</a><a href="#team-insights">✅ 团队启发</a></aside><main class="content"><a class="back" href="index.html">← 返回目录</a>
+<section class="hero"><h1>第 95 期：工具变慢了，先找真正花时间的那一步</h1><p class="meta">第 95 期 · 2026年9月10日，星期四</p><p class="core-judgment">我的判断：研发提效先缩小问题与权限范围，再增加 Agent 的自动化程度。</p><p class="highlights"><strong>✨ 本期亮点：</strong>主故事：JetBrains 把部分启动延迟定位到安全扫描；厂商复盘不等于本机结论 · 5 项工具：合并冲突 Skill、Git diff、jq 可先用；ADB 与 TeamAI 需确认接入条件 · Codex、Claude Code、React 与 Apple 提审更新，分别标明版本、阶段与适用边界 · X 已成功抓取；旧教程标明原始日期，不把转发时间包装成发布时间</p><img class="article-img" src="https://blog.jetbrains.com/wp-content/uploads/2026/09/DefenderPerformanceToolScreenshot.png" alt="JetBrains 文章中的 Defender 性能调查工具截图" loading="lazy"><p class="hero-caption">JetBrains 原文的性能调查工具截图。本文只借鉴排障方法，不把 Windows 测试结果套到本机，也不建议关闭安全防护。</p></section>
+
+    <h2 id="main-story">🔥 主故事</h2>
+    <article class="main-story">
+      <h3>启动变慢了，瓶颈却不在你以为的地方</h3>
+      <p class="story-hook">一次架构改造改善了整体响应，却让部分用户觉得启动更慢。</p>
+      <p>JetBrains 在 9 月 9 日复盘 ReSharper 进程外架构的启动问题：团队沿着性能数据调查，发现 Microsoft Defender 扫描是延迟来源之一，而不只是 IDE 内部逻辑。</p>
+      <div class="story-grid">
+        <div class="story-field"><strong>核心冲突</strong>把工作移出主进程，并不会让外部安全扫描的成本消失。只盯应用函数耗时，可能漏掉系统层的等待；直接关闭安全软件，则把性能问题换成另一类风险。</div>
+        <div class="story-field"><strong>转折点</strong>团队与 Microsoft 联合调查。文章说明，Defender 端调整已经发布；特定优化还依赖安装到写保护目录。它不是一句“更新 IDE 就快了”，而是一条包含扫描、安装位置和系统版本的条件链。</div>
+        <div class="story-field"><strong>为什么是现在</strong>这篇 9 月 9 日的复盘，适合今天做客户端稳定性和研发工具排障时借鉴。它讨论 Windows 工具，不应拿来诊断你这台 Mac。</div>
+        <div class="story-field"><strong>对团队的启发</strong>给一个真实慢启动问题建立阶段时间线，先采集、后归因；涉及安全配置的改动必须单独评审，不把关闭防护当成默认修复。</div>
+      </div>
+      <p></p>
+      <p><strong>我的判断：</strong>我的判断：研发提效先缩小问题与权限范围，再增加 Agent 的自动化程度。 当 Agent 建议重写慢代码时，先让它区分应用执行、文件访问、网络和外部检查，并写出支持每个判断的证据。</p>
+      <div class="story-line">慢在哪里，要用证据回答，而不是用工具名字回答。</div>
+      <p><strong>来源：</strong><a href="https://blog.jetbrains.com/dotnet/2026/09/09/why-rider-and-resharper-were-slow-to-start-and-how-microsoft-helped-fix-the-problem" target="_blank" rel="noopener noreferrer">blog.jetbrains.com</a></p>
+    </article>
+<h2 id="trends">⚡ 今日冲突趋势</h2><div class="trend-grid">
+<article class="trend-card"><h3>更快的架构，仍可能遇到外部瓶颈</h3><div class="trend-conflict">应用内优化与系统扫描成本并存。</div><p>性能归因先跨过进程边界，再决定改哪段代码。</p><small>blog.jetbrains.com</small></article>
+<article class="trend-card"><h3>Agent 更自主，权限更需要明确</h3><div class="trend-conflict">执行入口增加，责任不能随之模糊。</div><p>把允许操作写进流程，不用“自动”替代审批。</p><small>github.blog · github.com</small></article>
+<article class="trend-card"><h3>状态被命名，不等于流程已实现</h3><div class="trend-conflict">Kubernetes 有约定字段，却没有核心消费者自动行动。</div><p>验收必须观察行为，不能只检查一个状态值。</p><small>kubernetes.io</small></article>
+</div>
+<h2 id="tech-news">📰 科技动态</h2>
+<article class="entry">
+<h3>1、<a href="https://developer.apple.com/news?id=vn8abkxx" target="_blank" rel="noopener noreferrer">iPhone Duo：先看官方适配入口</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">新设备入口出来后，先找可验证的适配约束。</p>
+<p>Apple 9 月 9 日提供视频、Group Labs 与开发者论坛问答入口。当前新闻页没有给出足够的布局细节，本期不补造屏幕参数。对客户端团队，先安排阅读适配材料，再把页面宽度变化、状态保持和交互连续性列为待核验事项；这些是编辑建议，不是已确认的新平台要求。</p>
+
+</article>
+<article class="entry">
+<h3>2、<a href="https://developer.apple.com/news?id=k1mtkt1k" target="_blank" rel="noopener noreferrer">新系统提审已开放，不等于最低 SDK 今天强制切换</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">可用日期与强制日期，是两件事。</p>
+<p>Apple 9 月 9 日宣布可提交使用新系统 SDK 的应用，并提供 Xcode 27 RC；新闻页把新的最低 SDK 上传要求放在 2027 年 4 月。客户端负责人应把“现在可提审”和“未来必须升级”分成两张清单。macOS 兼容性、年龄分级和商店素材还有单独事项，需要各产品核对，不能机械套用 iOS 清单。</p>
+
+</article>
+<article class="entry">
+<h3>3、<a href="https://github.blog/changelog/2026-09-09-codeql-2-27-0-adds-support-for-linux-arm64" target="_blank" rel="noopener noreferrer">CodeQL 2.27.0：Linux ARM64 扫描链路更直接</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">扫描器支持了平台，还要确认流水线真正使用它。</p>
+<p>9 月 9 日公告新增 Linux ARM64 原生包，并扩展 Java/Kotlin 等框架建模。对已有 ARM CI 的团队，可评估是否减少跨架构扫描步骤。GitHub.com 托管扫描与自管 GHES 的更新节奏不同，不能看到版本发布就宣称所有项目已覆盖。</p>
+
+</article>
+<article class="entry">
+<h3>4、<a href="https://react.dev/blog/2026/09/09/react-19-3" target="_blank" rel="noopener noreferrer">React 19.3：视图过渡与 Fragment Refs 转为稳定</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">减少胶水代码，同时保留浏览器和安全策略边界。</p>
+<p>React 团队 9 月 9 日宣布 View Transitions 与 Fragment Refs 稳定，并介绍 Trusted Types 集成。对 Web 页面，可以先在一个列表到详情的交互中评估过渡和焦点行为；安全能力仍依赖 CSP 与正确的净化策略，不是升级 React 就自动免疫 DOM XSS。</p>
+
+</article>
+<article class="entry">
+<h3>5、<a href="https://nodejs.org/en/blog/release/v24.21.0" target="_blank" rel="noopener noreferrer">Node.js 24.21.0：按 LTS 原文日期记录</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">列表更新时间不一定是发布日期。</p>
+<p>源列表在 9 月 9 日抓到这条更新，但官方正文写的是 9 月 8 日的 LTS 版本。本期采用原文日期。变化包含私钥 STORE loader 支持和根证书更新；对后台团队，应核对 TLS 与运行时依赖回归需求，而非跟着 Current 分支一起升级。</p>
+
+</article>
+<article class="entry">
+<h3>6、<a href="https://clickhouse.com/blog/postgres-managed-by-clickhouse-gcp-private-preview" target="_blank" rel="noopener noreferrer">ClickHouse Postgres 扩到 GCP，仍是私有预览</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">同一产品，不同云的开放阶段可能不同。</p>
+<p>9 月 9 日介绍的 GCP 入口处于 Private Preview，需要申请访问。它把托管 Postgres、CDC 与查询组合放到同一云环境，适合已有对应基础设施的团队评估。本期只作后台架构动态，不推荐你个人安装，也不把其他云上的开放状态套到 GCP。</p>
+
+</article>
+<article class="entry">
+<h3>7、<a href="https://code.visualstudio.com/updates/v1_137" target="_blank" rel="noopener noreferrer">VS Code 1.137：自动化之外，先保留执行上下文</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">入口更多时，更需要知道任务在哪个目录运行。</p>
+<p>9 月 9 日正式说明把重复任务自动化、工作区中的快速会话和 Agent 语音交互列为重点。你已有 Codex 时不必再换工具；可迁移的判断是：每个自动任务都要绑定清楚目录、允许的写入与结果检查。这里是工程动态，不占个人工具推荐位。</p>
+
+</article>
+<h2 id="ai">🤖 AI 相关</h2>
+<article class="entry">
+<h3>1、<a href="https://github.com/openai/codex/releases/tag/rust-v0.154.0" target="_blank" rel="noopener noreferrer">Codex 0.154.0：CLI 增加实验性 worktree 入口</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">隔离目录，才能把并行工作的责任分开。</p>
+<p>9 月 9 日的正式发布说明列出实验性 --worktree 与 /worktree，可为新建或分叉会话建立隔离检出；也增加继续工作时的内联问题回答。这是 CLI 发布说明，不等于桌面 App 的所有入口同时改变。对你而言，价值是把并行修改放进独立目录，而不是再装一个 Agent。</p>
+
+</article>
+<article class="entry">
+<h3>2、<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.267" target="_blank" rel="noopener noreferrer">Claude Code 2.1.267：给思考强度设置上限</a> <span class="certainty certainty-已证实：第一方发布；未在本机复现。">已证实：第一方发布；未在本机复现。</span></h3>
+<p class="hook">限制最大强度，不必禁止所有复杂任务。</p>
+<p>9 月 9 日版本新增 maxEffortLevel，可在顶层或按模型设置强度上限，并涉及多个模型服务商；同时修复大于 5 MB 的会话恢复时丢失并行工具调用与 Hook 输出的问题。与昨天的网关修复是不同续报。配置上限不等于已证实的费用下降，本期未升级或测量。</p>
+
+</article>
+<h2 id="articles">📝 文章推荐</h2>
+<article class="entry"><h3><a href="https://kubernetes.io/blog/2026/09/09/kubernetes-v1-37-node-lifecycle-conditions" target="_blank" rel="noopener noreferrer">Kubernetes 节点生命周期：状态字段不是执行器</a></h3><p class="hook">一个状态名字出现，不代表系统已经按它行动。</p><p>9 月 9 日文章介绍 DrainInProgress、Drained 与维护、优雅关机等五个约定状态。关键限制是：1.37 中没有核心组件读取它们，Alpha gate 当前实质上不执行行为控制。它们提供共同语言，但写入“维护中”不会自动帮你完成维护或阻止流量。</p><p class="story-line">状态可见与流程生效要分别验收。</p></article>
+<article class="entry"><h3><a href="https://www.postgresql.org/about/news/autobase-211-released-3374" target="_blank" rel="noopener noreferrer">Autobase 2.11：数据库升级仍要看中断窗口</a></h3><p class="hook">能点升级，不等于可以忽略回退方案。</p><p>9 月 9 日项目公告介绍从界面管理扩容、升级、备份与时间点恢复。项目明确把近零中断的蓝绿大版本升级列为未来计划，不能写成当前已交付。本期不沿用项目估算的停机秒数作生产承诺；真实窗口依赖数据规模、环境与恢复演练。</p><p class="story-line">计划中的能力不进入上线承诺。</p></article>
+<h2 id="tools">🛠️ 工具推荐</h2><div class="tool-grid">
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">已有能力可用</span></div><h3><a href="https://github.com/mattpocock/skills/blob/main/skills/engineering/resolving-merge-conflicts/SKILL.md" target="_blank" rel="noopener noreferrer">今日实用工具：resolving-merge-conflicts Skill</a></h3><p>合并冲突不只是把红色标记删掉。这个 Skill 会先追溯两边提交为什么修改，再逐块保留双方意图。适合客户端并行分支、发布分支回合和多人修改同一段状态逻辑。本期介绍已有能力的具体用法，不是宣称今天发布了新版本。</p><p class="why"><strong>适合你的环节：</strong>合并前解释冲突意图，减少误删另一分支修复的风险。</p><p><strong>今天怎么试：</strong>在真正出现 merge/rebase 冲突时，对 Codex 说：“参考 resolving-merge-conflicts，先只读解释每块冲突两边的意图和建议，不修改、不暂存、不提交，等我确认。”</p><p class="fact"><strong>边界：</strong>上游完整流程包含修改、检查与提交。只想分析时必须明确收窄权限；没有冲突时不必为了使用 Skill 发起合并。本文没有执行合并，也没有验证业务结果。</p></article>
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">方法可试</span></div><h3><a href="https://git-scm.com/docs/git-diff" target="_blank" rel="noopener noreferrer">git diff：先收窄审查范围</a></h3><p>Agent 一次改了很多文件，先别把整段 diff 都塞回聊天。先看改动范围，再只看指定目录或文件；工作区和暂存区也要分开检查。这是 Git 已有的审查方法，不是新发布工具，也不同于前几天用于比较两轮提交序列的 range-diff。</p><p class="why"><strong>适合你的环节：</strong>iOS、Android 和后台 MR 审查前，把无关文件与目标改动分开。</p><p><strong>今天怎么试：</strong>对 Codex 说：“先给 git diff --stat，再只看我指定文件的 diff；另外说明暂存区是否还有改动，不要提交。”需要查看暂存区时使用 git diff --cached。</p><p class="fact"><strong>边界：</strong>diff 只显示差异，不证明逻辑正确；未跟踪文件不在普通 diff 中，还要结合 git status。只查看结果，不自动清理工作区。</p></article>
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">已有能力可用</span></div><h3><a href="https://jqlang.org/manual/" target="_blank" rel="noopener noreferrer">jq：先筛 JSON，再交给 Agent</a></h3><p>接口返回、结构化日志和流水线报告通常只有少数字段影响判断。jq 可以在本地把大 JSON 变成错误条目的短表，让 Agent 聚焦状态、错误码与时间，而不是重复阅读整份响应。它是已有 CLI 的实践用法。</p><p class="why"><strong>适合你的环节：</strong>排查接口或自动化失败时，压缩无关数据，降低重复读取。</p><p><strong>今天怎么试：</strong>对 Codex 说：“只在本地查看这份 JSON 的结构，用 jq 提取失败记录、错误码和时间；先脱敏，不输出完整响应，不上传文件。”字段以实际数据为准，不照抄假定路径。</p><p class="fact"><strong>边界：</strong>本机为 jq 1.7.1，官网默认手册为 1.8；本期只建议基础字段筛选。金额精确计算不要直接依赖浮点运算；处理日志仍需先去除凭证和个人信息。</p></article>
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">条件适用</span></div><h3><a href="https://android-developers.googleblog.com/2026/09/wireless-debugging-adb-wifi-2.html" target="_blank" rel="noopener noreferrer">ADB Wi-Fi 2.0：减少真机调试重连</a></h3><p>9 月 9 日 Android 官方介绍新的无线调试栈，涉及主机 adb、设备 adbd 和 Android Studio 的发现入口。对经常反复连接 Android 真机做回归的人，比再安装一个完整 IDE 更有针对性。官方给出了连接改善数据，但本期未复测，不把厂商测量当成本机收益。</p><p class="why"><strong>适合你的环节：</strong>Android 真机回归时减少设备发现、配对和网络变化后的重连操作。</p><p><strong>今天怎么试：</strong>先确认测试设备是 Android 17，Android Studio 为 Quail 3 或更新版本；再在受信任网络的小范围测试中开启无线调试、完成配对，比较断开重连是否稳定。</p><p class="fact"><strong>边界：</strong>官方最低条件：Android 17、Platform-Tools 37.0.0、Android Studio Quail 3。不要只因 adb 版本够新就判断全链路可用；本次没有连接设备、升级软件或修改网络。</p></article>
+</div>
+<h2 id="ai-tools">🧠 AI 工具</h2><div class="tool-grid">
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">条件适用</span></div><h3><a href="https://github.com/Tencent/teamai-cli" target="_blank" rel="noopener noreferrer">TeamAI CLI：统一多个 Agent 的项目经验</a></h3><p>同一条项目规则在多个编码工具里各维护一份，很容易出现一边更新、另一边仍用旧规则。TeamAI 以共享经验仓库为入口，提供资源初始化与经验检索；本期通过 9 月 9 日 X 讨论发现，已回到 Tencent 仓库核验，不将讨论日期写成项目首发日。</p><p class="why"><strong>适合你的环节：</strong>多人、多 Agent 协作时统一规则与可复用经验，减少重复说明项目约束。</p><p><strong>今天怎么试：</strong>先用一个不含业务代码的空目录评估：列出初始化会写哪些规则、Skill 和 Hook，确认与现有 Codex 配置是否冲突，再决定是否接入共享仓库。</p><p class="fact"><strong>边界：</strong>需要安装 CLI 和配置共享 Git 仓库及写权限；经验提交可能向团队仓库传播内容，必须排除凭证和客户数据。本次不运行安装或 init，不声称已经节省 Token。</p></article>
+</div>
+<h2 id="concepts">🧩 本期概念库</h2>
+<article class="concept"><h3>1. 外部等待成本</h3><p><strong>一句话解释：</strong>耗时可能来自系统或外部依赖，而不是当前函数内部。</p><p><strong>为什么重要：</strong>避免把错误归因变成无效重构。</p><p><strong>团队应用：</strong>把慢请求和慢启动分阶段，再采集证据。</p></article>
+<article class="concept"><h3>2. 不变量</h3><p><strong>一句话解释：</strong>无论实现怎样改变，都必须保持的规则。</p><p><strong>为什么重要：</strong>为 Agent 的修改提供明确判定边界。</p><p><strong>团队应用：</strong>先写出重复执行、异常恢复等场景中不能破坏的状态约束。</p></article>
+<article class="concept"><h3>3. 采用门槛</h3><p><strong>一句话解释：</strong>工具可下载、已安装、可连接和适合任务，是不同状态。</p><p><strong>为什么重要：</strong>避免把产品介绍当成可执行方案。</p><p><strong>团队应用：</strong>每次推荐写出环境、权限和一次最小验证。</p></article>
+<h2 id="curiosity">🎲 还能这样？今日好奇心</h2>
+<article class="curiosity"><h3><a href="https://simonwillison.net/2026/Sep/9/blender-viewer" target="_blank" rel="noopener noreferrer">.blend 浏览器预览：让 Agent 的产物更容易检查</a></h3><p class="hook"></p><p>Simon Willison 9 月 9 日展示了从图像生成 Blender 文件并用浏览器查看的个人实验。预览工具要求文件可访问，并受 CORS 等条件约束；本次直接工具页面没有返回可提取正文，只采用作者原文说明，未验证任意模型都可打开。对你更有用的启发是：让 Agent 交付可查看的中间产物，而不是只报告“已经完成”。</p><p><strong>背后的启发：</strong></p></article>
+<h2 id="resources">📚 资源</h2>
+<article class="resource"><h3><a href="https://mhacevedo.com/posts/the-discovery-problem" target="_blank" rel="noopener noreferrer">AI 的发现问题：先知道它能替你省哪一步</a></h3><p>作者认为，空白输入框让用户必须先知道“该问什么”，才能发现 AI 能力。这是作者观点，不是行业量化结论。本期在 9 月 9 日 HN 讨论中发现，原文日期未确认，仅作背景阅读。对你，工具卡必须绑定一个真实任务：审查冲突、筛日志或连接真机，而不是罗列一串软件名。</p></article>
+<h2 id="quotes">💬 言论：本期认知增量</h2>
+<article class="quote"><blockquote>访谈将“系统应该做什么”的讨论放在写代码之前，而不是把所有意图沟通都挤进代码审查。</blockquote><p><strong><a href="https://newsletter.pragmaticengineer.com/p/building-codex-with-tibo-sottiaux" target="_blank" rel="noopener noreferrer">Tibo Sottiaux / The Pragmatic Engineer</a></strong> · 摘要式转述 · 工程判断</p><p>9 月 9 日访谈中的观点，不等于今天已能自动替代全部正确性与安全审查。</p><p class="team"><strong>团队启发：</strong>9 月 9 日访谈中的观点，不等于今天已能自动替代全部正确性与安全审查。</p></article>
+<article class="quote"><blockquote>使用 Coding Agent 的能力，也包括指导工作流、定义规格和评价产物。</blockquote><p><strong><a href="https://x.com/DeepLearningAI/status/2097790678273069226" target="_blank" rel="noopener noreferrer">DeepLearning.AI</a></strong> · 摘要式转述 · 工程判断</p><p>9 月 9 日官方帖的技能地图导读；落实为每个任务先给结果判定标准。</p><p class="team"><strong>团队启发：</strong>9 月 9 日官方帖的技能地图导读；落实为每个任务先给结果判定标准。</p></article>
+<article class="quote"><blockquote>终端里的 AI 工作流应结合实际上下文与工具，而不只是猜一个命令。</blockquote><p><strong><a href="https://x.com/freeCodeCamp/status/2097777337446085025" target="_blank" rel="noopener noreferrer">freeCodeCamp</a></strong> · 摘要式转述 · 工程判断</p><p>9 月 9 日重新分享的教程原文发表于 4 月 29 日，是旧文重读；本文只取思路，不背书旧安装命令或版本门槛。</p><p class="team"><strong>团队启发：</strong>9 月 9 日重新分享的教程原文发表于 4 月 29 日，是旧文重读；本文只取思路，不背书旧安装命令或版本门槛。</p></article>
+<article class="quote"><blockquote>自助试用的资格范围扩大，仍然需要企业账单与许可入口。</blockquote><p><strong><a href="https://github.blog/changelog/2026-09-09-github-advanced-security-expands-trial-availability" target="_blank" rel="noopener noreferrer">GitHub：Advanced Security</a></strong> · 摘要式转述 · 工程判断</p><p>官方 9 月 9 日公告；资格扩大不等于个人账号或当前公司已获授权，不建议为此另装工具。</p><p class="team"><strong>团队启发：</strong>官方 9 月 9 日公告；资格扩大不等于个人账号或当前公司已获授权，不建议为此另装工具。</p></article>
+<article class="quote"><blockquote>Bend 的演示用一个“不能获胜”的规则，展示 AI 改写游戏时保持约束的设想。</blockquote><p><strong><a href="https://x.com/VictorTaelin/status/2097792428988317957" target="_blank" rel="noopener noreferrer">Victor Taelin</a></strong> · 摘要式转述 · 工程判断</p><p>这是发布者对演示的描述，未核验形式化保证，更不能推广成“AI 永远不会写 Bug”。可借鉴的是先写清不变量。</p><p class="team"><strong>团队启发：</strong>这是发布者对演示的描述，未核验形式化保证，更不能推广成“AI 永远不会写 Bug”。可借鉴的是先写清不变量。</p></article>
+<article class="quote"><blockquote>企业可以把 Agent 的命令、文件与网络操作分成禁止、需审批和可自动执行。</blockquote><p><strong><a href="https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations" target="_blank" rel="noopener noreferrer">GitHub：Agent 操作权限</a></strong> · 摘要式转述 · 工程判断</p><p>9 月 9 日官方说明：托管限制不能被用户或工作区设置放宽。适用指定 Copilot 产品与企业条件，不代表当前 Codex 受相同策略控制。</p><p class="team"><strong>团队启发：</strong>9 月 9 日官方说明：托管限制不能被用户或工作区设置放宽。适用指定 Copilot 产品与企业条件，不代表当前 Codex 受相同策略控制。</p></article>
+<h2 id="podcast">🎙️ 播客提纲</h2><article class="podcast">
+<h3>今天先少走一步弯路</h3>
+<p class="hook">今天是九月十日。假设一个工具升级以后，整体响应变好了，启动却变慢了。你会让 AI 去改启动代码，还是先检查别的东西？今天这条复盘提醒我们，最有价值的提效，可能不是多写一点代码，而是少做一轮错误的修改。</p>
+<h4>主故事：慢在谁那里</h4><p>JetBrains 介绍了 ReSharper 进程外架构的一次排查。团队原本希望减少主进程的负担，但用户反馈启动变慢。经过性能分析，他们发现，Microsoft Defender 对进程的扫描占用了意料之外的时间。这说明，应用代码执行之外，还有系统层面的成本。团队随后与 Microsoft 合作，文章报告了扫描侧调整，而且一些优化与写保护安装目录有关。这里要保留边界：这是厂商复盘，不是我们在本机复现的结论，更不能据此认为 Mac 上的卡顿也是同一原因。对我们的启发很具体：让 Agent 调查慢启动时，先把应用执行、磁盘、网络和外部检查拆成阶段，再找证据。不要一上来重写业务逻辑，也不要为了快就关闭安全防护。 还有一个相似的工程细节：Kubernetes 新增了节点维护状态，但官方明确说，当前核心组件还不会读取这些状态来执行动作。于是，界面上显示维护中，并不能证明流量已经被安全迁走。这个区别同样适用于我们验收 Agent：它说任务完成，只是一个状态；差异、日志和实际行为，才是完成的证据。把这层证据留住，往往比继续增加自动化步骤更重要。</p>
+<h4>快讯一：真机连接</h4><p>Android 的 ADB Wi-Fi 二点零，改了设备发现和网络变化后的连接处理。它需要 Android 十七、较新的 Platform-Tools，以及 Quail 三或更新的 Android Studio。今天核对到，你的主机 ADB 版本够新，但手机和 IDE 条件还没验证。所以它是有条件可试，不是已经可用。先选测试设备做配对验证，不要直接影响正在用的调试环境。</p>
+<h4>快讯二：多 Agent 的规则</h4><p>X 上发现的 TeamAI CLI，值得放入你的候选清单。它通过共享仓库组织规则和经验，适合多个 Agent 各维护一份配置时使用。但初始化会触及本地资源，共享也可能把内容送进团队仓库。今天没有安装。最小下一步不是全局接入，而是在空目录里确认它要写什么、怎样回退、哪些内容不能同步。</p>
+<h4>快讯三：先用已有工具</h4><p>更快就能尝试的是已有能力。合并冲突 Skill 可以先解释两边改动的意图，但原始流程包含提交，所以你只想分析时，要明确要求只读。Git diff 可以先缩小审查文件范围。jq 可以先把大 JSON 筛成少量失败记录，再交给 AI。它们不是今天的新产品，而是针对你现在工作的实践选择，且都不需要为了日报重复安装。</p>
+<h4>团队行动</h4><p>今天建议只挑一个真实任务。遇到接口问题，先在本地用 jq 筛字段并脱敏；遇到分支冲突，先看意图，不自动提交；遇到启动慢，先建立时间线。还有一条发布时间提醒：X 今天分享的 MCP 教程其实是四月旧文，不能当成今天的新发布。技术信息有用，与信息刚刚发布，是两个不同判断。</p>
+<p>今天的核心判断是：先缩小问题和权限范围，再提高自动化程度。在线版列出了五项工具的用途、条件和最小尝试方式。无需一次全装，先看哪一项能减少你今天正在重复的动作。</p></article>
+<h2 id="team-insights">✅ 对团队的启发</h2>
+<div class="insight"><strong>1</strong><p>合并冲突先请 Agent 解释双方意图，未经确认不修改或提交。</p></div>
+<div class="insight"><strong>2</strong><p>日志先在本地筛字段并脱敏，保留足够定位证据，不回灌全量。</p></div>
+<div class="insight"><strong>3</strong><p>无线调试或共享规则先在测试设备、空目录评估，不直接改团队默认配置。</p></div><footer class="footer">Tech Digest · 2026-09-10 · 来源与事实边界见各条目<br><strong>抓取缺口：</strong>console.dev；Product Hunt；BAIR Blog；Netflix TechBlog；Figma Engineering；JavaScript Weekly；Airbnb Engineering；ACM Queue；Coinbase Engineering</footer></main></div></body></html>
