@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-11",
+    "title": "第 96 期：Agent 让双端开发便宜了，然后呢？",
+    "highlights": [
+      "Shopify 重新评估原生开发成本，不把个案写成所有团队的迁移建议",
+      "trynix、PR 筛选和 JSON 校验可先试；ClickHouse Skill 只在有 SQL 场景时评估",
+      "Actions 缓存权限、数据库加密升级与灾备：成功状态之外还要检查真实边界",
+      "X 已抓取；新讨论与经典背景材料明确分开"
+    ],
+    "image": "https://cdn.shopify.com/b/shopify-brochure2-assets/74f109ae9b0c3034a78a3b63294ae2e6.png"
+  },
+  {
     "date": "2026-09-10",
     "title": "第 95 期：工具变慢了，先找真正花时间的那一步",
     "highlights": [

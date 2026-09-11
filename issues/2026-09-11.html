@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 96 期：Agent 让双端开发便宜了，然后呢？</title><meta name="description" content="我的判断：Agent 改变的是部分开发成本，不能替团队省掉平台适配、验证与长期维护责任。">
+<meta property="og:title" content="第 96 期：Agent 让双端开发便宜了，然后呢？"><meta property="og:description" content="我的判断：Agent 改变的是部分开发成本，不能替团队省掉平台适配、验证与长期维护责任。"><meta property="og:image" content="https://cdn.shopify.com/b/shopify-brochure2-assets/74f109ae9b0c3034a78a3b63294ae2e6.png"><style>
+:root{color-scheme:light;--ink:#17251e;--muted:#66756d;--green:#008a58;--green-soft:#eaf6ef;--line:#d9e1dc;--paper:#fff;--bg:#f5f7f5;--red:#9d2c2c;--gold:#8b6200}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Noto Sans CJK SC",sans-serif;line-height:1.72;letter-spacing:0}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}.topbar{height:56px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:10}.brand{font-weight:750}.nav{display:flex;gap:20px;font-size:14px}.layout{display:grid;grid-template-columns:190px minmax(0,820px);gap:38px;max-width:1090px;margin:0 auto;padding:34px 20px 80px}.toc{position:sticky;top:84px;align-self:start;font-size:14px}.toc strong{display:block;margin-bottom:10px}.toc a{display:block;color:var(--muted);padding:4px 0}.content{min-width:0}.back{font-size:14px}.hero h1{font-size:34px;line-height:1.25;margin:18px 0 8px}.meta{color:var(--muted);font-size:14px}.highlights{background:var(--green-soft);border-left:4px solid var(--green);padding:16px 18px;border-radius:5px}.article-img{display:block;width:100%;max-height:520px;object-fit:contain;background:#fff;border:1px solid #e6ebe8;border-radius:6px;margin:24px 0 8px}.hero-caption{text-align:center;color:var(--muted);font-size:13px}h2{font-size:22px;margin:46px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--ink)}h3{font-size:18px;line-height:1.45;margin:0 0 10px}h4{font-size:16px;margin:22px 0 4px}.main-story{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--green);padding:24px;border-radius:6px}.story-hook,.hook{font-weight:650}.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.story-field{background:#f6f8f6;border:1px solid var(--line);padding:14px;border-radius:5px}.story-field strong{display:block;margin-bottom:5px}.number-chip{display:inline-block;background:#eef1ef;border:1px solid var(--line);padding:5px 9px;margin:3px;border-radius:4px;font-size:13px}.story-line{border-left:4px solid var(--gold);padding:10px 14px;background:#fff9e8;font-weight:650}.trend-grid,.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.trend-card,.tool-card{background:var(--paper);border:1px solid var(--line);padding:16px;border-radius:6px}.trend-conflict{font-weight:700;color:var(--red)}.trend-card small{color:var(--muted)}.entry,.curiosity,.quote,.resource,.concept,.podcast{padding:20px 0;border-bottom:1px solid var(--line)}.entry p,.curiosity p,.quote p{margin:8px 0}.why{color:#315744}.fact{color:var(--muted);font-size:14px}.tag,.priority,.certainty{display:inline-block;font-size:11px;line-height:1;padding:5px 7px;border-radius:3px;margin-right:6px}.tag{background:#e8f1ec;color:#23523b}.priority{background:#fff0c8;color:#714e00}.certainty{background:#eef0ef;color:#45534b}.certainty-confirmed,.certainty-announced{background:#e7f5ec;color:#17683e}.certainty-reported{background:#fff3d5;color:#795400}.certainty-opinion,.certainty-inference{background:#f5e9ea;color:#803638}blockquote{font-size:19px;margin:0 0 12px;border-left:4px solid var(--green);padding-left:16px}.team{color:#315744}.insight{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;border-bottom:1px solid var(--line);padding:10px 0}.insight strong{display:grid;place-items:center;width:28px;height:28px;background:var(--ink);color:#fff;border-radius:4px}.insight p{margin:0}.footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}@media(max-width:820px){.topbar{padding:0 14px}.nav{gap:12px}.layout{display:block;padding:22px 16px 60px}.toc{display:none}.hero h1{font-size:28px}.story-grid,.trend-grid,.tool-grid{grid-template-columns:1fr}.main-story{padding:18px}.article-img{max-height:400px}}@media(max-width:420px){.nav a:nth-child(n+3){display:none}.hero h1{font-size:25px;overflow-wrap:anywhere}h2{font-size:20px}.highlights{padding:13px}.content{overflow-wrap:anywhere}}
+</style></head>
+<body><header class="topbar"><a class="brand" href="../index.html">Tech Digest</a><nav class="nav"><a href="index.html">Archive</a><a href="2026-09-11.html">Today</a><a href="#tools">Tools</a><a href="#quotes">Quotes</a></nav><span>2026-09-11</span></header>
+<div class="layout"><aside class="toc"><strong>本期目录</strong><a href="#main-story">🔥 主故事</a><a href="#trends">⚡ 冲突趋势</a><a href="#tech-news">📰 科技动态</a><a href="#ai">🤖 AI 相关</a><a href="#articles">📝 文章推荐</a><a href="#tools">🛠️ 工具推荐</a><a href="#ai-tools">🧠 AI 工具</a><a href="#concepts">🧩 概念库</a><a href="#curiosity">🎲 好奇心</a><a href="#resources">📚 资源</a><a href="#quotes">💬 言论</a><a href="#podcast">🎙️ 播客</a><a href="#team-insights">✅ 团队启发</a></aside><main class="content"><a class="back" href="index.html">← 返回目录</a>
+<section class="hero"><h1>第 96 期：Agent 让双端开发便宜了，然后呢？</h1><p class="meta">第 96 期 · 2026年9月11日，星期五</p><p class="core-judgment">我的判断：Agent 改变的是部分开发成本，不能替团队省掉平台适配、验证与长期维护责任。</p><p class="highlights"><strong>✨ 本期亮点：</strong>Shopify 重新评估原生开发成本，不把个案写成所有团队的迁移建议 · trynix、PR 筛选和 JSON 校验可先试；ClickHouse Skill 只在有 SQL 场景时评估 · Actions 缓存权限、数据库加密升级与灾备：成功状态之外还要检查真实边界 · X 已抓取；新讨论与经典背景材料明确分开</p><img class="article-img" src="https://cdn.shopify.com/b/shopify-brochure2-assets/74f109ae9b0c3034a78a3b63294ae2e6.png" alt="Shopify 原生开发文章配图" loading="lazy"><p class="hero-caption">Shopify 原文配图。文章讨论自身团队的选择；不能据此推导其他项目的迁移收益。</p></section>
+
+    <h2 id="main-story">🔥 主故事</h2>
+    <article class="main-story">
+      <h3>Shopify 回到原生：变化的是成本假设，不是过去的成功</h3>
+      <p class="story-hook">一支曾经坚定采用 React Native 的团队，重新选择了 Swift 和 Kotlin。</p>
+      <p>Shopify 的新工程文章说明，2020 年转向 React Native 帮助团队减少重复实现、扩大参与开发的人群，也减少了两端追赶功能的负担。现在，团队开始迁回原生技术栈。</p>
+      <div class="story-grid">
+        <div class="story-field"><strong>核心冲突</strong>作者并没有把 React Native 写成失败方案。变化在于他们对双端实现成本的判断：编码 Agent 可以承担一部分实现、转译、测试和审查工作。</div>
+        <div class="story-field"><strong>转折点</strong>团队据此重新评估了技术路线。但原文也明确说，维护两个平台的成本并未消失；这是 Shopify 对自身应用和团队的选择，不是原生必胜的通用结论。</div>
+        <div class="story-field"><strong>为什么是现在</strong>9 月 10 日出现的这篇原文，直接对应客户端负责人需要重新计算的问题：哪些跨端收益还成立，哪些成本已经变化？</div>
+        <div class="story-field"><strong>对团队的启发</strong>选一个同时覆盖 iOS 与 Android 的低风险功能，用同一验收清单记录两端差异，不拿生成代码耗时替代全部交付成本。</div>
+      </div>
+      <p></p>
+      <p><strong>我的判断：</strong>我的判断：Agent 改变的是部分开发成本，不能替团队省掉平台适配、验证与长期维护责任。 不建议据此迁移现有项目；先拿一个小功能比较适配、验收、返工与维护成本。</p>
+      <div class="story-line">重新算账，不等于否定以前的选择。</div>
+      <p><strong>来源：</strong><a href="https://shopify.engineering/back-to-native" target="_blank" rel="noopener noreferrer">shopify.engineering</a></p>
+    </article>
+<h2 id="trends">⚡ 今日冲突趋势</h2><div class="trend-grid">
+<article class="trend-card"><h3>双端成本变了，双端责任还在</h3><div class="trend-conflict">Agent 帮助实现，不替代平台验收。</div><p>比较交付全程，而不是只看写代码的分钟数。</p><small>shopify.engineering</small></article>
+<article class="trend-card"><h3>备份和评测，都不能只看绿灯</h3><div class="trend-conflict">过程成功与结果正确并不等价。</div><p>结果检查和过程检查各自保留。</p><small>tech.meituan.com · cncf.io</small></article>
+<article class="trend-card"><h3>缓存更快，权限不能更松</h3><div class="trend-conflict">性能优化也可能扩大不可信数据入口。</div><p>让低信任任务默认少写。</p><small>github.blog</small></article>
+</div>
+<h2 id="tech-news">📰 科技动态</h2>
+<article class="entry">
+<h3>1、<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.268" target="_blank" rel="noopener noreferrer">Claude Code 2.1.268：WebFetch 不再无限等待</a> <span class="certainty certainty-第一方说明；本期未实测。">第一方说明；本期未实测。</span></h3>
+<p class="hook">失败有截止时间，流程才有机会继续。</p>
+<p>9 月 10 日版本给未结束的 WebFetch 响应增加超时，并修复第三方兼容端点因工具 schema 正则而返回 HTTP 400 的问题。与昨天的强度上限和会话恢复是不同修复。使用兼容服务时，先对照版本和报错，不能把一切 400 都解释为这个原因。</p>
+
+</article>
+<article class="entry">
+<h3>2、<a href="https://androidstudio.googleblog.com/2026/09/android-studio-rabbit-1-canary-5-now.html" target="_blank" rel="noopener noreferrer">Android Studio Canary：并装评估，不替换稳定环境</a> <span class="certainty certainty-第一方说明；本期未实测。">第一方说明；本期未实测。</span></h3>
+<p class="hook">版本号变新，不等于当前项目需要它。</p>
+<p>9 月 10 日的 Rabbit 1 Canary 5 公告提供 Canary 更新入口。当前可提取正文没有足够细节支持具体修复结论，本期只确认渠道与版本。没有明确阻塞问题时，不建议你为了“跟新”覆盖稳定安装。</p>
+
+</article>
+<article class="entry">
+<h3>3、<a href="https://github.blog/changelog/2026-09-10-control-github-actions-cache-access-with-cache-mode" target="_blank" rel="noopener noreferrer">Actions cache-mode：缓存也有读写权限</a> <span class="certainty certainty-第一方说明；本期未实测。">第一方说明；本期未实测。</span></h3>
+<p class="hook">缓存不是纯性能开关，也是数据入口。</p>
+<p>9 月 10 日官方宣布可在工作流或 job 级别限制缓存读取、写入或完全禁用。被调用工作流不能获得超过调用方授予的权限。低信任事件显式获得写权限会增加缓存投毒风险，官方会给出警告。不要为提高命中率无条件开放缓存写入。</p>
+
+</article>
+<article class="entry">
+<h3>4、<a href="https://github.blog/changelog/2026-09-10-ai-scan-for-pull-request-apis-in-public-preview" target="_blank" rel="noopener noreferrer">AI Scan API：仓库开关不能越过组织禁用</a> <span class="certainty certainty-第一方说明；本期未实测。">第一方说明；本期未实测。</span></h3>
+<p class="hook">批量配置之前，先看策略层级。</p>
+<p>9 月 10 日的公开预览支持通过 REST API 管理 PR AI 扫描开关，适用 GitHub.com 的 Advanced Security 客户。仓库配置不能覆盖组织层禁用；本次不支持 GHES。它是管理员能力动态，不是你现在可以直接安装的个人工具。</p>
+
+</article>
+<article class="entry">
+<h3>5、<a href="https://www.postgresql.org/about/news/pg_vault_tde-v171-transparent-data-encryption-for-postgresql-17-and-18-3376" target="_blank" rel="noopener noreferrer">pg_vault_tde 1.7.1：先读迁移警告再换二进制</a> <span class="certainty certainty-项目第一方升级警告；未在数据库中复现。">项目第一方升级警告；未在数据库中复现。</span></h3>
+<p class="hook">加密实现修复，也可能改变已有数据的读取条件。</p>
+<p>9 月 10 日项目公告说明修正了外置 TOAST 数据的认证附加数据派生。项目明确警告：旧版本写入的相关数据不能直接在新版本下通过认证，受影响表必须在安装新二进制前导出。这里只提示升级风险，操作须按 README 和测试恢复方案执行；不把它当无感小版本升级。</p>
+
+</article>
+<h2 id="ai">🤖 AI 相关</h2>
+<article class="entry">
+<h3>1、<a href="https://huggingface.co/blog/gradio-workflow-1111" target="_blank" rel="noopener noreferrer">Gradio Workflow：媒体流程变成可检查节点</a> <span class="certainty certainty-第一方说明；本期未实测。">第一方说明；本期未实测。</span></h3>
+<p class="hook">可视化流程仍然需要知道每个节点花什么、做什么。</p>
+<p>9 月 10 日文章展示多个媒体处理流水线的图式组合。模型调用使用登录用户自己的额度，不能写成免费、完全本地。对你更有用的是观察如何拆分生成、修正和检查步骤；不是推荐安装一套图像平台，也不执行图片生成。</p>
+
+</article>
+<h2 id="articles">📝 文章推荐</h2>
+<article class="entry"><h3><a href="https://tech.meituan.com/2026/09/10/Agent-Evaluation-White-Paper-01.html" target="_blank" rel="noopener noreferrer">Agent 评测：工具调用成功不等于任务办成</a></h3><p class="hook">监控绿了，结果仍可能是错的。</p><p>美团 9 月 10 日介绍端到端评测与过程评测的分工。前者看交付结果，后者帮助定位哪一步出错；文中的数字示例不应当成真实业务成绩。对你的日报或研发 Agent，可分别保留“产物合格”和“采集、生成、发布各步状态”，并让关键失败真正阻断交付。</p><p class="story-line">量最终结果，也量中间过程。</p></article>
+<article class="entry"><h3><a href="https://www.cncf.io/blog/2026/09/10/kubernetes-disaster-recovery-guidance-from-three-reproducible-failure-scenarios" target="_blank" rel="noopener noreferrer">灾备演练：备份完成与能恢复之间还差什么</a></h3><p class="hook">先找恢复后的数据，再相信备份状态。</p><p>CNCF 9 月 10 日文章用三个实验场景区分备份记录、真实存储数据和跨卷一致性。重点是证明数据确实离开原集群，并在恢复后检查内容，而非只看任务完成状态。本期未执行实验；涉及真实集群时应在隔离环境验证，不能照搬破坏性演练。</p><p class="story-line">恢复证据比一条成功日志更完整。</p></article>
+<article class="entry"><h3><a href="https://clickhouse.com/blog/introducing-walshadow" target="_blank" rel="noopener noreferrer">WalShadow：物理 WAL 同步的指标先看条件</a></h3><p class="hook">源端提交完成，到查询看见数据，中间仍有距离。</p><p>9 月 10 日 ClickHouse 介绍从 Postgres 物理 WAL 复制数据的方案。文中延迟和吞吐是厂商在单表、同区域等条件下测得，本期不把这些结果推广成你业务的承诺。对后台评估，先核对写入形态、恢复流程与数据可见性的定义，再比较速度。</p><p class="story-line">比较指标前先统一测量起止点。</p></article>
+<article class="entry"><h3><a href="https://github.blog/news-insights/company-news/github-availability-report-august-2026" target="_blank" rel="noopener noreferrer">GitHub 八月可用性复盘：缓解不是根治</a></h3><p class="hook">把故障缓解写成永久修复，会漏掉后续工作。</p><p>9 月 10 日发布的报告回顾八月服务降级事件，不是今天发生的新故障。GitHub 描述容量、重试策略和核心服务韧性的改进，并把部分容量分流明确定位为短期措施。本期不转述百分比为永久收益；团队可以借鉴“临时止损”和“结构性改进”分开跟踪。</p><p class="story-line">恢复服务后，问题清单仍需继续关闭。</p></article>
+<article class="entry"><h3><a href="https://terriblesoftware.org/2026/09/10/ai-is-breaking-this-thing-we-call-trust/" target="_blank" rel="noopener noreferrer">AI 交付与信任：谁承担解释成本</a></h3><p class="hook">写得完整，不等于已经理解。</p><p>9 月 10 日作者讨论一种协作成本：产物看起来完成，提交者却不能回答具体问题，审查人不得不重做调查。这是个人观点，不是对所有 AI 使用者的结论。对团队交付，附上检查过的场景、未覆盖的边界和修改理由，比额外生成一页泛泛解释更有用。</p><p class="story-line">让审查者复核，而不是重新调查。</p></article>
+<h2 id="tools">🛠️ 工具推荐</h2><div class="tool-grid">
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">方法可试</span></div><h3><a href="https://trynix.dev" target="_blank" rel="noopener noreferrer">今日实用工具：trynix，先在浏览器试 CLI</a></h3><p>想试一个命令行工具，却不想先改本机环境，可以先打开 trynix。它把 Nix 包和依赖放进浏览器里的 Linux 虚拟机。9 月 10 日的讨论带来了这个入口；不是每个历史软件包都在当天更新。对你，适合试语法、观察输出和做轻量对比，不适合替代 iOS 真机验证。</p><p class="why"><strong>适合你的环节：</strong>评估小工具时，先做隔离的浏览器实验，减少本机安装与清理。</p><p><strong>今天怎么试：</strong>打开项目页面，选择一个公开示例包，点击 Load 后只运行帮助或版本查询；记录能否启动和输出是否符合预期。不放入业务代码或凭证。</p><p class="fact"><strong>边界：</strong>原站已可访问，尚未实际启动虚拟机。需要浏览器支持及网络下载依赖；运行环境是模拟的 Linux，不代表 macOS 或原生 App 的表现。项目称计算在浏览器执行，不等于完全离线。</p></article>
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">方法可试</span></div><h3><a href="https://github.blog/changelog/2026-09-10-refreshed-repository-pull-requests-page-in-public-preview" target="_blank" rel="noopener noreferrer">GitHub PR 筛选：把待审列表变成工作清单</a></h3><p>9 月 10 日的 PR 列表公开预览增加高级筛选、紧凑显示和更明确的状态信息。对负责多个改动的技术负责人，先找到自己需要处理的 PR，比再装一个审查 App 更直接。这里只推荐筛选这个小动作，不推荐更换整套平台。</p><p class="why"><strong>适合你的环节：</strong>跨仓审查前，先整理本人相关、待审和检查异常的 PR。</p><p><strong>今天怎么试：</strong>在已有 GitHub 仓库的 Pull requests 页面先筛本人相关条目；若启用新版预览，再尝试 AND、OR 等组合。只整理列表，不自动批准或合并。</p><p class="fact"><strong>边界：</strong>需登录并拥有仓库访问权限；本期未切换你的预览设置。新版暂不支持保存自定义视图和批量更新。普通筛选方法可先用，不保证当前账号已进入新版。</p></article>
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">已有能力可用</span></div><h3><a href="https://docs.python.org/3/library/json.html" target="_blank" rel="noopener noreferrer">Python JSON 校验：先排除文件格式错误</a></h3><p>Agent 生成配置后，一个引号或逗号错误就可能阻断后续步骤。Python 自带 JSON 命令行入口，可以先检查能否解析，再格式化查看。与昨天 jq 的字段筛选不同，今天这一步用来快速拦住“文件根本不是合法 JSON”的问题，属于已有能力的实践，不是新软件发布。</p><p class="why"><strong>适合你的环节：</strong>日报、配置和接口样本进入下游前，先检查 JSON 语法。</p><p><strong>今天怎么试：</strong>对 Codex 说：“只用 python3 -m json.tool 检查这个本地 JSON；不要覆盖原文件，不输出敏感字段；如果失败，只告诉我位置与原因。”</p><p class="fact"><strong>边界：</strong>能解析不代表满足业务 schema；重复键、权限、金额精度和必填字段仍需另查。不把语法检查写成内容正确性验证。</p></article>
+</div>
+<h2 id="ai-tools">🧠 AI 工具</h2><div class="tool-grid">
+<article class="tool-card"><div><span class="tag">实践精选</span><span class="priority">条件适用</span></div><h3><a href="https://github.com/ClickHouse/agent-skills" target="_blank" rel="noopener noreferrer">ClickHouse Agent Skills：先复用 SQL 规则</a></h3><p>9 月 10 日的连接器介绍同时提到开源 Agent Skills：把表设计、查询优化和数据摄入知识交给编码 Agent。对你，只在确有 ClickHouse 或 chdb 任务时值得评估这份规则，不需要为了读 Skill 购买托管数据库。Skill 和云端 MCP 是两回事。</p><p class="why"><strong>适合你的环节：</strong>有 ClickHouse 查询任务时，减少反复解释引擎规则与常见注意事项。</p><p><strong>今天怎么试：</strong>先挑一份脱敏 SQL，让 Codex 只读上游相关规则，指出适用条件和风险；确认有价值后再决定是否安装到项目，不接生产数据库。</p><p class="fact"><strong>边界：</strong>当前会话未提供该 Skill，未安装或验证版本。云 MCP 需要另行账号授权；readOnlyHint 是提示元数据，安全边界仍应靠权限和服务端约束。使用 Skill 不代表查询已经验证。</p></article>
+</div>
+<h2 id="concepts">🧩 本期概念库</h2>
+<article class="concept"><h3>1. 成本假设</h3><p><strong>一句话解释：</strong>技术选择依赖当时对实现、协作和维护成本的估计。</p><p><strong>为什么重要：</strong>外部条件变化后应重新验证，而不是机械坚持或推翻。</p><p><strong>团队应用：</strong>用一个低风险功能建立新的对照记录。</p></article>
+<article class="concept"><h3>2. 端到端与过程评测</h3><p><strong>一句话解释：</strong>分别回答任务是否完成，以及中间哪一步失败。</p><p><strong>为什么重要：</strong>避免只见成功率变化，却无法定位原因。</p><p><strong>团队应用：</strong>为最终产物和关键工具调用分别记录判定。</p></article>
+<article class="concept"><h3>3. 缓存信任边界</h3><p><strong>一句话解释：</strong>有资格读缓存，不必然有资格写入共享缓存。</p><p><strong>为什么重要：</strong>避免不可信工作影响可信流水线。</p><p><strong>团队应用：</strong>检查事件来源与缓存读写权限。</p></article>
+<h2 id="curiosity">🎲 还能这样？今日好奇心</h2>
+<article class="curiosity"><h3><a href="https://spectrum.ieee.org/codeveloper-of-ethernet-predecessor-dies" target="_blank" rel="noopener noreferrer">ALOHAnet 回顾：旧问题怎样启发新网络</a></h3><p class="hook"></p><p>IEEE 9 月 10 日刊出的纪念文章回顾 Frank Kuo 与 ALOHAnet 的工作，并注明其去世日期是 4 月 14 日，不能写成今日讣闻。它展示无线分组网络如何影响后来的网络发展。这里作为技术史阅读，不把先驱故事强行包装成今天的工具推荐。</p><p><strong>背后的启发：</strong></p></article>
+<h2 id="resources">📚 资源</h2>
+<article class="resource"><h3><a href="https://github.blog/ai-and-ml/github-copilot/github-copilot-app-for-beginners-using-the-diff-terminal-and-browser" target="_blank" rel="noopener noreferrer">检查 Agent 改动：diff、终端与预览各看什么</a></h3><p>GitHub 9 月 10 日教程把代码差异、命令结果和浏览器预览放在一起。对已经使用 Codex 的你，不需要为这个方法另装 Copilot App。可迁移的验收顺序是：确认改动范围、执行被授权的检查、查看实际界面；三类证据不能互相替代。</p></article>
+<article class="resource"><h3><a href="https://blog.jetbrains.com/clion/2026/09/join-us-at-the-zephyr-project-meetup-in-amsterdam" target="_blank" rel="noopener noreferrer">Zephyr 交流活动：留意无硬件模糊测试思路</a></h3><p>9 月 10 日公告介绍 9 月 15 日在阿姆斯特丹的活动，包括 AFL 与 Renode 的固件模糊测试演示。这里是未来议程，不是已经公开的录播或本期复现。嵌入式内容不是你的日常优先项，作为“如何在缺少设备时测试”的思路储备即可。</p></article>
+<h2 id="quotes">💬 言论：本期认知增量</h2>
+<article class="quote"><blockquote>把编码助手组织成可重复工作流，比把它只当聊天框更有方向。</blockquote><p><strong><a href="https://x.com/samcoderx/status/2098070195994862057" target="_blank" rel="noopener noreferrer">Samcoderx</a></strong> · 摘要式转述 · 工程实践</p><p>9 月 10 日社区观点；未核验图片中的完整清单，不推荐未读的命令。</p><p class="team"><strong>团队启发：</strong>9 月 10 日社区观点；未核验图片中的完整清单，不推荐未读的命令。</p></article>
+<article class="quote"><blockquote>先从自己的重复审查和跟进工作寻找自动化机会。</blockquote><p><strong><a href="https://x.com/LearnerBR/status/2098097712914997399" target="_blank" rel="noopener noreferrer">LearnerBR</a></strong> · 摘要式转述 · 工程实践</p><p>9 月 10 日帖子提供提示思路；不照搬其历史访问范围，也没有读取你的 GitHub 活动或连接 MCP。</p><p class="team"><strong>团队启发：</strong>9 月 10 日帖子提供提示思路；不照搬其历史访问范围，也没有读取你的 GitHub 活动或连接 MCP。</p></article>
+<article class="quote"><blockquote>Windows 语音构建所用的 Cygwin 档案是 CI 构建输入，不是终端用户安装包。</blockquote><p><strong><a href="https://github.com/openai/codex/releases/tag/voice-cygwin-108b38cf67cbb731" target="_blank" rel="noopener noreferrer">Codex 发布说明</a></strong> · 摘要式转述 · 工程实践</p><p>9 月 10 日发布记录；不要把仓库每个 Release 都推送成用户升级建议。</p><p class="team"><strong>团队启发：</strong>9 月 10 日发布记录；不要把仓库每个 Release 都推送成用户升级建议。</p></article>
+<article class="quote"><blockquote>可靠性和发布速度需要通过明确的风险预算协调。</blockquote><p><strong><a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener noreferrer">Google SRE</a></strong> · 摘要式转述 · 工程实践</p><p>经典背景阅读，不是今天新文。预算应服务具体 SLO，不能借它合理化任意故障。</p><p class="team"><strong>团队启发：</strong>经典背景阅读，不是今天新文。预算应服务具体 SLO，不能借它合理化任意故障。</p></article>
+<article class="quote"><blockquote>RAG 和微调并不能彻底解决提示注入。</blockquote><p><strong><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener noreferrer">OWASP</a></strong> · 摘要式转述 · 工程实践</p><p>2025 版风险说明，作为背景核验。读取来的内容不能自动升级成操作授权。</p><p class="team"><strong>团队启发：</strong>2025 版风险说明，作为背景核验。读取来的内容不能自动升级成操作授权。</p></article>
+<article class="quote"><blockquote>按日期查询 reflog，得到的是本地引用在那个时间的状态。</blockquote><p><strong><a href="https://git-scm.com/docs/gitrevisions" target="_blank" rel="noopener noreferrer">Git 文档</a></strong> · 摘要式转述 · 工程实践</p><p>基础文档重读；不是全世界代码在那一刻的统一快照，不把本地记录当远端事实。</p><p class="team"><strong>团队启发：</strong>基础文档重读；不是全世界代码在那一刻的统一快照，不把本地记录当远端事实。</p></article>
+<h2 id="podcast">🎙️ 播客提纲</h2><article class="podcast">
+<h3>重新计算 Agent 带来的成本变化</h3>
+<p class="hook">今天是九月十一日。一家曾经拥抱 React Native 的公司，又准备回到 Swift 和 Kotlin。听起来像技术路线反复，但今天真正值得学的，不是跟着换框架，而是看他们重新计算了哪一项成本。</p>
+<h4>主故事</h4><p>Shopify 的工程文章先承认，二零二零年选择 React Native 是成功的。少写一遍功能，让更多工程师参与移动端开发，减少两边追赶进度，这些收益都真实地影响了当时的选择。现在团队说，编码 Agent 能承担一部分实现、转译、测试和审查工作，因此同时维护原生代码的账，和以前不一样了。注意边界：这是他们团队的经验，不是所有公司都该回到原生，更不是维护两个平台的成本已经消失。对我们，最有价值的动作是先拿一个小功能比较。需求解释要多久，两端差异怎么处理，谁做验收，后面改一次要付出多少成本？这些都要记下来。只比较 AI 生成代码用了多少分钟，会漏掉交付中最难的部分。 另外，已有开源依赖的维护安排也要单独跟踪。作者对不同库说明了不同后续路线，有些仍在讨论交接，有些计划停止维护。不能看到一篇路线文章就认定移交已经完成。对技术负责人而言，依赖未来由谁维护，和今天页面怎样实现，是两张不同的风险清单。</p>
+<h4>快讯一：先试，不先装</h4><p>今天的小工具是 trynix。它在浏览器里运行 Linux 虚拟机，让你选择历史 Nix 软件包，先看命令怎样工作。这里推荐的是一种无需改本机环境的试用方法，不是保证所有包都跑得动。本期核验了项目说明，没有实际启动虚拟机。你可以先用公开示例查询帮助，不放业务代码和密码，也不要拿模拟环境的速度判断本机性能。</p>
+<h4>快讯二：Skill 与连接器分开</h4><p>ClickHouse 的 Agent Skills 是一组查询和表设计规则，和访问云数据库的 MCP 不是同一个东西。没有相关 SQL 工作，就不用装。确实有任务时，可以先读规则，再拿脱敏查询核对。云连接仍然需要独立授权。元数据上写着只读，也不能替代真实权限控制。今天没有安装这个 Skill，更没有连接你的数据库。</p>
+<h4>快讯三：两种检查别混在一起</h4><p>美团的 Agent 评测文章提出，端到端看事情办没办成，过程评测看是哪一步出了问题。同样，Python 能解析 JSON，只说明格式过关，不说明内容正确；备份任务完成，也不说明恢复出来的数据可用。我们可以把这些检查放在一起，但不能拿一个绿色状态替代所有判断。</p>
+<h4>团队行动</h4><p>今天只做三件小事。第一，选一个双端功能，把实现之外的验收和维护成本列出来。第二，整理待审 PR，只缩小需要处理的列表，不自动批准合并。第三，把 Agent 交付的证据留好：哪些场景检查过，哪些没有，结论来自哪里。这样审查人是在复核，而不是从零调查。顺便提醒，今天引用的 SRE、Git 和提示注入文档是背景材料，不是刚发布的新消息。</p>
+<p>今天的核心判断是：Agent 能改变部分开发成本，但平台责任和验证责任仍然属于团队。工具不需要一次全装，先从一个真实问题和一个可检查的结果开始。 如果这一步没有省掉真实的重复工作，就先停下来重新选场景，而不是继续增加工具数量。</p></article>
+<h2 id="team-insights">✅ 对团队的启发</h2>
+<div class="insight"><strong>1</strong><p>先选一个双端功能对照完整交付成本，不直接迁移框架。</p></div>
+<div class="insight"><strong>2</strong><p>先筛出需要本人处理的 PR，不自动审批或合并。</p></div>
+<div class="insight"><strong>3</strong><p>使用新 Skill 前确认写入范围与数据流，只用脱敏样例。</p></div><footer class="footer">Tech Digest · 2026-09-11 · 来源与事实边界见各条目<br><strong>抓取缺口：</strong>console.dev；Product Hunt；BAIR Blog；Netflix TechBlog；Figma Engineering；JavaScript Weekly；Airbnb Engineering；ACM Queue；Coinbase Engineering</footer></main></div></body></html>
